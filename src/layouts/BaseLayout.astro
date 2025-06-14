@@ -1,5 +1,6 @@
 ---
 const { title } = Astro.props;
+import "../styles/global.css";
 ---
 
 <!doctype html>
@@ -14,6 +15,15 @@ const { title } = Astro.props;
   <body
     class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"
   >
+    <!-- ✅ Global login check -->
+    <script is:inline>
+      if (typeof window !== "undefined") {
+        const user = localStorage.getItem("user");
+        if (!user) {
+          window.location.href = "/";
+        }
+      }
+    </script>
     <div class="flex flex-1">
       <!-- Sidebar -->
       <aside
@@ -147,6 +157,8 @@ const { title } = Astro.props;
       window.logoutUser = logoutUser;
       function logoutUser() {
         localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("user");
+        localStorage.setItem("isLoggedIn", "false");
         window.location.href = "/";
       }
       window.addEventListener("DOMContentLoaded", () => {
@@ -186,3 +198,32 @@ const { title } = Astro.props;
     </script>
   </body>
 </html>
+<script is:inline>
+  const timeoutMinutes = 20; // waktu timeout dalam menit
+  const timeoutMillis = timeoutMinutes * 60 * 1000;
+
+  function checkLoginTimeout() {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const loginTime = parseInt(localStorage.getItem("loginTime"));
+
+    if (isLoggedIn === "true") {
+      const now = Date.now();
+      if (now - loginTime > timeoutMillis) {
+        alert("Sesi login Anda telah habis. Silakan login kembali.");
+        localStorage.clear();
+        window.location.href = "/";
+      }
+    }
+  }
+
+  // Jalankan saat halaman dimuat
+  checkLoginTimeout();
+
+  // Tambahan: perbarui waktu login saat ada aktivitas (opsional)
+  //   document.addEventListener("mousemove", () => {
+  //     localStorage.setItem("loginTime", Date.now());
+  //   });
+  //   document.addEventListener("keydown", () => {
+  //     localStorage.setItem("loginTime", Date.now());
+  //   });
+</script>

@@ -1,0 +1,97 @@
+---
+// components/AddUserForm.astro
+---
+
+<div
+  id="addUserModal"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+>
+  <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
+    <button
+      onclick="closeModal()"
+      class="absolute top-2 right-2 text-gray-600 hover:text-red-500"
+    >
+      ✕
+    </button>
+    <h2 class="text-xl font-bold mb-4">Tambah Pengguna</h2>
+    <form id="addUserForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input
+        type="text"
+        id="firstName"
+        placeholder="Nama Depan"
+        class="border p-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        id="lastName"
+        placeholder="Nama Belakang"
+        class="border p-2 rounded"
+        required
+      />
+      <input
+        type="email"
+        id="email"
+        placeholder="Email"
+        class="border p-2 rounded"
+        required
+      />
+      <input
+        type="text"
+        id="phone"
+        placeholder="No. Telepon"
+        class="border p-2 rounded"
+      />
+      <div class="md:col-span-2 flex justify-end">
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          Simpan
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  const form = document.getElementById("addUserForm");
+  const modal = document.getElementById("addUserModal");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const newUser = {
+      firstName: document.getElementById("firstName").value.trim(),
+      lastName: document.getElementById("lastName").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+    };
+
+    try {
+      const res = await fetch("https://dummyjson.com/users/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newUser),
+      });
+
+      const result = await res.json();
+
+      window.dispatchEvent(new CustomEvent("user-added", { detail: result }));
+      form.reset();
+      modal.classList.add("hidden");
+      alert("User berhasil ditambahkan!");
+    } catch (err) {
+      console.error("Gagal menambahkan user:", err);
+      alert("Gagal menambahkan user.");
+    }
+  });
+
+  window.openModal = function () {
+    modal.classList.remove("hidden");
+  };
+
+  window.closeModal = function () {
+    modal.classList.add("hidden");
+  };
+</script>

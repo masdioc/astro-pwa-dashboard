@@ -1,11 +1,13 @@
 ---
+import UserChart from "../components/UserChart.jsx";
 import BaseLayout from "../layouts/BaseLayout.astro";
+const response = await fetch("https://dummyjson.com/users");
+const json = await response.json();
+const userCount = json.users.length;
 ---
 
-<BaseLayout title="dashboard">
-  <div class="p-6">
-    <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
-
-    <p>Selamat datang di dashboard aplikasi PWA Astro.</p>
+<BaseLayout title="home">
+  <div class="max-w-xl bg-white p-6 rounded shadow">
+    <UserChart client:load userCount={userCount} />
   </div>
 </BaseLayout>

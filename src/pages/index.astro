@@ -137,7 +137,7 @@ import "../styles/global.css";
       localStorage.setItem("token", data.token);
       // Simpan data
       localStorage.setItem("user", JSON.stringify(data)); // Simpan user
-
+      localStorage.setItem("loginTime", Date.now()); // simpan waktu login
       localStorage.setItem("isLoggedIn", "true");
 
       window.location.href = "/home";
