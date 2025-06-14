@@ -1,0 +1,23 @@
+---
+const { title = "Halaman" } = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+
+  <!-- Tailwind CSS via local build -->
+  <!-- <link rel="stylesheet" href="/styles/global.css" /> -->
+
+  <!-- Lucide Icon CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- SheetJS (untuk export Excel) -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"
+  ></script>
+
+  <!-- Favicon (optional) -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>

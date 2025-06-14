@@ -1,0 +1,40 @@
+---
+import { useEffect } from 'react';
+---
+
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+  </head>
+  <body class="flex items-center justify-center h-screen bg-gray-100">
+    <div class="bg-white p-6 rounded shadow-md w-full max-w-sm">
+      <h1 class="text-xl font-bold mb-4 text-center">Login</h1>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <label class="block text-sm">Username</label>
+          <input type="text" id="username" class="w-full px-3 py-2 border rounded" />
+        </div>
+        <div>
+          <label class="block text-sm">Password</label>
+          <input type="password" id="password" class="w-full px-3 py-2 border rounded" />
+        </div>
+        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+      </form>
+      <p id="error" class="text-red-500 text-sm mt-2 hidden">Login gagal!</p>
+    </div>
+    <script>
+      document.getElementById("loginForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const user = document.getElementById("username").value;
+        const pass = document.getElementById("password").value;
+        if (user === "admin" && pass === "1234") {
+          localStorage.setItem("isLoggedIn", "true");
+          window.location.href = "/dashboard";
+        } else {
+          document.getElementById("error").classList.remove("hidden");
+        }
+      });
+    </script>
+  </body>
+</html>
