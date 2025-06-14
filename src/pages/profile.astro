@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Profil Pengguna">
+  <main class="ml-60 flex-1 p-6">
+    <h1 class="text-2xl font-bold mb-4">Profil Pengguna</h1>
+    <div
+      id="profileBox"
+      class="bg-white p-6 rounded shadow w-full max-w-lg border"
+    >
+      <p>Memuat data pengguna...</p>
+    </div>
+
+    <script type="module">
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const box = document.getElementById("profileBox");
+
+      if (user?.id) {
+        box.innerHTML = `
+          <p><strong>Nama:</strong> ${user.firstName} ${user.lastName}</p>
+          <p><strong>Email:</strong> ${user.email}</p>
+          <p><strong>Username:</strong> ${user.username}</p>
+          <p><strong>Phone:</strong> ${user.phone}</p>
+          <p><strong>Gender:</strong> ${user.gender}</p>
+        `;
+      } else {
+        box.innerHTML = `<p class="text-red-500">Gagal memuat data pengguna.</p>`;
+      }
+    </script>
+  </main>
+</BaseLayout>
