@@ -1,19 +1,22 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import pwa from '@vite-pwa/astro'; // kalau kamu pakai PWA juga
+import pwa from '@vite-pwa/astro';
 
 export default defineConfig({
   integrations: [
     react(),
     pwa({
       registerType: 'autoUpdate',
+      devOptions: {
+        enabled: true
+      },
       manifest: {
-        name: 'Aplikasi Saya',
-        short_name: 'AppSaya',
+        name: 'Astro PWA App',
+        short_name: 'PWAApp',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
-        theme_color: '#00aaff',
+        theme_color: '#0f172a',
         icons: [
           {
             src: '/pwa-192x192.png',
