@@ -1,13 +1,16 @@
 ---
-import UserChart from "../components/UserChart.jsx";
 import BaseLayout from "../layouts/BaseLayout.astro";
-const response = await fetch("https://dummyjson.com/users");
-const json = await response.json();
+import UserChart from "../components/UserChart.jsx";
+
+// Ambil data user dari dummyjson
+const res = await fetch("https://dummyjson.com/users");
+const json = await res.json();
 const userCount = json.users.length;
 ---
 
-<BaseLayout title="home">
-  <div class="max-w-xl bg-white p-6 rounded shadow">
-    <UserChart client:load userCount={userCount} />
+<BaseLayout title="Dashboard">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-xl mx-auto">
+    <h2 class="text-xl font-semibold mb-4">Grafik Jumlah Pengguna</h2>
+    <UserChart userCount={userCount} client:load />
   </div>
 </BaseLayout>

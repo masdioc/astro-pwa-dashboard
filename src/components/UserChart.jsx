@@ -1,26 +1,20 @@
-import { Bar } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
 
 export default function UserChart({ userCount }) {
-  const data = {
-    labels: ['Pengguna'],
-    datasets: [
-      {
-        label: 'Jumlah Pengguna',
-        data: [userCount],
-        backgroundColor: 'rgba(59, 130, 246, 0.7)',
-      },
-    ],
-  };
+  const data = [
+    { name: "Pengguna", jumlah: userCount },
+    { name: "Sisa Slot", jumlah: 100 - userCount }, // misal batas 100
+  ];
 
-  return <Bar data={data} />;
+  return (
+    <ResponsiveContainer width="100%" height={300}>
+      <BarChart data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis allowDecimals={false} />
+        <Tooltip />
+        <Bar dataKey="jumlah" fill="#3182ce" />
+      </BarChart>
+    </ResponsiveContainer>
+  );
 }
