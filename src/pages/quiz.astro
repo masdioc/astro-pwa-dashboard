@@ -1,7 +1,8 @@
 ---
-// import BaseLayout from "../layouts/BaseLayout.astro";
-// import BaseLayout from "../components/Layout";
-import QuizComponent from "../components/Quiz";
+import Layout from "../pages/layout.astro";
+import QuizPage from "../components/Quiz";
 ---
 
-<QuizComponent client:only="react" />
+<Layout title="Quiz">
+  <QuizPage client:load />
+</Layout>
