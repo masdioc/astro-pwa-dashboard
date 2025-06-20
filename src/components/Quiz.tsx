@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import Layout from "../components/Layout";
 type Question = {
   question: string;
   options: string[];
@@ -122,6 +122,7 @@ export default function Quiz() {
   const q = questions[current];
 
   return (
+    <Layout title="Quiz">
     <div className="bg-white p-6 rounded shadow-md w-full max-w-md mx-auto mt-10">
       {/* Progress Bar */}
       <div className="mb-4">
@@ -191,5 +192,6 @@ export default function Quiz() {
         )}
       </div>
     </div>
+    </Layout>
   );
 }
