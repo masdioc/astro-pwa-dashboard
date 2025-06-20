@@ -3,6 +3,6 @@ import BaseLayout from "../components/Layout";
 import DataUsers from "../components/DataUsers";
 ---
 
-<BaseLayout title="data" client:only="react">
-  <DataUsers client:only="react" />
+<BaseLayout title="data" client:load>
+  <DataUsers client:load />
 </BaseLayout>
