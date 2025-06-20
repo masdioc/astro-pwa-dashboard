@@ -1,10 +1,11 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import pwa from '@vite-pwa/astro';
+import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
   integrations: [
-    react(),
+    react(), tailwind(),
     pwa({
       registerType: 'autoUpdate',
       devOptions: {

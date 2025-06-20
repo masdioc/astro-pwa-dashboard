@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../components/Layout";
 import UserChart from "../components/UserChart.jsx";
 
 // Ambil data user dari dummyjson
@@ -8,7 +8,7 @@ const json = await res.json();
 const userCount = json.users.length;
 ---
 
-<BaseLayout title="Dashboard">
+<BaseLayout title="home" client:load>
   <div class="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-xl mx-auto">
     <h2 class="text-xl font-semibold mb-4">Grafik Jumlah Pengguna</h2>
     <UserChart userCount={userCount} client:load />
