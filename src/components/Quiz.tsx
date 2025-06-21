@@ -20,7 +20,7 @@ export default function Quiz() {
 
   // Load soal dari file JSON
   useEffect(() => {
-    fetch("/src/data/soal_jawaban_inggis_pembahasan.json")
+    fetch("/data/soal_jawaban_inggis_pembahasan.json")
       .then((res) => res.json())
       .then((data: Question[]) => {
         setQuestions(data);
