@@ -12,7 +12,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://dummyjson.com/auth/login", {
+      const res = await fetch("http://103.187.146.112:3000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -93,7 +93,18 @@ export default function LoginPage() {
             >
               Login
             </button>
+            
           </form>
+          <div className="text-center mt-4">
+  <span className="text-sm text-gray-600 dark:text-gray-300">Belum punya akun?</span>
+  <a
+    href="/register"
+    className="ml-2 text-sm text-blue-600 hover:underline dark:text-blue-400"
+  >
+    Daftar di sini
+  </a>
+</div>
+
         </div>
       </div>
     </div>

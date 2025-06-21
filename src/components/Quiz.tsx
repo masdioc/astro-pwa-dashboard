@@ -21,7 +21,6 @@ export default function Quiz() {
   const [elapsedTime, setElapsedTime] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-
   useEffect(() => {
     fetch("/data/soal_jawaban_inggis_pembahasan.json")
       .then((res) => res.json())
@@ -53,7 +52,6 @@ export default function Quiz() {
   const handleAnswer = (index: number) => {
     if (selected !== null || !questions.length) return;
     setSelected(index);
-
     const correct = index === questions[current].answer;
     if (correct) setScore((prev) => prev + 1);
 
@@ -105,7 +103,6 @@ export default function Quiz() {
   useEffect(() => {
     if (showResult && !posted) {
       if (timerRef.current) clearInterval(timerRef.current);
-
       fetch("https://jsonplaceholder.typicode.com/posts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -173,29 +170,39 @@ export default function Quiz() {
 
   return (
     <div className="flex flex-col md:flex-row gap-4 p-4 max-w-5xl mx-auto">
-      {/* Sidebar navigasi soal */} 
-<div className="md:w-1/5 w-full grid grid-cols-5 gap-x-1 gap-y-0 p-0">
-  {questions.map((_, index) => (
-    <button
-      key={index}
-      onClick={() => handleJump(index)}
-      className={`w-9 h-9 rounded-full text-xs font-bold ${
-        index === current
-          ? "bg-blue-500 text-white"
-          : answers[index] !== null
-          ? "bg-green-500 text-white"
-          : "bg-gray-300 text-black"
-      }`}
-    >
-      {index + 1}
-    </button>
-  ))}
-</div>
+      <div className="md:w-1/3 w-full">
+        <div className="bg-white rounded-xl shadow p-4">
+          <h2 className="text-sm font-semibold mb-4 text-gray-700">Nomor Soal</h2>
+          <div className="grid grid-cols-5 gap-x-1 gap-y-2">
+            {questions.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleJump(index)}
+                className={`w-9 h-9 rounded-full text-xs font-bold ${
+                  index === current
+                    ? "bg-blue-500 text-white"
+                    : answers[index] !== null
+                    ? "bg-green-500 text-white"
+                    : "bg-gray-300 text-black"
+                }`}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-
-
-      {/* Area soal utama */}
       <div className="bg-white p-6 rounded shadow-md w-full md:w-4/5">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleFinish}
+            className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+          >
+            Selesai
+          </button>
+        </div>
+
         <div className="mb-4">
           <div className="text-sm text-gray-600 mb-1">
             Soal {current + 1} dari {questions.length}
@@ -212,25 +219,33 @@ export default function Quiz() {
           Waktu: {elapsedTime} detik
         </div>
 
-        <h2 className="text-xl font-semibold mb-4">{q.question}</h2>
+        <div className="mb-4">
+          <h3 className="text-base font-bold text-gray-700 mb-2">Pertanyaan:</h3>
+          <h2 className="text-lg font-medium text-gray-900">{q.question}</h2>
+        </div>
+
         <ul className="space-y-2">
-          {q.options.map((opt, idx) => (
-            <li
-              key={idx}
-              className={`p-3 rounded cursor-pointer border transition ${
-                selected !== null
-                  ? idx === q.answer
-                    ? "bg-green-200 border-green-600"
-                    : idx === selected
-                    ? "bg-red-200 border-red-600"
-                    : "bg-white border-gray-300"
-                  : "hover:bg-blue-100 border-gray-300"
-              }`}
-              onClick={() => handleAnswer(idx)}
-            >
-              {opt}
-            </li>
-          ))}
+          {q.options.map((opt, idx) => {
+            const optionLabel = String.fromCharCode(65 + idx);
+            return (
+              <li
+                key={idx}
+                className={`p-3 rounded cursor-pointer border transition flex items-start gap-2 ${
+                  selected !== null
+                    ? idx === q.answer
+                      ? "bg-green-200 border-green-600"
+                      : idx === selected
+                      ? "bg-red-200 border-red-600"
+                      : "bg-white border-gray-300"
+                    : "hover:bg-blue-100 border-gray-300"
+                }`}
+                onClick={() => handleAnswer(idx)}
+              >
+                <span className="font-bold">{optionLabel}.</span>
+                <span>{opt}</span>
+              </li>
+            );
+          })}
         </ul>
 
         {selected !== null && (
@@ -239,7 +254,6 @@ export default function Quiz() {
           </div>
         )}
 
-        {/* Navigasi bawah */}
         <div className="mt-6 flex justify-between items-center">
           {current > 0 ? (
             <button
@@ -266,12 +280,6 @@ export default function Quiz() {
                 Berikutnya
               </button>
             )}
-            <button
-              onClick={handleFinish}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-            >
-              Selesai
-            </button>
           </div>
         </div>
       </div>
