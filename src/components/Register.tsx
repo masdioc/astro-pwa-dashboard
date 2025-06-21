@@ -30,7 +30,7 @@ export default function RegisterPage() {
     setMessage("");
 
     try {
-      const res = await fetch("https://api.app-metodejariyah.comregister", {
+      const res = await fetch("https://api.app-metodejariyah.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
