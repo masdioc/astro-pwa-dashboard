@@ -62,6 +62,12 @@ import "/src/styles/global.css";
           >
             <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
           </a>
+          <a
+            href="/quiz"
+            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
+          >
+            <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
+          </a>
         </nav>
         <!-- Tombol Logout -->
         <!-- Bagian bawah: tombol logout -->
@@ -158,85 +164,71 @@ import "/src/styles/global.css";
     >
       &copy; {new Date().getFullYear()} My App. All rights reserved.
     </footer>
-
-    <script>
-      window.logoutUser = logoutUser;
-      function logoutUser() {
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("user");
-        localStorage.setItem("isLoggedIn", "false");
-        window.location.href = "/";
-      }
+    <!-- @ts-ignore -->
+    <script type="module">
       window.addEventListener("DOMContentLoaded", () => {
         lucide?.createIcons();
+
         if (localStorage.theme === "dark") {
           document.documentElement.classList.add("dark");
         }
+
+        checkLoginTimeout();
       });
 
-      function toggleSidebar() {
-        const sidebar = document.getElementById("sidebar");
-        const main = document.getElementById("main-content");
+      const timeoutMinutes = 20;
+      const timeoutMillis = timeoutMinutes * 60 * 1000;
 
-        const isHidden = sidebar.classList.contains("-translate-x-full");
+      function checkLoginTimeout() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const loginTime = parseInt(localStorage.getItem("loginTime") || "0");
 
-        sidebar.classList.toggle("-translate-x-full");
-        sidebar.classList.toggle("translate-x-0");
-
-        if (window.innerWidth >= 768) {
-          main.classList.toggle("ml-60", isHidden);
-          main.classList.toggle("ml-0", !isHidden);
+        if (isLoggedIn === "true") {
+          const now = Date.now();
+          if (now - loginTime > timeoutMillis) {
+            alert("Sesi login Anda telah habis. Silakan login kembali.");
+            localStorage.clear();
+            window.location.href = "/";
+          }
         }
       }
 
-      function toggleUserDropdown() {
-        const dropdown = document.getElementById("userDropdown");
-        dropdown.classList.toggle("hidden");
-      }
+      Object.assign(window, {
+        logoutUser() {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("user");
+          localStorage.setItem("isLoggedIn", "false");
+          window.location.href = "/";
+        },
+        toggleSidebar() {
+          const sidebar = document.getElementById("sidebar");
+          const main = document.getElementById("main-content");
 
-      function toggleDarkMode() {
-        const html = document.documentElement;
-        if (html.classList.contains("dark")) {
-          html.classList.remove("dark");
-          localStorage.theme = "light";
-        } else {
-          html.classList.add("dark");
-          localStorage.theme = "dark";
-        }
-      }
+          const isHidden = sidebar?.classList.contains("-translate-x-full");
 
-      window.toggleSidebar = toggleSidebar;
-      window.toggleUserDropdown = toggleUserDropdown;
-      window.toggleDarkMode = toggleDarkMode;
+          sidebar?.classList.toggle("-translate-x-full");
+          sidebar?.classList.toggle("translate-x-0");
+
+          if (window.innerWidth >= 768 && sidebar && main) {
+            main.classList.toggle("ml-60", isHidden);
+            main.classList.toggle("ml-0", !isHidden);
+          }
+        },
+        toggleUserDropdown() {
+          const dropdown = document.getElementById("userDropdown");
+          dropdown?.classList.toggle("hidden");
+        },
+        toggleDarkMode() {
+          const html = document.documentElement;
+          if (html.classList.contains("dark")) {
+            html.classList.remove("dark");
+            localStorage.theme = "light";
+          } else {
+            html.classList.add("dark");
+            localStorage.theme = "dark";
+          }
+        },
+      });
     </script>
   </body>
 </html>
-<script is:inline>
-  const timeoutMinutes = 20; // waktu timeout dalam menit
-  const timeoutMillis = timeoutMinutes * 60 * 1000;
-
-  function checkLoginTimeout() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const loginTime = parseInt(localStorage.getItem("loginTime"));
-
-    if (isLoggedIn === "true") {
-      const now = Date.now();
-      if (now - loginTime > timeoutMillis) {
-        alert("Sesi login Anda telah habis. Silakan login kembali.");
-        localStorage.clear();
-        window.location.href = "/";
-      }
-    }
-  }
-
-  // Jalankan saat halaman dimuat
-  checkLoginTimeout();
-
-  // Tambahan: perbarui waktu login saat ada aktivitas (opsional)
-  //   document.addEventListener("mousemove", () => {
-  //     localStorage.setItem("loginTime", Date.now());
-  //   });
-  //   document.addEventListener("keydown", () => {
-  //     localStorage.setItem("loginTime", Date.now());
-  //   });
-</script>
