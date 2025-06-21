@@ -3,34 +3,33 @@ import { useEffect, useState } from "react";
 type Question = {
   question: string;
   options: string[];
-  answer: number;
+  answer: number,
+    explanation: string; // tambahkan ini;
 };
 
-const questions: Question[] = [
-  {
-    question: "Apa ibu kota Indonesia?",
-    options: ["Bandung", "Surabaya", "Jakarta", "Medan"],
-    answer: 2,
-  },
-  {
-    question: "Berapakah hasil dari 2 + 2?",
-    options: ["3", "4", "5", "6"],
-    answer: 1,
-  },
-];
-
 export default function Quiz() {
+  const [questions, setQuestions] = useState<Question[]>([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>(Array(questions.length).fill(null));
+  const [answers, setAnswers] = useState<(number | null)[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [posted, setPosted] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
   const [elapsedTime, setElapsedTime] = useState(0);
 
+  // Load soal dari file JSON
   useEffect(() => {
-    if (!startTime) setStartTime(new Date());
+    fetch("/src/data/soal_jawaban_inggis_pembahasan.json")
+      .then((res) => res.json())
+      .then((data: Question[]) => {
+        setQuestions(data);
+        setAnswers(Array(data.length).fill(null));
+        setStartTime(new Date());
+      });
+  }, []);
+
+  useEffect(() => {
     const timer = setInterval(() => {
       if (startTime) {
         setElapsedTime(Math.floor((new Date().getTime() - startTime.getTime()) / 1000));
@@ -40,7 +39,7 @@ export default function Quiz() {
   }, [startTime]);
 
   const handleAnswer = (index: number) => {
-    if (selected !== null) return;
+    if (selected !== null || !questions.length) return;
     setSelected(index);
 
     const correct = index === questions[current].answer;
@@ -92,7 +91,11 @@ export default function Quiz() {
           setPosted(true);
         });
     }
-  }, [showResult, posted, score, elapsedTime]);
+  }, [showResult, posted, score, elapsedTime, questions.length]);
+
+  if (!questions.length) {
+    return <div className="text-center mt-10">Memuat soal...</div>;
+  }
 
   if (showResult) {
     return (
@@ -161,7 +164,12 @@ export default function Quiz() {
           </li>
         ))}
       </ul>
-
+{/* Pembahasan jawaban */}
+{selected !== null && (
+  <div className="mt-4 p-4 bg-yellow-100 border-l-4 border-yellow-500 text-gray-800 rounded">
+    <strong>Pembahasan:</strong> {q.explanation}
+  </div>
+)}
       {/* Navigasi */}
       <div className="mt-6 flex justify-between items-center">
         {current > 0 ? (
@@ -171,9 +179,11 @@ export default function Quiz() {
           >
             Kembali
           </button>
-        ) : <div />}
-        {selected !== null && (
-          current + 1 < questions.length ? (
+        ) : (
+          <div />
+        )}
+        {selected !== null &&
+          (current + 1 < questions.length ? (
             <button
               onClick={handleNext}
               className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
@@ -187,8 +197,7 @@ export default function Quiz() {
             >
               Lihat Hasil
             </button>
-          )
-        )}
+          ))}
       </div>
     </div>
   );
