@@ -2,8 +2,11 @@ import { useEffect, useRef, useState } from "react";
 
 type Question = {
   question: string;
-  options: string[];
-  answer: number;
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  answer: string; // 'a', 'b', 'c', 'd'
   explanation: string;
 };
 
@@ -12,9 +15,9 @@ export default function Quiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [selectedCount, setSelectedCount] = useState<number | null>(null);
   const [current, setCurrent] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const [score, setScore] = useState(0);
-  const [answers, setAnswers] = useState<(number | null)[]>([]);
+  const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [posted, setPosted] = useState(false);
   const [startTime, setStartTime] = useState<Date | null>(null);
@@ -22,17 +25,21 @@ export default function Quiz() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-    fetch("/data/soal_jawaban_inggis_pembahasan.json")
-      .then((res) => res.json())
-      .then((data: Question[]) => {
-        setAllQuestions(data);
-      });
-  }, []);
-
+  fetch("http://localhost:3000/api/soals")
+    .then((res) => res.json())
+    .then((data) => {
+      if (Array.isArray(data.soals)) {
+        setAllQuestions(data.soals);
+      } else {
+        console.error("❌ Format JSON tidak sesuai: 'soals' bukan array.");
+      }
+    })
+    .catch((err) => console.error("❌ Gagal memuat soal:", err));
+}, []);
   useEffect(() => {
     if (startTime && !showResult) {
       timerRef.current = setInterval(() => {
-        setElapsedTime(Math.floor((new Date().getTime() - startTime.getTime()) / 1000));
+        setElapsedTime(Math.floor((Date.now() - startTime.getTime()) / 1000));
       }, 1000);
     }
     return () => {
@@ -47,24 +54,28 @@ export default function Quiz() {
     setAnswers(Array(count).fill(null));
     setSelectedCount(count);
     setStartTime(new Date());
+    setCurrent(0);
+    setScore(0);
+    setSelected(null);
   };
 
-  const handleAnswer = (index: number) => {
+  const handleAnswer = (key: string) => {
     if (selected !== null || !questions.length) return;
-    setSelected(index);
-    const correct = index === questions[current].answer;
+    setSelected(key);
+    const correct = key === questions[current].answer;
     if (correct) setScore((prev) => prev + 1);
-
     setAnswers((prev) => {
       const updated = [...prev];
-      updated[current] = index;
+      updated[current] = key;
       return updated;
     });
   };
 
   const handleNext = () => {
-    setSelected(null);
-    setCurrent((prev) => prev + 1);
+    if (current + 1 < questions.length) {
+      setSelected(null);
+      setCurrent((prev) => prev + 1);
+    }
   };
 
   const handleSkip = () => {
@@ -73,27 +84,28 @@ export default function Quiz() {
       updated[current] = null;
       return updated;
     });
-    setSelected(null);
-    setCurrent((prev) => prev + 1);
+    handleNext();
   };
 
   const handleBack = () => {
-    const prevIndex = current - 1;
-    const prevSelected = answers[prevIndex];
-    if (prevSelected !== null && prevSelected === questions[prevIndex].answer) {
-      setScore((prev) => prev - 1);
+    if (current > 0) {
+      const prevIndex = current - 1;
+      const prevSelected = answers[prevIndex];
+      if (prevSelected && prevSelected === questions[prevIndex].answer) {
+        setScore((prev) => prev - 1);
+      }
+      setCurrent(prevIndex);
+      setSelected(null);
     }
-    setCurrent(prevIndex);
-    setSelected(null);
   };
 
-  const handleFinish = () => {
-    setShowResult(true);
-  };
+  const handleFinish = () => setShowResult(true);
 
   const handleJump = (index: number) => {
-    setCurrent(index);
-    setSelected(answers[index]);
+    if (index < questions.length) {
+      setCurrent(index);
+      setSelected(answers[index]);
+    }
   };
 
   useEffect(() => {
@@ -115,7 +127,7 @@ export default function Quiz() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("Skor berhasil dikirim:", data);
+          console.log("Skor terkirim:", data);
           setPosted(true);
         });
     }
@@ -166,7 +178,22 @@ export default function Quiz() {
     );
   }
 
+  // ⛔️ Cegah error jika q belum ada
+  if (!questions[current]) {
+    return (
+      <div className="text-center p-10">
+        <p className="text-lg text-gray-500">Sedang menyiapkan soal...</p>
+      </div>
+    );
+  }
+
   const q = questions[current];
+  const optionEntries = [
+    ["a", q.a],
+    ["b", q.b],
+    ["c", q.c],
+    ["d", q.d],
+  ] as [string, string][];
 
   return (
     <div className="flex flex-col md:flex-row gap-4 p-4 max-w-5xl mx-auto">
@@ -225,27 +252,24 @@ export default function Quiz() {
         </div>
 
         <ul className="space-y-2">
-          {q.options.map((opt, idx) => {
-            const optionLabel = String.fromCharCode(65 + idx);
-            return (
-              <li
-                key={idx}
-                className={`p-3 rounded cursor-pointer border transition flex items-start gap-2 ${
-                  selected !== null
-                    ? idx === q.answer
-                      ? "bg-green-200 border-green-600"
-                      : idx === selected
-                      ? "bg-red-200 border-red-600"
-                      : "bg-white border-gray-300"
-                    : "hover:bg-blue-100 border-gray-300"
-                }`}
-                onClick={() => handleAnswer(idx)}
-              >
-                <span className="font-bold">{optionLabel}.</span>
-                <span>{opt}</span>
-              </li>
-            );
-          })}
+          {optionEntries.map(([key, value]) => (
+            <li
+              key={key}
+              className={`p-3 rounded cursor-pointer border transition flex items-start gap-2 ${
+                selected !== null
+                  ? key === q.answer
+                    ? "bg-green-200 border-green-600"
+                    : key === selected
+                    ? "bg-red-200 border-red-600"
+                    : "bg-white border-gray-300"
+                  : "hover:bg-blue-100 border-gray-300"
+              }`}
+              onClick={() => handleAnswer(key)}
+            >
+              <span className="font-bold">{key.toUpperCase()}.</span>
+              <span>{value}</span>
+            </li>
+          ))}
         </ul>
 
         {selected !== null && (

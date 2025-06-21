@@ -1,9 +1,13 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig ,envField} from 'astro/config';
 import react from '@astrojs/react';
 import pwa from '@vite-pwa/astro';
 import tailwind from "@astrojs/tailwind";
+// import { defineConfig, envField } from "astro/config";
 
-export default defineConfig({
+
+
+export default defineConfig({ 
+
   integrations: [
     react(), tailwind(),
     pwa({

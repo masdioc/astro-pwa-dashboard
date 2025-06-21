@@ -6,10 +6,7 @@ interface User {
   name: string;
   // lastName: string;
   email: string;
-  phone: string;
-  gender: string;
-  address: { address: string; city: string };
-  company: { name: string };
+  level: string; 
 }
 
 export default function UserDataPage() {
@@ -130,6 +127,7 @@ export default function UserDataPage() {
                 <th className="border px-4 py-2 text-left">ID</th>
                 <th className="border px-4 py-2 text-left">Nama</th>
                 <th className="border px-4 py-2 text-left">Email</th>
+                        <th className="border px-4 py-2 text-left">Level Pendidikan</th>
                 <th className="border px-4 py-2 text-left">Aksi</th>
               </tr>
             </thead>
@@ -139,6 +137,7 @@ export default function UserDataPage() {
                   <td className="px-4 py-2 border-b">{user.id}</td>
                   <td className="px-4 py-2 border-b">{user.name}</td>
                   <td className="px-4 py-2 border-b">{user.email}</td>
+                                    <td className="px-4 py-2 border-b">{user.level}</td>
                   <td className="px-4 py-2 border-b">
                     <button
                       onClick={() => setDetailUser(user)}
@@ -175,23 +174,36 @@ export default function UserDataPage() {
         </div>
 
         {/* Detail User */}
-        {detailUser && (
-          <div className="mt-6 bg-white dark:bg-gray-800 p-4 rounded shadow text-sm">
-            <h3 className="text-lg font-semibold mb-2">Detail Pengguna</h3>
-            <p><strong>Nama:</strong> {detailUser.name}</p>
-            <p><strong>Email:</strong> {detailUser.email}</p>
-            <p><strong>Phone:</strong> {detailUser.phone}</p>
-            <p><strong>Gender:</strong> {detailUser.gender}</p>
-            <p><strong>Alamat:</strong> {detailUser.address.address}, {detailUser.address.city}</p>
-            <p><strong>Perusahaan:</strong> {detailUser.company.name}</p>
-            <button
-              onClick={() => setDetailUser(null)}
-              className="mt-2 px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-sm"
-            >
-              Tutup
-            </button>
-          </div>
-        )}
+      {detailUser && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md relative">
+      <button
+        onClick={() => setDetailUser(null)}
+        className="absolute top-2 right-2 text-gray-500 hover:text-gray-900 dark:text-gray-300"
+      >
+        ✕
+      </button>
+      <h2 className="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">
+        Detail Pengguna
+      </h2>
+      <div className="space-y-2 text-sm text-gray-700 dark:text-gray-200">
+        <p><strong>ID:</strong> {detailUser.id}</p>
+        <p><strong>Nama:</strong> {detailUser.name}</p>
+        <p><strong>Email:</strong> {detailUser.email}</p>
+        <p><strong>Level User:</strong> {detailUser.level}</p> 
+      </div>
+      <div className="mt-4 text-right">
+        <button
+          onClick={() => setDetailUser(null)}
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm"
+        >
+          Tutup
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
       </>
     )}
   </div>

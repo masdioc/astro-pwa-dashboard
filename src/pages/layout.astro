@@ -1,22 +1,19 @@
 ---
-import "../styles/global.css";
+import Sidebar from "../components/Sidebar.astro";
 const { title } = Astro.props;
 ---
 
-<html lang="id" class="">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="manifest" href="/manifest.webmanifest" />
-
-    <!-- <link rel="stylesheet" href="src/styles/global.css" /> -->
   </head>
   <body
     class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"
   >
-    <!-- ✅ Global login check -->
     <script is:inline>
       if (typeof window !== "undefined") {
         const user = localStorage.getItem("user");
@@ -25,66 +22,14 @@ const { title } = Astro.props;
         }
       }
     </script>
-    <div class="flex flex-1">
-      <!-- Sidebar -->
-      <aside
-        id="sidebar"
-        class="w-60 transform -translate-x-full bg-blue-800 dark:bg-gray-900 text-white dark:text-gray-100 border-r-0 dark:border-r border-gray-700 h-screen fixed top-0 left-0 transition-transform duration-300 z-50"
-      >
-        <div class="p-4 flex justify-between items-center">
-          <h2 class="text-xl font-bold">Sidebar</h2>
-          <button onclick="toggleSidebar()" class="text-white">
-            <i data-lucide="x"></i>
-          </button>
-        </div>
-        <nav class="mt-6 flex flex-col space-y-2 px-4">
-          <a
-            href="/home"
-            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-          >
-            <i data-lucide="home" class="w-4 h-4 mr-2"></i> Home
-          </a>
-          <a
-            href="/dashboard"
-            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-          >
-            <i data-lucide="layout-dashboard" class="w-4 h-4 mr-2"></i> Dashboard
-          </a>
-          <a
-            href="/tentang"
-            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-          >
-            <i data-lucide="info" class="w-4 h-4 mr-2"></i> Tentang
-          </a>
-          <a
-            href="/data"
-            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-          >
-            <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
-          </a>
-          <a
-            href="/quiz"
-            class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-          >
-            <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
-          </a>
-        </nav>
-        <!-- Tombol Logout -->
-        <!-- Bagian bawah: tombol logout -->
-        <button
-          onclick="logoutUser()"
-          class="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm shadow transition-all"
-        >
-          🚪 Logout
-        </button>
-      </aside>
 
-      <!-- Konten -->
+    <div class="flex flex-1">
+      <Sidebar client:load />
+
       <div
         id="main-content"
         class="ml-0 flex-1 flex flex-col min-h-screen transition-all duration-300"
       >
-        <!-- Top Navbar -->
         <header
           class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center sticky top-0 z-10"
         >
@@ -98,7 +43,6 @@ const { title } = Astro.props;
             <h1 class="text-lg font-semibold">{title}</h1>
           </div>
           <div class="flex items-center gap-2">
-            <!-- Toggle Dark Mode -->
             <button
               onclick="toggleDarkMode()"
               class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded"
@@ -106,8 +50,6 @@ const { title } = Astro.props;
             >
               <i data-lucide="moon" class="w-5 h-5"></i>
             </button>
-
-            <!-- User Dropdown -->
             <div class="relative">
               <button
                 onclick="toggleUserDropdown()"
@@ -151,28 +93,24 @@ const { title } = Astro.props;
           </div>
         </header>
 
-        <!-- Konten -->
         <main class="p-6 flex-1">
           <slot />
         </main>
       </div>
     </div>
 
-    <!-- Footer -->
     <footer
       class="bg-white dark:bg-gray-800 text-center text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 py-3"
     >
-      <!-- &copy; {new Date().getFullYear()} My App. All rights reserved. -->
       &copy; {new Date().getFullYear()}
     </footer>
+
     <script type="module">
       window.addEventListener("DOMContentLoaded", () => {
         lucide?.createIcons();
-
         if (localStorage.theme === "dark") {
           document.documentElement.classList.add("dark");
         }
-
         checkLoginTimeout();
       });
 
@@ -182,7 +120,6 @@ const { title } = Astro.props;
       function checkLoginTimeout() {
         const isLoggedIn = localStorage.getItem("isLoggedIn");
         const loginTime = parseInt(localStorage.getItem("loginTime") || "0");
-
         if (isLoggedIn === "true") {
           const now = Date.now();
           if (now - loginTime > timeoutMillis) {
@@ -203,12 +140,9 @@ const { title } = Astro.props;
         toggleSidebar() {
           const sidebar = document.getElementById("sidebar");
           const main = document.getElementById("main-content");
-
           const isHidden = sidebar?.classList.contains("-translate-x-full");
-
           sidebar?.classList.toggle("-translate-x-full");
           sidebar?.classList.toggle("translate-x-0");
-
           if (window.innerWidth >= 768 && sidebar && main) {
             main.classList.toggle("ml-60", isHidden);
             main.classList.toggle("ml-0", !isHidden);

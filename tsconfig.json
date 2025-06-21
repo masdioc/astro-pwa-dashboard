@@ -1,13 +1,19 @@
 {
   "compilerOptions": {
-     "allowSyntheticDefaultImports": true,
+     "allowSyntheticDefaultImports": true, 
     "strict": true, 
     "jsx": "preserve",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "types": ["astro/client"]
+    "types": ["astro/astro-jsx"],
+ "paths": {
+      "store": ["./src/components/vendor/store"],
+          "@dto/*": ["./src/components/dto/*"],
+      "@vendor/*": ["./src/components/vendor/*"],
+      "@/*": ["./src/*"]
+    },
   },
-  "include": ["src"]
+  "include": ["src",".astro/types.d.ts", "**/*"],
 }
 

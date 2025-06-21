@@ -1,26 +1,39 @@
 import React, { useState } from "react";
-import "../styles/global.css";
-const apiUrl = "https://api.app-metodejariyah.com";
-// const apiUrl = import.meta.env.VITE_NICE;
-  
-console.log(import.meta.env.VITE_NICE);
+// import { getEnv } from "@vendor/env";
+// import { Http, type HexaRequestConfig } from "@vendor/http";
+import "../styles/global.css";   
+const API_URL = "https://api.app-metodejariyah.com";
+// console.log("TSX"+API_URL);
+//  console.log ( ` URL API : $ { apiUrl} ` );
+// import {} from "astro:env"
+  //  console.log("AWAL : "+API_URL);
+  // console.log("API_URL:", import.meta.env);
+  // const API_URL = getEnv("API_BASE_URL");
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+// const API_URL_NEW = API_URL;
   const togglePassword = () => setShowPassword(!showPassword);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+//   const raw = import.meta.env.VITE_API_BASE_URL;
+// const API_URL = raw?.trim?.();
+const finalUrl = new URL("/api/login", API_URL).toString();
 
-    try {
-      const res = await fetch(`${apiUrl}/api/login`,  {
+// console.log("🧪 RAW:", raw);
+// console.log("✅ Trimmed:", API_URL, "Length:", API_URL?.length);
+// console.log("🌐 Final Fetch URL:", API_URL);
+  // const fullUrl = new URL("/api/login", API_URL).toString();
+  console.log("Hit to:", finalUrl);
+    try { 
+  const res = await fetch(finalUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-
+    //  console.log("AKHIR : "+API_URL);
       if (!res.ok) throw new Error("Login gagal");
 
       const data = await res.json();
