@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "../styles/global.css";
-
+const apiUrl = "https://api.app-metodejariyah.com";
+// const apiUrl = import.meta.env.VITE_NICE;
+  
+console.log(import.meta.env.VITE_NICE);
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
@@ -12,7 +15,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://api.app-metodejariyah.com/api/login", {
+      const res = await fetch(`${apiUrl}/api/login`,  {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

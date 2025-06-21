@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import Layout from "./layout";
-
+const apiUrl = "https://api.app-metodejariyah.com";
 interface User {
   id: number;
   name: string;
@@ -22,7 +22,7 @@ export default function UserDataPage() {
   const [detailUser, setDetailUser] = useState<User | null>(null);
 
  useEffect(() => {
-  fetch("https://api.app-metodejariyah.com/api/users")
+  fetch(apiUrl+"/api/users")
     .then((res) => res.json())
     .then((data) => {
       console.log("Data loaded:", data);

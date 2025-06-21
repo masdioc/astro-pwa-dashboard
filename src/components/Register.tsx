@@ -1,4 +1,5 @@
 import { useState } from "react";
+const apiUrl = "https://api.app-metodejariyah.com";
 
 type RegisterData = {
   username: string;
@@ -30,7 +31,7 @@ export default function RegisterPage() {
     setMessage("");
 
     try {
-      const res = await fetch("https://api.app-metodejariyah.com/api/register", {
+      const res = await fetch(apiUrl+"/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
