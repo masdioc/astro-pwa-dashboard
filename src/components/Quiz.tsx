@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+const apiUrl = "https://api.app-metodejariyah.com";
 type Question = {
   question: string;
   a: string;
@@ -25,7 +25,7 @@ export default function Quiz() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-  fetch("http://localhost:3000/api/soals")
+  fetch(apiUrl+"/api/soals")
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data.soals)) {

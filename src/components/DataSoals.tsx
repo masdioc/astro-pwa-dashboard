@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 // import Layout from "./layout";
-const apiUrl = "http://localhost:3000";
+const apiUrl = "https://api.app-metodejariyah.com";
 interface User {
   id: number;
    jenis_soal: string;
