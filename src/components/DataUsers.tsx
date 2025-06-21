@@ -22,7 +22,7 @@ export default function UserDataPage() {
   const [detailUser, setDetailUser] = useState<User | null>(null);
 
  useEffect(() => {
-  fetch("http://103.187.146.112:3000/api/users")
+  fetch("https://api.app-metodejariyah.com/api/users")
     .then((res) => res.json())
     .then((data) => {
       console.log("Data loaded:", data);
