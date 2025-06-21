@@ -9,7 +9,7 @@ const json = await res.json();
 const userCount = json.users.length;
 ---
 
-<BaseLayout title="home" client:load>
+<BaseLayout title="home">
   <div class="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-xl mx-auto">
     <h2 class="text-xl font-semibold mb-4">Grafik Jumlah Pengguna</h2>
     <UserChart userCount={userCount} client:load />

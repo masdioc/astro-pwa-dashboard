@@ -1,45 +1,82 @@
-<!DOCTYPE html><html lang="id" class=""> <head><meta charset="UTF-8"><title>Dashboard</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src="https://unpkg.com/lucide@latest" defer></script><!-- <link rel="stylesheet" href="src/styles/global.css" /> --><link rel="stylesheet" href="/_astro/dashboard.BWJ5X2Oi.css"><script type="module" src="/_astro/hoisted.ptXHx6UZ.js"></script></head> <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"> <!-- ✅ Global login check --> <script>
+<!DOCTYPE html><html lang="id" class=""> <head><meta charset="UTF-8"><title>home</title><meta name="viewport" content="width=device-width, initial-scale=1.0"><script src="https://unpkg.com/lucide@latest" defer></script><link rel="manifest" href="/manifest.webmanifest"><!-- <link rel="stylesheet" href="src/styles/global.css" /> --><link rel="stylesheet" href="/_astro/dashboard.iUTjXSZG.css">
+<link rel="stylesheet" href="/_astro/index.DL5HRcTw.css"></head> <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"> <!-- ✅ Global login check --> <script>
       if (typeof window !== "undefined") {
         const user = localStorage.getItem("user");
         if (!user) {
           window.location.href = "/";
         }
       }
-    </script> <div class="flex flex-1"> <!-- Sidebar --> <aside id="sidebar" class="w-60 bg-blue-800 dark:bg-gray-900 text-white dark:text-gray-100 border-r-0 dark:border-r border-gray-700 h-screen fixed top-0 left-0 transition-transform duration-300"> <div class="p-4 font-bold text-xl">My App</div> <nav class="mt-6 flex flex-col space-y-2 px-4"> <a href="/home" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="home" class="w-4 h-4 mr-2"></i> Home
+    </script> <div class="flex flex-1"> <!-- Sidebar --> <aside id="sidebar" class="w-60 transform -translate-x-full bg-blue-800 dark:bg-gray-900 text-white dark:text-gray-100 border-r-0 dark:border-r border-gray-700 h-screen fixed top-0 left-0 transition-transform duration-300 z-50"> <div class="p-4 flex justify-between items-center"> <h2 class="text-xl font-bold">Sidebar</h2> <button onclick="toggleSidebar()" class="text-white"> <i data-lucide="x"></i> </button> </div> <nav class="mt-6 flex flex-col space-y-2 px-4"> <a href="/home" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="home" class="w-4 h-4 mr-2"></i> Home
 </a> <a href="/dashboard" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="layout-dashboard" class="w-4 h-4 mr-2"></i> Dashboard
 </a> <a href="/tentang" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="info" class="w-4 h-4 mr-2"></i> Tentang
 </a> <a href="/data" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
+</a> <a href="/quiz" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"> <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
 </a> </nav> <!-- Tombol Logout --> <!-- Bagian bawah: tombol logout --> <button onclick="logoutUser()" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md text-sm shadow transition-all">
 🚪 Logout
-</button> </aside> <!-- Konten --> <div id="main-content" class="ml-60 flex-1 flex flex-col min-h-screen transition-all duration-300"> <!-- Top Navbar --> <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center sticky top-0 z-10"> <div class="flex items-center gap-3"> <button onclick="toggleSidebar()" class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded"> <i data-lucide="menu" class="w-5 h-5"></i> </button> <h1 class="text-lg font-semibold">Dashboard</h1> </div> <div class="flex items-center gap-2"> <!-- Toggle Dark Mode --> <button onclick="toggleDarkMode()" class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded" title="Dark Mode"> <i data-lucide="moon" class="w-5 h-5"></i> </button> <!-- User Dropdown --> <div class="relative"> <button onclick="toggleUserDropdown()" class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm"> <i data-lucide="user" class="w-4 h-4"></i> User
-<i data-lucide="chevron-down" class="w-4 h-4"></i> </button> <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded shadow-lg hidden z-50"> <ul class="text-sm text-gray-700 dark:text-gray-100"> <li> <a href="/profile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Profil</a> </li> <li> <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Pengaturan</a> </li> <li> <hr class="my-1 border-gray-300 dark:border-gray-600"> </li> <li> <a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Keluar</a> </li> </ul> </div> </div> </div> </header> <!-- Konten --> <main class="p-6 flex-1">  <div class="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-xl mx-auto"> <h2 class="text-xl font-semibold mb-4">Grafik Jumlah Pengguna</h2> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="1JWjd5" prefix="r1" component-url="/_astro/UserChart.n2BjJXKL.js" component-export="default" renderer-url="/_astro/client.CrmUmMjw.js" props="{&quot;userCount&quot;:[0,30]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;UserChart&quot;,&quot;value&quot;:true}" await-children=""><div class="recharts-responsive-container" style="width:100%;height:300px;min-width:0"></div><!--astro:end--></astro-island> </div>  </main> </div> </div> <!-- Footer --> <footer class="bg-white dark:bg-gray-800 text-center text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 py-3">
-&copy; 2025 My App. All rights reserved.
-</footer>  </body> </html> <script>
-  const timeoutMinutes = 20; // waktu timeout dalam menit
-  const timeoutMillis = timeoutMinutes * 60 * 1000;
+</button> </aside> <!-- Konten --> <div id="main-content" class="ml-0 flex-1 flex flex-col min-h-screen transition-all duration-300"> <!-- Top Navbar --> <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center sticky top-0 z-10"> <div class="flex items-center gap-3"> <button onclick="toggleSidebar()" class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded"> <i data-lucide="menu" class="w-5 h-5"></i> </button> <h1 class="text-lg font-semibold">home</h1> </div> <div class="flex items-center gap-2"> <!-- Toggle Dark Mode --> <button onclick="toggleDarkMode()" class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded" title="Dark Mode"> <i data-lucide="moon" class="w-5 h-5"></i> </button> <!-- User Dropdown --> <div class="relative"> <button onclick="toggleUserDropdown()" class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm"> <i data-lucide="user" class="w-4 h-4"></i> User
+<i data-lucide="chevron-down" class="w-4 h-4"></i> </button> <div id="userDropdown" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded shadow-lg hidden z-50"> <ul class="text-sm text-gray-700 dark:text-gray-100"> <li> <a href="/profile" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Profil</a> </li> <li> <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Pengaturan</a> </li> <li> <hr class="my-1 border-gray-300 dark:border-gray-600"> </li> <li> <a href="/" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600">Keluar</a> </li> </ul> </div> </div> </div> </header> <!-- Konten --> <main class="p-6 flex-1">  <div class="bg-white dark:bg-gray-800 p-6 rounded shadow max-w-xl mx-auto"> <h2 class="text-xl font-semibold mb-4">Grafik Jumlah Pengguna</h2> <style>astro-island,astro-slot,astro-static-slot{display:contents}</style><script>(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event("astro:load"));})();;(()=>{var A=Object.defineProperty;var g=(i,o,a)=>o in i?A(i,o,{enumerable:!0,configurable:!0,writable:!0,value:a}):i[o]=a;var d=(i,o,a)=>g(i,typeof o!="symbol"?o+"":o,a);{let i={0:t=>m(t),1:t=>a(t),2:t=>new RegExp(t),3:t=>new Date(t),4:t=>new Map(a(t)),5:t=>new Set(a(t)),6:t=>BigInt(t),7:t=>new URL(t),8:t=>new Uint8Array(t),9:t=>new Uint16Array(t),10:t=>new Uint32Array(t),11:t=>1/0*t},o=t=>{let[l,e]=t;return l in i?i[l](e):void 0},a=t=>t.map(o),m=t=>typeof t!="object"||t===null?t:Object.fromEntries(Object.entries(t).map(([l,e])=>[l,o(e)]));class y extends HTMLElement{constructor(){super(...arguments);d(this,"Component");d(this,"hydrator");d(this,"hydrate",async()=>{var b;if(!this.hydrator||!this.isConnected)return;let e=(b=this.parentElement)==null?void 0:b.closest("astro-island[ssr]");if(e){e.addEventListener("astro:hydrate",this.hydrate,{once:!0});return}let c=this.querySelectorAll("astro-slot"),n={},h=this.querySelectorAll("template[data-astro-template]");for(let r of h){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("data-astro-template")||"default"]=r.innerHTML,r.remove())}for(let r of c){let s=r.closest(this.tagName);s!=null&&s.isSameNode(this)&&(n[r.getAttribute("name")||"default"]=r.innerHTML)}let p;try{p=this.hasAttribute("props")?m(JSON.parse(this.getAttribute("props"))):{}}catch(r){let s=this.getAttribute("component-url")||"<unknown>",v=this.getAttribute("component-export");throw v&&(s+=` (export ${v})`),console.error(`[hydrate] Error parsing props for component ${s}`,this.getAttribute("props"),r),r}let u;await this.hydrator(this)(this.Component,p,n,{client:this.getAttribute("client")}),this.removeAttribute("ssr"),this.dispatchEvent(new CustomEvent("astro:hydrate"))});d(this,"unmount",()=>{this.isConnected||this.dispatchEvent(new CustomEvent("astro:unmount"))})}disconnectedCallback(){document.removeEventListener("astro:after-swap",this.unmount),document.addEventListener("astro:after-swap",this.unmount,{once:!0})}connectedCallback(){if(!this.hasAttribute("await-children")||document.readyState==="interactive"||document.readyState==="complete")this.childrenConnectedCallback();else{let e=()=>{document.removeEventListener("DOMContentLoaded",e),c.disconnect(),this.childrenConnectedCallback()},c=new MutationObserver(()=>{var n;((n=this.lastChild)==null?void 0:n.nodeType)===Node.COMMENT_NODE&&this.lastChild.nodeValue==="astro:end"&&(this.lastChild.remove(),e())});c.observe(this,{childList:!0}),document.addEventListener("DOMContentLoaded",e)}}async childrenConnectedCallback(){let e=this.getAttribute("before-hydration-url");e&&await import(e),this.start()}async start(){let e=JSON.parse(this.getAttribute("opts")),c=this.getAttribute("client");if(Astro[c]===void 0){window.addEventListener(`astro:${c}`,()=>this.start(),{once:!0});return}try{await Astro[c](async()=>{let n=this.getAttribute("renderer-url"),[h,{default:p}]=await Promise.all([import(this.getAttribute("component-url")),n?import(n):()=>()=>{}]),u=this.getAttribute("component-export")||"default";if(!u.includes("."))this.Component=h[u];else{this.Component=h;for(let f of u.split("."))this.Component=this.Component[f]}return this.hydrator=p,this.hydrate},e,this)}catch(n){console.error(`[astro-island] Error hydrating ${this.getAttribute("component-url")}`,n)}}attributeChangedCallback(){this.hydrate()}}d(y,"observedAttributes",["props"]),customElements.get("astro-island")||customElements.define("astro-island",y)}})();</script><astro-island uid="2trJTA" prefix="r1" component-url="/_astro/UserChart.DpX6soW-.js" component-export="default" renderer-url="/_astro/client.CrmUmMjw.js" props="{&quot;userCount&quot;:[0,30]}" ssr="" client="load" opts="{&quot;name&quot;:&quot;UserChart&quot;,&quot;value&quot;:true}" await-children=""><div class="recharts-responsive-container" style="width:100%;height:300px;min-width:0"></div><!--astro:end--></astro-island> </div>  </main> </div> </div> <!-- Footer --> <footer class="bg-white dark:bg-gray-800 text-center text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 py-3"> <!-- &copy; {new Date().getFullYear()} My App. All rights reserved. -->
+&copy; 2025 </footer> <script type="module">
+      window.addEventListener("DOMContentLoaded", () => {
+        lucide?.createIcons();
 
-  function checkLoginTimeout() {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const loginTime = parseInt(localStorage.getItem("loginTime"));
+        if (localStorage.theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
 
-    if (isLoggedIn === "true") {
-      const now = Date.now();
-      if (now - loginTime > timeoutMillis) {
-        alert("Sesi login Anda telah habis. Silakan login kembali.");
-        localStorage.clear();
-        window.location.href = "/";
+        checkLoginTimeout();
+      });
+
+      const timeoutMinutes = 20;
+      const timeoutMillis = timeoutMinutes * 60 * 1000;
+
+      function checkLoginTimeout() {
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+        const loginTime = parseInt(localStorage.getItem("loginTime") || "0");
+
+        if (isLoggedIn === "true") {
+          const now = Date.now();
+          if (now - loginTime > timeoutMillis) {
+            alert("Sesi login Anda telah habis. Silakan login kembali.");
+            localStorage.clear();
+            window.location.href = "/";
+          }
+        }
       }
-    }
-  }
 
-  // Jalankan saat halaman dimuat
-  checkLoginTimeout();
+      Object.assign(window, {
+        logoutUser() {
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("user");
+          localStorage.setItem("isLoggedIn", "false");
+          window.location.href = "/";
+        },
+        toggleSidebar() {
+          const sidebar = document.getElementById("sidebar");
+          const main = document.getElementById("main-content");
 
-  // Tambahan: perbarui waktu login saat ada aktivitas (opsional)
-  //   document.addEventListener("mousemove", () => {
-  //     localStorage.setItem("loginTime", Date.now());
-  //   });
-  //   document.addEventListener("keydown", () => {
-  //     localStorage.setItem("loginTime", Date.now());
-  //   });
-</script>
+          const isHidden = sidebar?.classList.contains("-translate-x-full");
+
+          sidebar?.classList.toggle("-translate-x-full");
+          sidebar?.classList.toggle("translate-x-0");
+
+          if (window.innerWidth >= 768 && sidebar && main) {
+            main.classList.toggle("ml-60", isHidden);
+            main.classList.toggle("ml-0", !isHidden);
+          }
+        },
+        toggleUserDropdown() {
+          const dropdown = document.getElementById("userDropdown");
+          dropdown?.classList.toggle("hidden");
+        },
+        toggleDarkMode() {
+          const html = document.documentElement;
+          if (html.classList.contains("dark")) {
+            html.classList.remove("dark");
+            localStorage.theme = "light";
+          } else {
+            html.classList.add("dark");
+            localStorage.theme = "dark";
+          }
+        },
+      });
+    </script> </body> </html>

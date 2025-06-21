@@ -1,6 +1,6 @@
 ---
+import "../styles/global.css";
 const { title } = Astro.props;
-import "/src/styles/global.css";
 ---
 
 <html lang="id" class="">
@@ -162,9 +162,9 @@ import "/src/styles/global.css";
     <footer
       class="bg-white dark:bg-gray-800 text-center text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 py-3"
     >
-      &copy; {new Date().getFullYear()} My App. All rights reserved.
+      <!-- &copy; {new Date().getFullYear()} My App. All rights reserved. -->
+      &copy; {new Date().getFullYear()}
     </footer>
-    <!-- @ts-ignore -->
     <script type="module">
       window.addEventListener("DOMContentLoaded", () => {
         lucide?.createIcons();
