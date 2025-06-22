@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { API_URL } from "astro:env/client";
-import "../styles/global.css";
+// import "../styles/global.css";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
