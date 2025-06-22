@@ -19,8 +19,8 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: 'Astro PWA App',
-        short_name: 'PWAApp',
+        name: 'Belajar Asik',
+        short_name: 'B.ASIK',
         start_url: '/',
         display: 'standalone',
         background_color: '#ffffff',
