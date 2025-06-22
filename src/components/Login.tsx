@@ -32,19 +32,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center px-4">
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-12 px-4 flex justify-center">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 border border-gray-200 dark:border-gray-700">
         
-        {/* Gambar Bulat */}
+        {/* Gambar bulat */}
         <img
-          src="/images/dewasa-belajar.png" // Ganti dengan path gambar kamu
+          src="/images/dewasa-gadget.png"
           alt="Logo"
-          className="w-60 h-auto max-w-lg rounded-lg max-w-lg mx-auto"
-          // className="w-24 h-24 rounded-full mx-auto mb-4 shadow"
+          className="w-full max-w-[200px] rounded-lg mx-auto mb-6 shadow"
         />
 
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-4 mt-4">
-          Masuk Belajar Asik
+        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-4">
+           Belajar Asik
         </h2>
 
         <form onSubmit={handleLogin} className="space-y-5">
@@ -89,7 +88,7 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold py-2 rounded-md shadow-md"
           >
-            Login
+            Masuk
           </button>
         </form>
 
