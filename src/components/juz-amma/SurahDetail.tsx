@@ -20,7 +20,7 @@ interface Props {
 const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
   const [ayat, setAyat] = useState<Ayat[]>([]);
   const [showTranslation, setShowTranslation] = useState(true);
-  const [fontSize, setFontSize] = useState(42); 
+  const [fontSize, setFontSize] = useState(35); 
     const [keterangan, setKeterangan] = useState<string>("");
 
 const [suratAudioUrl, setSuratAudioUrl] = useState("");
