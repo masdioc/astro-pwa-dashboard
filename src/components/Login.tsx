@@ -21,10 +21,14 @@ export default function LoginPage() {
       if (!res.ok) throw new Error("Login gagal");
 
       const data = await res.json();
+      
+      const dataUser = JSON.stringify(data.user);
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem("user", dataUser);
       localStorage.setItem("loginTime", Date.now().toString());
       localStorage.setItem("isLoggedIn", "true");
+      // await new Promise((r) => setTimeout(r, 100)); // tambahkan delay 100ms
+      console.log(JSON.stringify(dataUser));
       window.location.href = "/home";
     } catch (err) {
       alert("Login gagal. Silakan coba lagi.");

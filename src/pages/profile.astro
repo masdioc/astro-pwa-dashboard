@@ -1,14 +1,16 @@
 ---
-// import BaseLayout from "../components/Layout";
 import BaseLayout from "../pages/layout.astro";
 ---
 
 <BaseLayout title="Profil Pengguna">
-  <main class="ml-60 flex-1 p-6">
-    <h1 class="text-2xl font-bold mb-4">Profil Pengguna</h1>
+  <main class="flex-1 p-4 sm:p-6">
+    <h1 class="text-2xl font-bold mb-4 text-center md:text-left">
+      Profil Pengguna
+    </h1>
+
     <div
       id="profileBox"
-      class="bg-white p-6 rounded shadow w-full max-w-lg border"
+      class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow border border-gray-200 dark:border-gray-700 w-full max-w-xl mx-auto"
     >
       <p>Memuat data pengguna...</p>
     </div>
@@ -19,11 +21,9 @@ import BaseLayout from "../pages/layout.astro";
 
       if (user?.id) {
         box.innerHTML = `
-          <p><strong>Nama:</strong> ${user.firstName} ${user.lastName}</p>
-          <p><strong>Email:</strong> ${user.email}</p>
-          <p><strong>Username:</strong> ${user.username}</p>
-          <p><strong>Phone:</strong> ${user.phone}</p>
-          <p><strong>Gender:</strong> ${user.gender}</p>
+          <p class="mb-2"><strong>Nama:</strong> ${user.firstName || user.name || "-"} ${user.lastName || ""}</p>
+          <p class="mb-2"><strong>Email:</strong> ${user.email || "-"}</p>
+          <p class="mb-2"><strong>Username:</strong> ${user.username || "-"}</p>
         `;
       } else {
         box.innerHTML = `<p class="text-red-500">Gagal memuat data pengguna.</p>`;

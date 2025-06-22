@@ -58,7 +58,8 @@ export default function UserDataPage() {
 
   return (
     <> 
-  <div className="p-4 max-w-screen-xl mx-auto">
+    <div className="w-screen h-screen overflow-x-auto flex flex-col p-4 max-w-screen-xl mx-auto">
+
     <h1 className="text-2xl md:text-3xl font-bold mb-4">Data Soal</h1>
 
     {/* Filter dan Tombol */}
@@ -169,8 +170,8 @@ export default function UserDataPage() {
         </div>
 
         {/* Navigasi halaman */}
-        <div className="flex flex-col md:flex-row justify-between items-center mt-4 gap-2">
-          <button
+           <div className="flex flex-row flex-nowrap justify-between items-center mt-4 gap-2 overflow-x-auto">
+     <button
             onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
             className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50"
             disabled={currentPage === 1}
