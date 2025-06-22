@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
  import { BASE_URL } from "astro:env/client";
-import { console } from "inspector";
+ import { API_URL } from "astro:env/client";
+import toast from "react-hot-toast";
 
+
+ 
 
 type Ayat = {
   arabic: string;
@@ -40,21 +43,45 @@ const [suratAudioUrl, setSuratAudioUrl] = useState("");
   if (surat) setKeterangan(surat.keterangan);
       });
 
-    // Load audio dari list_surah.json
-    // fetch("/data/list_surah.json")
-    //   .then((res) => res.json())
-    //   .then((list) => {
-    //     const surat = list.find((s: any) => s.nomor === nomor);
-    //     if (surat?.audio) setSuratAudioUrl(surat.audio);
-    //   });
   }, [nomor]);
+   const  addToHafalan = async (nomor: string, nama: string) => {
+  const item = localStorage.getItem("user");
+  if (!item) {
+    toast.error("⚠️ Data user tidak ditemukan");
+    return;
+  }
+
+  const user = JSON.parse(item);
+  // toast.success(user.id);
+       toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
+  try {
+    const res = await fetch(`${API_URL}/api/hafalan`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: user.id,
+        surah_nomor: nomor,
+        surah_nama: nama,
+      }),
+    });
+    
+
+    if (res.ok) {
+      toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
+    } else {
+      toast.error("❌ Gagal menyimpan.");
+    }
+  } catch (error) {
+    // console.error("Error:", error);
+    toast.error("❌ Terjadi kesalahan.");
+  }
+};
 
   const nomorInt = parseInt(nomor);
   const [showInfo, setShowInfo] = useState(false);
 
 const toArabicNumber = (num: number): string =>
-  num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]);
-
+  num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]); 
   return (
     
     <div className="p-4 bg-[#fdfaf2] dark:bg-gray-900 text-gray-900 dark:text-white rounded-xl shadow">
@@ -71,6 +98,12 @@ const toArabicNumber = (num: number): string =>
   >
     ℹ️ Keterangan
   </button>
+   <button
+      onClick={() => addToHafalan(nomor, nama)}
+      className="text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+    >
+      🧠 Tambahkan ke Hafalan
+    </button>
 </div>
 {showInfo && (
   <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
