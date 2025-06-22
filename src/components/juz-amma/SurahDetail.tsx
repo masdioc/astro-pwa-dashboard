@@ -53,7 +53,7 @@ const [suratAudioUrl, setSuratAudioUrl] = useState("");
 
   const user = JSON.parse(item);
   // toast.success(user.id);
-       toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
+      //  toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
   try {
     const res = await fetch(`${API_URL}/api/hafalan`, {
       method: "POST",
@@ -102,7 +102,7 @@ const toArabicNumber = (num: number): string =>
       onClick={() => addToHafalan(nomor, nama)}
       className="text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
     >
-      🧠 Tambahkan ke Hafalan
+      + Hafalan
     </button>
 </div>
 {showInfo && (
