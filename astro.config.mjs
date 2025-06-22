@@ -7,8 +7,14 @@ import tailwind from "@astrojs/tailwind";
 
 
 export default defineConfig({ 
-
+  env: {
+    schema: {
+      API_URL: envField.string({ context: "client", access: "public", optional: true }),
+      
+    }
+  },
   integrations: [
+    
     react(), tailwind(),
     pwa({
       registerType: 'autoUpdate',

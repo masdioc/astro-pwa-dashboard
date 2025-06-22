@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import Layout from "./layout";
-const apiUrl = "https://api.app-metodejariyah.com";
+import { API_URL } from "astro:env/client";
 interface User {
   id: number;
    jenis_soal: string;
@@ -24,7 +23,7 @@ export default function UserDataPage() {
   const [detailUser, setDetailUser] = useState<User | null>(null);
 
  useEffect(() => {
-  fetch(apiUrl+"/api/soals")
+  fetch(API_URL+"/api/soals")
     .then((res) => res.json())
     .then((data) => {
       console.log("Data loaded:", data);

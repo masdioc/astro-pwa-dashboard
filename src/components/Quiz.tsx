@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-const apiUrl = "https://api.app-metodejariyah.com";
+import { API_URL } from "astro:env/client";
 type Question = {
   question: string;
   a: string;
@@ -25,7 +25,7 @@ export default function Quiz() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
-  fetch(apiUrl+"/api/soals")
+  fetch(API_URL+"/api/soals")
     .then((res) => res.json())
     .then((data) => {
       if (Array.isArray(data.soals)) {

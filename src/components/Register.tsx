@@ -1,6 +1,5 @@
 import { useState } from "react";
-const apiUrl = "https://api.app-metodejariyah.com";
-
+import { API_URL } from "astro:env/client";
 type RegisterData = {
   username: string;
   password: string;
@@ -31,7 +30,7 @@ export default function RegisterPage() {
     setMessage("");
 
     try {
-      const res = await fetch(apiUrl+"/api/register", {
+      const res = await fetch(API_URL+"/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
