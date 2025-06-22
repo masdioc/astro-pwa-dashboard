@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layout.astro";
+import SurahDetail from "../../components/juz-amma/SurahDetail";
+import listSurah from "../../data/list_surah.json";
+
+const { nomor } = Astro.params;
+const surat = listSurah.find((s) => s.nomor === nomor);
+
+export async function getStaticPaths() {
+  return listSurah.map((s) => ({
+    params: { nomor: s.nomor },
+  }));
+}
+---
+
+<BaseLayout title={`Surat ${surat?.nama || "Tidak Ditemukan"}`}>
+  <main class="max-w-3xl mx-auto">
+    {
+      surat ? (
+        <SurahDetail client:only="react" nomor={nomor} nama={surat.nama} />
+      ) : (
+        <div class="text-center text-gray-600 mt-10">
+          Surat tidak ditemukan.
+        </div>
+      )
+    }
+  </main>
+</BaseLayout>
