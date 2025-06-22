@@ -6,6 +6,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({ 
   env: {
     schema: {
+      BASE_URL: envField.string({ context: "client", access: "public", optional: true }),
       API_URL: envField.string({ context: "client", access: "public", optional: true }),
       
     }

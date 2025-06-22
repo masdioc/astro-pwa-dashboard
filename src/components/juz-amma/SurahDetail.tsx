@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
- 
+ import { BASE_URL } from "astro:env/client";
+import { console } from "inspector";
+
 
 type Ayat = {
   arabic: string;
@@ -15,36 +17,79 @@ interface Props {
 const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
   const [ayat, setAyat] = useState<Ayat[]>([]);
   const [showTranslation, setShowTranslation] = useState(true);
-  const [fontSize, setFontSize] = useState(42);
-  const [suratAudioUrl, setSuratAudioUrl] = useState("");
+  const [fontSize, setFontSize] = useState(42); 
+    const [keterangan, setKeterangan] = useState<string>("");
+
+const [suratAudioUrl, setSuratAudioUrl] = useState("");
 
   useEffect(() => {
+    
     fetch(`/data/surah${nomor}.json`)
       .then((res) => res.json())
       .then((data) => {
         setAyat(data.data.ayat || []);
+       
+      
       });
-
-    // Load audio dari list_surah.json
-    fetch("/data/list_surah.json")
+       fetch("/data/list_surah.json")
       .then((res) => res.json())
       .then((list) => {
         const surat = list.find((s: any) => s.nomor === nomor);
-        if (surat?.audio) setSuratAudioUrl(surat.audio);
+           const mp3 = BASE_URL+"/data/audio/"+nomor+".mp3"; 
+            if (mp3) setSuratAudioUrl(mp3); 
+  if (surat) setKeterangan(surat.keterangan);
       });
+
+    // Load audio dari list_surah.json
+    // fetch("/data/list_surah.json")
+    //   .then((res) => res.json())
+    //   .then((list) => {
+    //     const surat = list.find((s: any) => s.nomor === nomor);
+    //     if (surat?.audio) setSuratAudioUrl(surat.audio);
+    //   });
   }, [nomor]);
 
   const nomorInt = parseInt(nomor);
+  const [showInfo, setShowInfo] = useState(false);
+
+const toArabicNumber = (num: number): string =>
+  num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]);
 
   return (
+    
     <div className="p-4 bg-[#fdfaf2] dark:bg-gray-900 text-gray-900 dark:text-white rounded-xl shadow">
       <h2 className="text-2xl font-bold text-center mb-1">{nama}</h2>
 
-      <div className="text-left mt-2 mb-4">
-        <a href="/surahIndex" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
-          ← Kembali ke Daftar Surah
-        </a>
-      </div>
+     <div className="flex justify-between items-center mb-4">
+  <a href="/surahIndex" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
+    ← Kembali ke Daftar Surah
+  </a>
+
+  <button
+    onClick={() => setShowInfo(true)}
+    className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+  >
+    ℹ️ Keterangan
+  </button>
+</div>
+{showInfo && (
+  <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full text-left relative">
+      <button
+        onClick={() => setShowInfo(false)}
+        className="absolute top-2 right-3 text-gray-600 dark:text-gray-300 hover:text-red-500"
+      >
+        ✖
+      </button> 
+    <h3 className="text-xl font-bold mb-2">Tentang Surat {nama}</h3>
+            <p
+  className="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-wrap"
+  dangerouslySetInnerHTML={{ __html: keterangan }}
+/>
+    </div>
+  </div>
+)}
+
 
       {suratAudioUrl && (
         <audio controls className="w-full mb-4">
@@ -80,20 +125,25 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
       <div className="space-y-3 leading-snug">
         {ayat.length > 0 ? (
           ayat.map((a, i) => (
-            <div key={i} className="text-right border-b border-gray-200 dark:border-gray-700 pb-3">
-              <div
-                className="font-serif"
-                style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
-              >
-                {a.arabic}
-              </div>
-              <div className="text-sm text-gray-700 dark:text-gray-300 italic">{a.latin}</div>
-              {showTranslation && (
-                <div className="text-base text-gray-800 dark:text-gray-200 text-left">
-                  {a.translation}
-                </div>
-              )}
-            </div>
+           <div key={i} className="text-right border-b border-gray-200 dark:border-gray-700 pb-3">
+ <div
+  className="font-serif inline-flex items-center gap-2 justify-end flex-wrap"
+  style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
+>
+  <span>{a.arabic}</span>
+ <span className="inline-block min-w-[40px] text-center font-bold rounded-full border border-gray-400 dark:border-gray-500 px-2 py-0.5 text-lg">
+                 {toArabicNumber(i + 1)}
+                </span>
+</div>
+
+  <div className="text-lg text-gray-700 dark:text-gray-300 italic mr-10">{a.latin}</div>
+  {showTranslation && (
+    <div className="text-base text-gray-800 dark:text-gray-200 text-left">
+      {a.translation}
+    </div>
+  )}
+</div>
+
           ))
         ) : (
           <div className="text-center text-gray-500 dark:text-gray-400 mt-10">
@@ -103,7 +153,7 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
       </div>
 
       <div className="flex justify-between mt-8 pt-4 border-t border-gray-300 dark:border-gray-700">
-        {nomorInt > 1 ? (
+        {nomorInt > 77 ? (
           <a
             href={`/surah/${nomorInt - 1}`}
             className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -114,7 +164,7 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
           <div />
         )}
 
-        {nomorInt < 77 ? (
+        {nomorInt < 114 ? (
           <a
             href={`/surah/${nomorInt + 1}`}
             className="text-blue-600 dark:text-blue-400 hover:underline ml-auto"
