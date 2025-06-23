@@ -6,16 +6,5 @@ import BaseLayout from "../pages/layout.astro";
 ---
 
 <BaseLayout title="Juz-Amma">
-  <main class="max-w-3xl mx-auto">
-    <div
-      class="p-4 bg-[#fdfaf2] bg-[url('/images/pattern.svg')] bg-repeat"
-      style={{ backgroundSize: "250px", backgroundAttachment: "fixed" }}
-    >
-      <h1 class="text-3xl font-bold text-center py-6 text-gray-900">
-        Daftar Surah
-      </h1>
-      <SurahList client:load surahList={listSurah} />
-    </div>
-  </main>
-  <!-- </body> -->
+  <SurahList client:load surahList={listSurah} />
 </BaseLayout>

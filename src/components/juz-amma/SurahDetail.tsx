@@ -27,21 +27,22 @@ const [suratAudioUrl, setSuratAudioUrl] = useState("");
 
   useEffect(() => {
     
-    fetch(`/data/surah${nomor}.json`)
+    fetch(`/data/surah/surah${nomor}.json`)
       .then((res) => res.json())
       .then((data) => {
-        setAyat(data.data.ayat || []);
+        setAyat(data.ayat || []);
        
       
       });
-       fetch("/data/list_surah.json")
-      .then((res) => res.json())
-      .then((list) => {
-        const surat = list.find((s: any) => s.nomor === nomor);
-           const mp3 = BASE_URL+"/data/audio/"+nomor+".mp3"; 
+      //  fetch("/data/list_surah.json")
+      // .then((res) => res.json())
+      // .then((list) => {
+      //   const surat = list.find((s: any) => s.nomor === nomor);
+      const formatted = String(nomor).padStart(3, "0");
+           const mp3 = BASE_URL+"/data/audio/"+formatted +".mp3"; 
             if (mp3) setSuratAudioUrl(mp3); 
-  if (surat) setKeterangan(surat.keterangan);
-      });
+  // if (surat) setKeterangan(surat.keterangan);
+      // });
 
   }, [nomor]);
    const  addToHafalan = async (nomor: string, nama: string) => {
@@ -52,9 +53,11 @@ const [suratAudioUrl, setSuratAudioUrl] = useState("");
   }
 
   const user = JSON.parse(item);
-  // toast.success(user.id);
-      //  toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
+  
+  // toast.success(API_URL.toString());
   try {
+// console.log("📡 Mulai fetch...");
+
     const res = await fetch(`${API_URL}/api/hafalan`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -64,9 +67,8 @@ const [suratAudioUrl, setSuratAudioUrl] = useState("");
         surah_nama: nama,
       }),
     });
-    
-
-    if (res.ok) {
+// console.log(res.status);
+      if (res.ok) {
       toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
     } else {
       toast.error("❌ Gagal menyimpan.");
@@ -84,13 +86,26 @@ const toArabicNumber = (num: number): string =>
   num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]); 
   return (
     
-    <div className="p-4 bg-[#fdfaf2] dark:bg-gray-900 text-gray-900 dark:text-white rounded-xl shadow">
-      <h2 className="text-2xl font-bold text-center mb-1">{nama}</h2>
+   <div className="p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-lg border border-gray-200 dark:border-gray-700">
+    <h2 className="text-2xl font-bold text-center mb-1">{nama}</h2>
+<div className="flex justify-between items-center text-sm mb-4 text-blue-600 dark:text-blue-400">
+  {nomorInt > 1 ? (
+    <a href={`/surah/${nomorInt - 1}`} className="hover:underline">
+      ← Sebelumnya
+    </a>
+  ) : <div />}
 
+ <a href="/surahIndex" className="block text-center text-blue-600 dark:text-blue-400 hover:underline">
+  📖 Daftar Surah
+</a>
+
+  {nomorInt < 114 ? (
+    <a href={`/surah/${nomorInt + 1}`} className="hover:underline">
+      Selanjutnya →
+    </a>
+  ) : <div />}
+</div>
      <div className="flex justify-between items-center mb-4">
-  <a href="/surahIndex" className="text-blue-600 dark:text-blue-400 hover:underline text-sm">
-    ← Kembali ke Daftar Surah
-  </a>
 
   <button
     onClick={() => setShowInfo(true)}
@@ -98,12 +113,11 @@ const toArabicNumber = (num: number): string =>
   >
     ℹ️ Keterangan
   </button>
-   <button
-      onClick={() => addToHafalan(nomor, nama)}
-      className="text-sm bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-    >
-      + Hafalan
-    </button>
+  {/* <h2 className="text-xl font-semibold text-center mb-2">{nama}</h2> */}
+
+<button className="text-sm px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition">
+  + Hafalan
+</button>
 </div>
 {showInfo && (
   <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
@@ -159,22 +173,25 @@ const toArabicNumber = (num: number): string =>
         {ayat.length > 0 ? (
           ayat.map((a, i) => (
            <div key={i} className="text-right border-b border-gray-200 dark:border-gray-700 pb-3">
- <div
-  className="font-serif inline-flex items-center gap-2 justify-end flex-wrap"
+  
+ 
+<div
+  className="font-serif inline-flex items-center gap-2 justify-end flex-wrap text-right"
   style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
 >
-  <span>{a.arabic}</span>
- <span className="inline-block min-w-[40px] text-center font-bold rounded-full border border-gray-400 dark:border-gray-500 px-2 py-0.5 text-lg">
-                 {toArabicNumber(i + 1)}
-                </span>
+  <span className="leading-snug">{a.arabic}</span>
+  <span className="min-w-[32px] px-2 py-0.5 text-sm text-center border rounded-full text-gray-600 dark:text-gray-300 border-gray-300 dark:border-gray-600">
+    {toArabicNumber(i + 1)}
+  </span>
 </div>
 
-  <div className="text-lg text-gray-700 dark:text-gray-300 italic mr-10">{a.latin}</div>
-  {showTranslation && (
-    <div className="text-base text-gray-800 dark:text-gray-200 text-left">
-      {a.translation}
-    </div>
-  )}
+<div className="text-base text-gray-700 dark:text-gray-300 italic mr-10">{a.latin}</div>
+
+{showTranslation && (
+  <div className="text-sm text-gray-800 dark:text-gray-200 text-left mt-1">
+    {a.translation}
+  </div>
+)}
 </div>
 
           ))
@@ -185,29 +202,20 @@ const toArabicNumber = (num: number): string =>
         )}
       </div>
 
-      <div className="flex justify-between mt-8 pt-4 border-t border-gray-300 dark:border-gray-700">
-        {nomorInt > 77 ? (
-          <a
-            href={`/surah/${nomorInt - 1}`}
-            className="text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            ← Sebelumnya
-          </a>
-        ) : (
-          <div />
-        )}
+      <div className="flex justify-between text-sm mt-10 pt-4 border-t border-gray-200 dark:border-gray-700">
+  {nomorInt > 1 ? (
+    <a href={`/surah/${nomorInt - 1}`} className="text-blue-600 hover:underline">
+      ← Sebelumnya
+    </a>
+  ) : <div />}
 
-        {nomorInt < 114 ? (
-          <a
-            href={`/surah/${nomorInt + 1}`}
-            className="text-blue-600 dark:text-blue-400 hover:underline ml-auto"
-          >
-            Selanjutnya →
-          </a>
-        ) : (
-          <div />
-        )}
-      </div>
+  {nomorInt < 114 ? (
+    <a href={`/surah/${nomorInt + 1}`} className="text-blue-600 hover:underline ml-auto">
+      Selanjutnya →
+    </a>
+  ) : <div />}
+</div>
+
     </div>
   );
 };

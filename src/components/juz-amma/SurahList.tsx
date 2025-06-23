@@ -1,55 +1,88 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { BASE_URL } from "astro:env/client";
 
-type Surah = {
-  nama: string;
-  arti: string;
-  nomor: string;
-  type: string;
-  audio: string;
-};
+export default function SurahList({ surahList }: { surahList: any[] }) {
+  const [query, setQuery] = useState("");
+  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
 
-interface Props {
-  surahList: Surah[];
-}
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-const SurahList: React.FC<Props> = ({ surahList }) => {
-  const [keyword, setKeyword] = useState("");
+  // Pause semua audio saat activeIndex berubah
+  useEffect(() => {
+    audioRefs.current.forEach((audio, index) => {
+      if (audio) {
+        if (index !== activeIndex) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      }
+    });
+  }, [activeIndex]);
 
-  const filteredSurah = surahList.filter((surah) =>
-    (surah.nama + " " + surah.arti + " " + surah.nomor)
-      .toLowerCase()
-      .includes(keyword.toLowerCase())
-  );
+  const filtered = surahList.filter((surah) => {
+    const target = `${surah.nama} ${surah.arti} ${surah.asma}`.toLowerCase();
+    return target.includes(query.toLowerCase());
+  });
 
   return (
-    <div className="p-4">
+    <>
       <input
         type="text"
-        placeholder="Cari surat..."
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        className="w-full px-4 py-2 mb-4 border rounded-md focus:outline-none focus:ring focus:border-blue-300 bg-white text-black dark:bg-gray-800 dark:text-white dark:border-gray-600"
+        placeholder="Cari surah..."
+        className="w-full mb-4 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+        onChange={(e) => setQuery(e.target.value)}
+        value={query}
       />
 
-      <div className="grid grid-cols-1 gap-3">
-        {filteredSurah.length > 0 ? (
-          filteredSurah.map((surah) => (
-            <a
-              key={surah.nomor}
-              href={`/surah/${surah.nomor}`}
-              className="block bg-white dark:bg-gray-800 rounded-xl shadow p-4 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
-            >
-              <div className="text-xl font-semibold dark:text-white">{surah.nama}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 italic">{surah.arti}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">{surah.type.toUpperCase()}</div>
-            </a>
-          ))
-        ) : (
-          <div className="text-center text-gray-500 dark:text-gray-400">Tidak ditemukan.</div>
-        )}
-      </div>
-    </div>
-  );
-};
+      <div className="grid gap-3 sm:grid-cols-2">
+        {filtered.map((surah, index) => {
+          const formatted = String(surah.nomor).padStart(3, "0");
+          const audioUrl = `${BASE_URL}/data/audio/${formatted}.mp3`;
 
-export default SurahList;
+          return (
+            <div
+              key={surah.nomor}
+              className="block px-4 py-3 rounded-xl bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-sm"
+            >
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+                    {surah.nomor}. {surah.nama}
+                  </h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
+                    {surah.arti} • {surah.type} • {surah.ayat} ayat
+                  </p>
+                </div>
+                <span className="text-2xl font-arabic text-right text-gray-800 dark:text-white">
+                  {surah.asma}
+                </span>
+              </div>
+
+              {/* Audio player */}
+      <audio
+  ref={(el) => {
+    if (el) audioRefs.current[index] = el;
+  }}
+  controls
+  className="mt-2 w-full"
+  onPlay={() => setActiveIndex(index)}
+>
+  <source src={audioUrl} type="audio/mpeg" />
+  Browser tidak mendukung audio.
+</audio>
+
+              <div className="mt-2 text-right">
+                <a
+                  href={`/surah/${surah.nomor}`}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Buka Surat →
+                </a>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+}
