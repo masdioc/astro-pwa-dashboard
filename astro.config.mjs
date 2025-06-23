@@ -37,6 +37,21 @@ export default defineConfig({
             type: 'image/png'
           }
         ]
+      },
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /.*\.mp3$/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'audio-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 165 * 24 * 60 * 60, // 165 hari
+              }
+            }
+          }
+        ]
       }
     })
   ]
