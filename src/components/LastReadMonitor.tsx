@@ -85,7 +85,8 @@ export default function LastReadMonitor() {
         className="mb-4 w-full p-2 border rounded-md shadow-sm dark:bg-gray-800 dark:border-gray-600 dark:text-white"
       />
 
-      <div className="overflow-x-auto rounded-lg shadow">
+      {/* TABEL untuk layar md ke atas */}
+      <div className="hidden md:block overflow-x-auto rounded-lg shadow">
         <table className="min-w-full table-auto border border-gray-300 dark:border-gray-700 text-sm">
           <thead className="bg-gray-100 dark:bg-gray-800">
             <tr>
@@ -99,56 +100,92 @@ export default function LastReadMonitor() {
             </tr>
           </thead>
           <tbody>
-            {paginated.length > 0 ? (
-              paginated.map((item, i) => (
-                <tr
-                  key={i}
-                  className="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-900 transition"
-                >
-                  <td className="px-4 py-2 border text-center">
-                    {(currentPage - 1) * itemsPerPage + i + 1}
-                  </td>
-                  <td className="px-4 py-2 border">{item.name}</td>
-                  <td className="px-4 py-2 border">{item.username}</td>
-                  <td className="px-4 py-2 border">
-                    {item.surah_nomor}. {item.surah_nama}
-                  </td>
-                  <td className="px-4 py-2 border text-center">
-                    {item.ayat_nomor}
-                  </td>
-                  <td className="px-4 py-2 border text-gray-600 dark:text-gray-400">
-                    {timeAgo(item.updated_at)}
-                  </td>
-                  <td className="px-4 py-2 border">
-                    <select
-                      value={item.status_validasi || ""}
-                      onChange={(e) =>
-                        updateStatus(
-                          item.user_id,
-                          item.surah_nomor,
-                          item.ayat_nomor,
-                          e.target.value as "baik" | "benar" | "kurang" | ""
-                        )
-                      }
-                      className="px-2 py-1 text-sm rounded border dark:bg-gray-800 dark:text-white"
-                    >
-                      <option value="">-</option>
-                      <option value="baik">Baik</option>
-                      <option value="benar">Benar</option>
-                      <option value="kurang">Kurang</option>
-                    </select>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={6} className="text-center py-4 text-gray-500">
-                  Tidak ada data ditemukan.
+            {paginated.map((item, i) => (
+              <tr
+                key={i}
+                className="odd:bg-white even:bg-gray-50 dark:odd:bg-gray-900 dark:even:bg-gray-800 hover:bg-yellow-50 dark:hover:bg-yellow-900 transition"
+              >
+                <td className="px-4 py-2 border text-center">
+                  {(currentPage - 1) * itemsPerPage + i + 1}
+                </td>
+                <td className="px-4 py-2 border">{item.name}</td>
+                <td className="px-4 py-2 border">{item.username}</td>
+                <td className="px-4 py-2 border">
+                  {item.surah_nomor}. {item.surah_nama}
+                </td>
+                <td className="px-4 py-2 border text-center">
+                  {item.ayat_nomor}
+                </td>
+                <td className="px-4 py-2 border">{timeAgo(item.updated_at)}</td>
+                <td className="px-4 py-2 border">
+                  <select
+                    value={item.status_validasi || ""}
+                    onChange={(e) =>
+                      updateStatus(
+                        item.user_id,
+                        item.surah_nomor,
+                        item.ayat_nomor,
+                        e.target.value as any
+                      )
+                    }
+                    className="px-2 py-1 text-sm rounded border dark:bg-gray-800 dark:text-white"
+                  >
+                    <option value="">-</option>
+                    <option value="baik">Baik</option>
+                    <option value="benar">Benar</option>
+                    <option value="kurang">Kurang</option>
+                  </select>
                 </td>
               </tr>
-            )}
+            ))}
           </tbody>
         </table>
+      </div>
+
+      {/* CARD-VIEW untuk layar kecil */}
+      <div className="md:hidden space-y-4">
+        {paginated.map((item, i) => (
+          <div
+            key={i}
+            className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 shadow"
+          >
+            <div className="text-sm text-gray-500 mb-1">
+              #{(currentPage - 1) * itemsPerPage + i + 1}
+            </div>
+            <div className="text-base font-semibold text-gray-800 dark:text-white">
+              {item.name} (@{item.username})
+            </div>
+            <div className="text-sm text-gray-700 dark:text-gray-300 mt-1">
+              <strong>Surah:</strong> {item.surah_nomor}. {item.surah_nama} —{" "}
+              <strong>Ayat:</strong> {item.ayat_nomor}
+            </div>
+            <div className="text-sm text-gray-500 mt-1">
+              <strong>Waktu:</strong> {timeAgo(item.updated_at)}
+            </div>
+            <div className="mt-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                Validasi:
+              </label>
+              <select
+                value={item.status_validasi || ""}
+                onChange={(e) =>
+                  updateStatus(
+                    item.user_id,
+                    item.surah_nomor,
+                    item.ayat_nomor,
+                    e.target.value as any
+                  )
+                }
+                className="w-full px-3 py-2 text-sm rounded border dark:bg-gray-800 dark:text-white"
+              >
+                <option value="">-</option>
+                <option value="baik">Baik</option>
+                <option value="benar">Benar</option>
+                <option value="kurang">Kurang</option>
+              </select>
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* Pagination */}

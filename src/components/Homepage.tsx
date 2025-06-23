@@ -52,9 +52,9 @@ const menus = [
 const HomepageMenu: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto py-12 px-6">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">
+      {/* <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">
         🕌 Menu Utama
-      </h1>
+      </h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {menus.map((menu, index) => (
           <a
