@@ -12,11 +12,11 @@ interface DoaItem {
 
 const DoaList: React.FC<{ doaData: DoaItem[] }> = ({ doaData }) => {
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6 sm:px-8">
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
+    <>
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-12">
         🕋 Kumpulan Doa Setelah Salat
       </h1>
-      <div className="space-y-10">
+      <div className="space-y-0">
         {doaData.map((item) => (
           <div
             key={item.id}
@@ -26,7 +26,7 @@ const DoaList: React.FC<{ doaData: DoaItem[] }> = ({ doaData }) => {
               {item.judul}
             </h2>
 
-            <p className="text-4xl text-right font-serif text-gray-900 leading-snug mb-4">
+            <p className="text-3xl text-right font-serif text-gray-900 leading-snug mb-4 pr-4">
               {item.arab}
             </p>
 
@@ -51,7 +51,7 @@ const DoaList: React.FC<{ doaData: DoaItem[] }> = ({ doaData }) => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

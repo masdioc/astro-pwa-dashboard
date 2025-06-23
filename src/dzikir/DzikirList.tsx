@@ -11,11 +11,11 @@ interface DzikirItem {
 
 const DzikirList: React.FC<{ dzikirData: DzikirItem[] }> = ({ dzikirData }) => {
   return (
-    <div className="max-w-3xl mx-auto py-5 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-12">
+    <>
+      <h1 className="text-2xl font-bold text-center text-gray-800 mb-12">
         🕌 Dzikir Harian
       </h1>
-      <div className="space-y-10">
+      <div>
         {dzikirData.map((item) => (
           <div
             key={item.urutan}
@@ -39,7 +39,7 @@ const DzikirList: React.FC<{ dzikirData: DzikirItem[] }> = ({ dzikirData }) => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

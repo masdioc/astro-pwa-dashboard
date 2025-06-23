@@ -5,7 +5,5 @@ import dzikirData from "../data/dzikir.json";
 ---
 
 <BaseLayout title="Dzikir Harian">
-  <main class="p-6">
-    <DzikirList dzikirData={dzikirData} client:load />
-  </main>
+  <DzikirList dzikirData={dzikirData} client:load />
 </BaseLayout>
