@@ -1,0 +1,11 @@
+---
+import BaseLayout from "../pages/layout.astro";
+import DzikirList from "../components/DoaList";
+import doaData from "../data/doa_shalat_sunah.json";
+---
+
+<BaseLayout title="Doa Shalat Sunah">
+  <main class="p-6">
+    <DzikirList doaData={doaData} client:load />
+  </main>
+</BaseLayout>

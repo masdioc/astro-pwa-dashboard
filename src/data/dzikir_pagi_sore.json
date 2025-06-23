@@ -1,0 +1,35 @@
+
+[
+    {
+        "waktu": "Pagi & Sore",
+        "judul": "Sayyidul Istighfar",
+        "arab": "اللَّهُمَّ أَنْتَ رَبِّي، لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ",
+        "latin": "Allâhumma anta rabbî lâ ilâha illâ anta, khalaqtanî wa anâ ‘abduka, wa anâ ‘alâ ‘ahdika wa wa‘dika mâ istatha‘t, a‘ûdzu bika min syarri mâ shana‘t, abû’u laka bini‘matika ‘alayya, wa abû’u bidzanbî faghfir lî, fa innahu lâ yaghfirudz-dzunûba illâ anta.",
+        "terjemah": "Ya Allah, Engkau adalah Tuhanku, tidak ada Tuhan selain Engkau. Engkau menciptakanku, dan aku adalah hamba-Mu. Aku berada dalam perjanjian dan janji-Mu selama aku mampu. Aku berlindung kepada-Mu dari kejahatan perbuatanku. Aku mengakui nikmat-Mu kepadaku, dan aku mengakui dosaku. Maka ampunilah aku, karena tidak ada yang dapat mengampuni dosa kecuali Engkau.",
+        "jumlah": 1
+    },
+    {
+        "waktu": "Pagi & Sore",
+        "judul": "Doa Perlindungan dari Segala Keburukan",
+        "arab": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ، وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي، وَآمِنْ رَوْعَاتِي، وَاحْفَظْنِي مِنْ بَيْنِ يَدَيَّ، وَمِنْ خَلْفِي، وَعَنْ يَمِينِي، وَعَنْ شِمَالِي، وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي",
+        "latin": "Allâhumma innî as’alukal-‘âfiyata fid-dunyâ wal-âkhirah. Allâhumma innî as’alukal-‘afwa wal-‘âfiyata fî dînî wa dunyâya wa ahli wa mâlî. Allâhumma astur ‘awrâtî, wa âmin raw‘âtî, waḥfaẓnî min bayni yadaiyya, wa min khalfî, wa ‘an yamînî, wa ‘an shimâlî, wa min fawqî, wa a‘ûdzu bi‘aẓamatika an ughtâla min taḥtî.",
+        "terjemah": "Ya Allah, aku mohon kepada-Mu keselamatan di dunia dan akhirat. Ya Allah, aku mohon kepada-Mu ampunan dan keselamatan dalam agamaku, duniaku, keluargaku, dan hartaku. Ya Allah, tutupilah auratku dan berilah ketenangan pada hatiku. Lindungilah aku dari arah depan, belakang, kanan, kiri, dan dari atas, dan aku berlindung kepada keagungan-Mu agar aku tidak disambar dari bawahku.",
+        "jumlah": 1
+    },
+    {
+        "waktu": "Pagi",
+        "judul": "Doa Pagi: Rida kepada Allah",
+        "arab": "رَضِيتُ بِاللّٰهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ ﷺ نَبِيًّا",
+        "latin": "Raḍîtu billâhi rabban, wabil-islâmi dînan, wa bi Muḥammadin ṣallallâhu ‘alayhi wa sallama nabiyyan.",
+        "terjemah": "Aku ridha Allah sebagai Tuhanku, Islam sebagai agamaku, dan Muhammad ﷺ sebagai nabiku.",
+        "jumlah": 3
+    },
+    {
+        "waktu": "Sore",
+        "judul": "Doa Sore: Perlindungan dari Kejahatan Malam",
+        "arab": "أَعُوذُ بِكَلِمَاتِ اللّٰهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ",
+        "latin": "A‘ûdzu bikalimâtillâhit-tâmmâti min syarri mâ khalaq.",
+        "terjemah": "Aku berlindung dengan kalimat-kalimat Allah yang sempurna dari kejahatan makhluk-Nya.",
+        "jumlah": 3
+    }
+]

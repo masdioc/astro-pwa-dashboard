@@ -37,7 +37,7 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
 
     // set audio
     const formatted = String(nomor).padStart(3, "0");
-    const mp3 = `${BASE_URL}data/audio/${formatted}.mp3`;
+    const mp3 = `${BASE_URL}/data/audio/${formatted}.mp3`;
     setSuratAudioUrl(mp3);
   }, [nomor]);
   useEffect(() => {

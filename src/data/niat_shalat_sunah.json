@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "judul": "Niat Salat Tahajud",
+    "arab": "أُصَلِّي سُنَّةَ التَهَجُّدِ رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatat-tahajjudi rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah tahajud dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Dilakukan setelah tidur di malam hari, minimal dua rakaat.",
+    "audio": "https://example.com/audio/doa_salat_sunah_1.mp3"
+  },
+  {
+     "id": 2,
+    "judul": "Niat Salat Dhuha",
+    "arab": "أُصَلِّي سُنَّةَ الضُّحَى رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatadh-dhuhâ rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah Dhuha dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Dikerjakan mulai setelah matahari naik hingga sebelum zuhur.",
+    "audio": "https://example.com/audio/doa_salat_sunah_2.mp3"
+  },
+  {
+     "id": 3,
+    "judul": "Niat Salat Istikharah",
+    "arab": "أُصَلِّي سُنَّةَ الاِسْتِخَارَةِ رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatal-istikhârah rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah istikharah dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Salat untuk memohon petunjuk dalam memilih keputusan terbaik.",
+    "audio": "https://example.com/audio/doa_salat_sunah_3.mp3"
+  },
+  {
+     "id": 4,
+    "judul": "Niat Salat Tarawih",
+    "arab": "أُصَلِّي سُنَّةَ التَّرَاوِيْحِ رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatat-tarâwîḥi rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah tarawih dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Salat malam di bulan Ramadan, dilakukan 2 rakaat salam.",
+    "audio": "https://example.com/audio/doa_salat_sunah_4.mp3"
+  },
+  {
+     "id": 5,
+    "judul": "Niat Salat Witir",
+    "arab": "أُصَلِّي سُنَّةَ الْوِتْرِ رَكْعَةً لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatal-witri rak‘atan lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah witir satu rakaat karena Allah Ta‘ala.",
+    "keterangan": "Dikerjakan sebagai penutup salat malam, jumlah ganjil.",
+    "audio": "https://example.com/audio/doa_salat_sunah_5.mp3"
+  },
+  {
+     "id": 6,
+    "judul": "Niat Salat Rawatib Qabliyah Subuh",
+    "arab": "أُصَلِّي سُنَّةَ الفَجْرِ رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatal-fajri rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah fajar dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Salat rawatib sebelum subuh, sangat dianjurkan Rasulullah.",
+    "audio": "https://example.com/audio/doa_salat_sunah_6.mp3"
+  },
+  {
+     "id": 7,
+    "judul": "Niat Salat Rawatib Ba'diyah Maghrib",
+    "arab": "أُصَلِّي سُنَّةَ المَغْرِبِ رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatal-maghribi rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah setelah Maghrib dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Termasuk salat rawatib ba'diyah (setelah salat wajib).",
+    "audio": "https://example.com/audio/doa_salat_sunah_7.mp3"
+  },
+   {
+     "id": 8,
+    "judul": "Niat Salat Dhuha",
+    "arab": "أُصَلِّي سُنَّةَ الضُّحَى رَكْعَتَيْنِ لِلّٰهِ تَعَالَى",
+    "latin": "Ushalli sunnatadh-dhuhâ rak‘ataini lillâhi ta‘âlâ",
+    "terjemah": "Aku niat salat sunah Dhuha dua rakaat karena Allah Ta‘ala.",
+    "keterangan": "Dikerjakan mulai setelah matahari naik hingga sebelum zuhur.",
+    "audio": "https://example.com/audio/doa_salat_sunah_2.mp3"
+  }
+]

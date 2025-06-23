@@ -1,0 +1,74 @@
+[
+    {
+        "urutan": 1,
+        "judul": "Istighfar (3x)",
+        "arab": "أَسْتَغْفِرُ اللّٰهَ",
+        "latin": "Astaghfirullâh",
+        "terjemah": "Aku memohon ampun kepada Allah.",
+        "jumlah": 3
+    },
+    {
+        "urutan": 2,
+        "judul": "Doa Penutup Salat",
+        "arab": "اللّٰهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلاَلِ وَالْإِكْرَامِ",
+        "latin": "Allâhumma anta as-salâm wa minka as-salâm, tabârakta yâ dzal-jalâli wal-ikrâm",
+        "terjemah": "Ya Allah, Engkaulah sumber keselamatan dan dari-Mu keselamatan itu, Maha Berkah Engkau, wahai Pemilik Keagungan dan Kemuliaan.",
+        "jumlah": 1
+    },
+    {
+        "urutan": 3,
+        "judul": "Ayat Kursi",
+        "arab": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ... (QS Al-Baqarah: 255)",
+        "latin": "Allâhu lâ ilâha illâ huwa al-ḥayyu al-qayyûm...",
+        "terjemah": "Allah, tidak ada Tuhan melainkan Dia yang Maha Hidup, terus menerus mengurus makhluk-Nya...",
+        "jumlah": 1
+    },
+    {
+        "urutan": 4,
+        "judul": "Tasbih",
+        "arab": "سُبْحَانَ اللّٰه",
+        "latin": "Subḥânallâh",
+        "terjemah": "Maha Suci Allah.",
+        "jumlah": 33
+    },
+    {
+        "urutan": 5,
+        "judul": "Tahmid",
+        "arab": "الْحَمْدُ لِلّٰه",
+        "latin": "Alḥamdulillâh",
+        "terjemah": "Segala puji bagi Allah.",
+        "jumlah": 33
+    },
+    {
+        "urutan": 6,
+        "judul": "Takbir",
+        "arab": "اللّٰهُ أَكْبَرُ",
+        "latin": "Allâhu Akbar",
+        "terjemah": "Allah Maha Besar.",
+        "jumlah": 33
+    },
+    {
+        "urutan": 7,
+        "judul": "Penutup Tasbih-Tahmid-Takbir",
+        "arab": "لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ",
+        "latin": "Lâ ilâha illallâh waḥdahu lâ syarîka lah, lahul-mulku wa lahul-ḥamdu wa huwa ‘alâ kulli syai’in qadîr",
+        "terjemah": "Tiada Tuhan selain Allah semata, tiada sekutu bagi-Nya. Milik-Nya-lah segala kerajaan dan pujian. Dia Mahakuasa atas segala sesuatu.",
+        "jumlah": 1
+    },
+    {
+        "urutan": 8,
+        "judul": "Dzikir Tambahan (Pagi Sore)",
+        "arab": "اللّٰهُمَّ أَجِرْنِي مِنَ النَّارِ",
+        "latin": "Allâhumma ajirnî minan-nâr",
+        "terjemah": "Ya Allah, lindungilah aku dari api neraka.",
+        "jumlah": 7
+    },
+    {
+        "urutan": 9,
+        "judul": "Doa Bebas (Contoh)",
+        "arab": "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        "latin": "Rabbanâ âtinâ fid-dunyâ ḥasanah wa fil-âkhirati ḥasanah wa qinâ ‘adzâban-nâr",
+        "terjemah": "Ya Tuhan kami, berikanlah kami kebaikan di dunia dan kebaikan di akhirat, dan peliharalah kami dari siksa neraka.",
+        "jumlah": 1
+    }
+]
