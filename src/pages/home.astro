@@ -1,10 +1,10 @@
 ---
 import BaseLayout from "../pages/layout.astro";
+import LastReadMonitor from "../components/LastReadMonitor";
 ---
 
 <BaseLayout title="home">
-  <div class="p-6">
-    <h1 class="text-3xl font-bold mb-4">Home</h1>
-    <p>Welcome Home</p>
-  </div>
+  <main class="p-6">
+    <LastReadMonitor client:only="react" />
+  </main>
 </BaseLayout>

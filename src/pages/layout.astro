@@ -20,6 +20,15 @@ const { title } = Astro.props;
     <script is:inline>
       if (typeof window !== "undefined") {
         const user = localStorage.getItem("user");
+        console.log("✅ Parsed user:", user);
+        try {
+          const user = JSON.parse(userData);
+          console.log("✅ Parsed user:", user);
+          const nameEl = document.getElementById("userNameDisplay");
+          if (nameEl) nameEl.textContent = user.name?.trim() || "User";
+        } catch (err) {
+          console.error("❌ Gagal parsing user:", err);
+        }
         if (!user) window.location.href = "/";
       }
     </script>
@@ -58,7 +67,7 @@ const { title } = Astro.props;
                 class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm"
               >
                 <i data-lucide="user" class="w-4 h-4"></i>
-                <span id="userNameDisplay">User</span>
+                <span id="userNameDisplay"></span>
                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
               </button>
               <div
@@ -122,19 +131,22 @@ const { title } = Astro.props;
         }
 
         // Cek timeout login
-        checkLoginTimeout();
+        // checkLoginTimeout();
 
         // Tampilkan nama user
         const userData = localStorage.getItem("user");
-        if (userData) {
-          try {
-            const user = JSON.parse(userData);
-            const nameEl = document.getElementById("userNameDisplay");
-            if (nameEl) nameEl.textContent = user.name || "User";
-          } catch (err) {
-            console.error("Gagal parsing user:", err);
-          }
-        }
+        const user = JSON.parse(userData);
+        const nameEl = document.getElementById("userNameDisplay");
+        if (nameEl) nameEl.textContent = user.name || "User";
+        // if (userData) {
+        //   try {
+        //     const user = JSON.parse(userData);
+        //     const nameEl = document.getElementById("userNameDisplay");
+        //     if (nameEl) nameEl.textContent = user.name || "User";
+        //   } catch (err) {
+        //     console.error("Gagal parsing user:", err);
+        //   }
+        // }
       });
 
       // const timeoutMinutes = 60;

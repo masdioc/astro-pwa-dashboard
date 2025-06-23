@@ -1,10 +1,11 @@
 ---
 import SurahList from "../components/juz-amma/SurahList";
 import listSurah from "../data/list_surah.json";
-
+import LastReadButton from "../components/LastReading";
 import BaseLayout from "../pages/layout.astro";
 ---
 
-<BaseLayout title="Juz-Amma">
+<BaseLayout title="Al Qur'an">
+  <LastReadButton client:only="react" />
   <SurahList client:load surahList={listSurah} />
 </BaseLayout>
