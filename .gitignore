@@ -4,7 +4,7 @@ node_modules/
 # Ignore build output
 dist/
 build/
-data/audio/
+public/data/audio/
 # Ignore environment variables
 .env
 .env.local
