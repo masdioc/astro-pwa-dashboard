@@ -28,6 +28,11 @@ const menus = [
     link: "/surahIndex",
   },
   {
+    title: "Dengerin Juz Amman",
+    icon: <BookOpen className="w-8 h-8 text-green-600" />,
+    link: "/dengerin_juzamma",
+  },
+  {
     title: "Bank Soal",
     icon: <ClipboardList className="w-8 h-8 text-orange-500" />,
     link: "/soal",

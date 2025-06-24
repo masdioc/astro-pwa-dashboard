@@ -3,9 +3,12 @@ import SurahList from "../components/juz-amma/SurahList";
 import listSurah from "../data/list_surah.json";
 import LastReadButton from "../components/LastReading";
 import BaseLayout from "../pages/layout.astro";
+import PlayAudio from "../components/PlayAudio";
+// import audioFiles from "../data/list_surah_audio_juza30.json";
 ---
 
 <BaseLayout title="Al Qur'an">
   <LastReadButton client:only="react" />
-  <SurahList client:load surahList={listSurah} />
+
+  <SurahList client:only="react" surahList={listSurah} />
 </BaseLayout>
