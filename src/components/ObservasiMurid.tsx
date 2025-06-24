@@ -82,7 +82,31 @@ export default function LastReadMonitor() {
   };
 
   useEffect(() => {
-    fetch(`${API_URL}/api/get-observasi`)
+    const userStr = localStorage.getItem("user");
+    let userId = null;
+
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        userId = user.id;
+      } catch (err) {
+        console.error("Gagal parsing user:", err);
+        return;
+      }
+    }
+
+    if (!userId) {
+      console.error("userId tidak ditemukan di localStorage");
+      return;
+    }
+
+    fetch(`${API_URL}/api/get-observasi`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }), // kirim body
+    })
       .then((res) => res.json())
       .then((json) => setData(json.data || []))
       .catch((err) => console.error("Gagal fetch:", err));
@@ -98,10 +122,61 @@ export default function LastReadMonitor() {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
+  const createObservasi = async () => {
+    const localUser = localStorage.getItem("user");
+    const parsedUser = localUser ? JSON.parse(localUser) : null;
+    const userId = parsedUser?.id;
+
+    if (!userId) {
+      toast.error(`❌ User ID tidak ditemukan di localStorage ${parsedUser}`);
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_URL}/api/add-observasi`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+
+      if (!res.ok) throw new Error("Request gagal");
+
+      toast.success("✅ Observasi telah dibuat");
+
+      // Refresh data observasi setelah insert
+      const res2 = await fetch(`${API_URL}/api/get-observasi`);
+      const json2 = await res2.json();
+      setData(json2.data || []);
+    } catch (err) {
+      console.error("Gagal membuat observasi:", err);
+      toast.error("❌ Gagal membuat observasi");
+    }
+  };
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">📋 Observasi Murid</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+          📋 Observasi Murid
+        </h1>
+
+        <div className="flex gap-2">
+          <button
+            onClick={createObservasi}
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded shadow text-sm"
+          >
+            ➕ <span className="hidden sm:inline">Create Observasi</span>
+          </button>
+
+          <button
+            onClick={() => (window.location.href = "/observasi_report")}
+            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow text-sm"
+          >
+            🧾 <span className="hidden sm:inline">View Report</span>
+          </button>
+        </div>
+      </div>
+
       <input
         type="text"
         placeholder="Cari Observasi..."
