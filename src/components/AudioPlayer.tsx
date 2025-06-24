@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { BASE_URL } from "astro:env/client";
+import { BookOpen } from "lucide-react";
+
 interface Surah {
   asma: string;
   nomor: string;
@@ -36,14 +38,23 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ audioList }) => {
   };
 
   return (
-    <div className="p-4 rounded-lg shadow-md bg-white max-w-md mx-auto">
-      <p className="text-4xl  font-serif text-center text-gray-900 leading-snug mb-4">
+    <div className="p-4 rounded-lg shadow-md bg-white max-w-md mx-auto relative">
+      {/* Tombol pojok kanan atas */}
+      <a
+        href={`/surah/${currentSurah.nomor}/`}
+        className="absolute right-2 top-2 p-2 bg-green-600 text-white rounded-full hover:bg-green-700 transition"
+        title="Buka Surah"
+      >
+        <BookOpen size={20} />
+      </a>
+
+      <p className="text-4xl font-serif text-center text-gray-900 leading-snug mb-4">
         {currentSurah.asma}
       </p>
       <p className="text-center text-lg font-bold mb-1">
         {currentSurah.nomor}. {currentSurah.nama} ({currentSurah.arti})
       </p>
-      <p className="text-center text-lg  mb-1">{currentSurah.keterangan}</p>
+      <p className="text-center text-lg mb-1">{currentSurah.keterangan}</p>
       <p className="text-center text-sm text-gray-500 mb-2">
         Sedang memutar: {currentIndex + 1} / {audioList.length}
       </p>
