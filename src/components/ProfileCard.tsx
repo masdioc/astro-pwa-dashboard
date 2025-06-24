@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { PUBLIC_API_URL } from "astro:env/client";
+import { API_URL } from "astro:env/client";
 
 export default function ProfileCard() {
   const [user, setUser] = useState<any>({});
@@ -25,7 +25,7 @@ export default function ProfileCard() {
     formData.append("user_id", user.id);
 
     try {
-      const res = await fetch(`${PUBLIC_API_URL}/api/update-photo`, {
+      const res = await fetch(`${API_URL}/api/update-photo`, {
         method: "POST",
         body: formData,
       });
