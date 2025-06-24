@@ -1,7 +1,7 @@
 ---
 import Sidebar from "../components/Sidebar.astro";
 import ToastProvider from "../components/ToasterProvider";
-import { Home } from "lucide-react";
+import { Contact, Home, MailsIcon, MonitorCheck } from "lucide-react";
 const { title } = Astro.props;
 ---
 
@@ -71,13 +71,15 @@ const { title } = Astro.props;
                     <a
                       href="/profile"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Profil</a>
+                      >Profil</a
+                    >
                   </li>
                   <li>
                     <a
                       href="/pengaturan"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Pengaturan</a>
+                      >Pengaturan</a
+                    >
                   </li>
                   <li>
                     <hr class="my-1 border-gray-300 dark:border-gray-600" />
@@ -87,7 +89,8 @@ const { title } = Astro.props;
                       href="/"
                       onclick="logoutUser()"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Keluar</a>
+                      >Keluar</a
+                    >
                   </li>
                 </ul>
               </div>
@@ -120,6 +123,27 @@ const { title } = Astro.props;
         >
           <Home size={24} />
           <span class="text-xs mt-1">Home</span>
+        </a>
+        <a
+          href="/home"
+          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+        >
+          <MailsIcon size={24} />
+          <span class="text-xs mt-1">Materi Belajar</span>
+        </a>
+        <a
+          href="/home"
+          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+        >
+          <MonitorCheck size={24} />
+          <span class="text-xs mt-1">Aktivitas</span>
+        </a>
+        <a
+          href="/profile"
+          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+        >
+          <Contact size={24} />
+          <span class="text-xs mt-1">Profile</span>
         </a>
       </div>
     </nav>

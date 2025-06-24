@@ -23,7 +23,7 @@ export default function ReportObservasi() {
       try {
         const user = JSON.parse(userStr);
         userId = user.id;
-        setNamaUser(user.name || "Nama Siswa");
+        setNamaUser(user.name || "Nama ");
       } catch (err) {
         console.error("Gagal parsing user:", err);
       }
@@ -68,7 +68,7 @@ export default function ReportObservasi() {
     <div className="max-w-4xl mx-auto p-6">
       {/* Tombol Export */}
       <div className="flex justify-between items-center mb-6 print:hidden">
-        <h1 className="text-2xl font-bold">📝 Report Hasil Observasi</h1>
+        <h1 className="text-2xl font-bold">📝 Report Observasi</h1>
         <button
           onClick={exportToPDF}
           className="px-4 py-2 bg-green-600 text-white rounded shadow hover:bg-green-700"
@@ -83,7 +83,7 @@ export default function ReportObservasi() {
         className="bg-white dark:bg-gray-900 text-black dark:text-white p-4 rounded shadow"
       >
         <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
-          Nama Peserta: <strong>{namaUser}</strong>
+          Nama : <strong>{namaUser}</strong>
         </p>
 
         <table className="w-full border-collapse border border-gray-400 text-sm">

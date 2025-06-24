@@ -4,6 +4,7 @@ import {
   BookOpen,
   ClipboardList,
   //   Mosque,
+  ChartBar,
   Sun,
   Moon,
   HandHeart,
@@ -58,6 +59,11 @@ const menus = [
     title: "Metode Jariyah",
     icon: <Youtube className="w-8 h-8 text-pink-600" />,
     link: "/nonton_tv",
+  },
+  {
+    title: "Report Observasi",
+    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
+    link: "/observasi_report",
   },
 ];
 
