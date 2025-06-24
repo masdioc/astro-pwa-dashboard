@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   BookOpen,
   ClipboardList,
@@ -28,7 +29,7 @@ const menus = [
     link: "/surahIndex",
   },
   {
-    title: "Dengerin Juz Amman",
+    title: "Dengerin Juz Amma",
     icon: <BookOpen className="w-8 h-8 text-green-600" />,
     link: "/dengerin_juzamma",
   },

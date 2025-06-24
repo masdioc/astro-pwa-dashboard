@@ -1,6 +1,7 @@
 ---
 import Sidebar from "../components/Sidebar.astro";
 import ToastProvider from "../components/ToasterProvider";
+import { Home } from "lucide-react";
 const { title } = Astro.props;
 ---
 
@@ -16,58 +17,49 @@ const { title } = Astro.props;
     class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"
   >
     <ToastProvider client:only="react" />
-    <!-- Redirect jika tidak login -->
+
     <script is:inline>
       if (typeof window !== "undefined") {
         const user = localStorage.getItem("user");
-        console.log("✅ Parsed user:", user);
-        try {
-          const user = JSON.parse(userData);
-          console.log("✅ Parsed user:", user);
-          const nameEl = document.getElementById("userNameDisplay");
-          if (nameEl) nameEl.textContent = user.name?.trim() || "User";
-        } catch (err) {
-          console.error("❌ Gagal parsing user:", err);
-        }
         if (!user) window.location.href = "/";
       }
     </script>
 
     <div class="flex flex-1">
       <Sidebar />
-
       <div
         id="main-content"
         class="ml-0 flex-1 flex flex-col min-h-screen transition-all duration-300"
       >
         <!-- Header -->
         <header
-          class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center sticky top-0 z-10"
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white dark:from-gray-800 dark:to-gray-900 shadow p-4 flex justify-between items-center sticky top-0 z-10"
         >
           <div class="flex items-center gap-3">
             <button
               onclick="toggleSidebar()"
-              class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded"
+              class="p-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded ring-1 ring-white/30"
             >
-              <i data-lucide="menu" class="w-5 h-5"></i>
+              <i data-lucide="menu" class="w-5 h-5 text-white"></i>
             </button>
-            <h1 class="text-lg font-semibold">{title}</h1>
+            <h1 class="text-lg font-semibold text-white">{title}</h1>
           </div>
           <div class="flex items-center gap-2">
             <button
               onclick="toggleDarkMode()"
-              class="p-2 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 rounded"
+              class="p-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded ring-1 ring-white/30"
               title="Dark Mode"
             >
-              <i data-lucide="moon" class="w-5 h-5"></i>
+              <i data-lucide="moon" class="w-5 h-5 text-white"></i>
             </button>
             <div class="relative">
               <button
                 onclick="toggleUserDropdown()"
-                class="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded text-sm"
+                class="flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded text-sm text-white ring-1 ring-white/30"
               >
                 <i data-lucide="user" class="w-4 h-4"></i>
-                <span id="userNameDisplay"></span>
+                <span id="userNameDisplay" class="truncate max-w-[100px]"
+                ></span>
                 <i data-lucide="chevron-down" class="w-4 h-4"></i>
               </button>
               <div
@@ -79,15 +71,13 @@ const { title } = Astro.props;
                     <a
                       href="/profile"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Profil</a
-                    >
+                      >Profil</a>
                   </li>
                   <li>
                     <a
                       href="/pengaturan"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Pengaturan</a
-                    >
+                      >Pengaturan</a>
                   </li>
                   <li>
                     <hr class="my-1 border-gray-300 dark:border-gray-600" />
@@ -97,8 +87,7 @@ const { title } = Astro.props;
                       href="/"
                       onclick="logoutUser()"
                       class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                      >Keluar</a
-                    >
+                      >Keluar</a>
                   </li>
                 </ul>
               </div>
@@ -120,48 +109,41 @@ const { title } = Astro.props;
       &copy; {new Date().getFullYear()} Belajar Asik
     </footer>
 
-    <!-- Script -->
+    <!-- Bottom Navigation -->
+    <nav
+      class="fixed bottom-0 w-full backdrop-blur-md bg-white/80 dark:bg-gray-800/80 border-t border-gray-300 dark:border-gray-700 shadow-md"
+    >
+      <div class="flex justify-around py-2">
+        <a
+          href="/home"
+          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+        >
+          <Home size={24} />
+          <span class="text-xs mt-1">Home</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Scripts -->
     <script type="module">
       window.addEventListener("DOMContentLoaded", () => {
         lucide?.createIcons();
 
-        // Aktifkan dark mode jika sebelumnya aktif
         if (localStorage.theme === "dark") {
           document.documentElement.classList.add("dark");
         }
 
-        // Cek timeout login
-        // checkLoginTimeout();
-
-        // Tampilkan nama user
         const userData = localStorage.getItem("user");
-        const user = JSON.parse(userData);
-        const nameEl = document.getElementById("userNameDisplay");
-        if (nameEl) nameEl.textContent = user.name || "User";
-        // if (userData) {
-        //   try {
-        //     const user = JSON.parse(userData);
-        //     const nameEl = document.getElementById("userNameDisplay");
-        //     if (nameEl) nameEl.textContent = user.name || "User";
-        //   } catch (err) {
-        //     console.error("Gagal parsing user:", err);
-        //   }
-        // }
-      });
-
-      // const timeoutMinutes = 60;
-      // const timeoutMillis = timeoutMinutes * 60 * 1000;
-
-      function checkLoginTimeout() {
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        const loginTime = parseInt(localStorage.getItem("loginTime") || "0");
-        const now = Date.now();
-        if (isLoggedIn === "true" && now - loginTime > timeoutMillis) {
-          alert("Sesi login Anda telah habis. Silakan login kembali.");
-          localStorage.clear();
-          window.location.href = "/";
+        if (userData) {
+          try {
+            const user = JSON.parse(userData);
+            const nameEl = document.getElementById("userNameDisplay");
+            if (nameEl) nameEl.textContent = user.name || "User";
+          } catch (err) {
+            console.error("Gagal parsing user:", err);
+          }
         }
-      }
+      });
 
       function logoutUser() {
         localStorage.clear();
@@ -196,7 +178,6 @@ const { title } = Astro.props;
         }
       }
 
-      // Tambahkan fungsi ke global
       Object.assign(window, {
         toggleSidebar,
         toggleUserDropdown,
