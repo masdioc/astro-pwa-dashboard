@@ -21,7 +21,7 @@ const { title } = Astro.props;
     <script is:inline>
       if (typeof window !== "undefined") {
         const user = localStorage.getItem("user");
-        if (!user) window.location.href = "/";
+        if (!user) window.location.href = "/home";
       }
     </script>
 
@@ -125,19 +125,23 @@ const { title } = Astro.props;
           <span class="text-xs mt-1">Home</span>
         </a>
         <a
-          href="/home"
-          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+          href="#"
+          onclick="event.preventDefault(); alert('Fitur sedang dikembangkan')"
+          class="flex flex-col items-center text-gray-400 cursor-not-allowed"
         >
-          <MailsIcon size={24} />
+          <i data-lucide="monitor-check" class="w-5 h-5"></i>
           <span class="text-xs mt-1">Materi Belajar</span>
         </a>
+
         <a
-          href="/home"
-          class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+          href="#"
+          onclick="event.preventDefault(); alert('Fitur sedang dikembangkan')"
+          class="flex flex-col items-center text-gray-400 cursor-not-allowed"
         >
-          <MonitorCheck size={24} />
+          <i data-lucide="monitor-check" class="w-5 h-5"></i>
           <span class="text-xs mt-1">Aktivitas</span>
         </a>
+
         <a
           href="/profile"
           class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"

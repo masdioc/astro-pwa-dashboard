@@ -8,81 +8,8 @@
       <i data-lucide="x"></i>
     </button>
   </div>
-  <nav class="mt-6 flex flex-col space-y-2 px-4">
-    <a
-      href="/home"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="home" class="w-4 h-4 mr-2"></i> Dashboard
-    </a>
-    <!-- <a
-      href="/dashboard"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="layout-dashboard" class="w-4 h-4 mr-2"></i> Dashboard
-    </a> -->
-    <!-- Dropdown Menu -->
-    <div class="relative group">
-      <button
-        class="w-full text-left flex items-center px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors"
-        onclick="toggleDataDropdown()"
-      >
-        <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
-        <i data-lucide="chevron-down" class="w-4 h-4 ml-auto"></i>
-      </button>
-      <div id="dataDropdown" class="ml-6 mt-1 hidden flex-col space-y-1">
-        <a
-          href="/data"
-          class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm"
-          >Data User</a
-        >
-        <a
-          href="/soal"
-          class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm"
-          >Data Soal</a
-        >
-        <a
-          href="/monitor_last_read"
-          class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm"
-          >Monitor Baca Qur'an</a
-        >
-        <a
-          href="/observasi_murid"
-          class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm"
-          >Observasi Murid</a
-        >
-      </div>
-    </div>
-    <a
-      href="/surahIndex"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="book" class="w-4 h-4 mr-2"></i> Qur'an
-    </a>
-    <a
-      href="/dzikir"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Harian
-    </a>
-    <a
-      href="/dzikir_pagi_sore"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Pagi Sore
-    </a>
-    <a
-      href="/doa"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="book" class="w-4 h-4 mr-2"></i> Doa-doa
-    </a>
-    <a
-      href="/quiz"
-      class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center"
-    >
-      <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
-    </a>
+  <nav class="mt-6 flex flex-col space-y-2 px-4" id="menuContainer">
+    <!-- Menu akan dimasukkan di sini lewat JS -->
   </nav>
 
   <button
@@ -97,5 +24,80 @@
       const dropdown = document.getElementById("dataDropdown");
       dropdown?.classList.toggle("hidden");
     }
+
+    function renderMenu() {
+      const data = localStorage.getItem("user");
+      const user = JSON.parse(data);
+      const role = user.role;
+      console.log(role);
+      const menu = document.getElementById("menuContainer");
+
+      if (!menu || !role) return;
+
+      let html = `
+        <a href="/home" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="home" class="w-4 h-4 mr-2"></i> Dashboard
+        </a>
+      `;
+
+      // Role: admin & guru
+      if (role === "admin") {
+        html += `
+        <div class="relative group">
+          <button onclick="toggleDataDropdown()" class="w-full text-left flex items-center px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors">
+            <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
+            <i data-lucide="chevron-down" class="w-4 h-4 ml-auto"></i>
+          </button>
+          <div id="dataDropdown" class="ml-6 mt-1 hidden flex-col space-y-1">
+            <a href="/data" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Data User</a>
+            <a href="/soal" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Data Soal</a>
+          </div>
+        </div>
+        `;
+      }
+
+      // Role: admin & guru
+      if (role === "guru") {
+        html += `
+        <div class="relative group">
+          <button onclick="toggleDataDropdown()" class="w-full text-left flex items-center px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors">
+            <i data-lucide="table" class="w-4 h-4 mr-2"></i> Data
+            <i data-lucide="chevron-down" class="w-4 h-4 ml-auto"></i>
+          </button>
+          <div id="dataDropdown" class="ml-6 mt-1 hidden flex-col space-y-1">
+            <a href="/monitor_last_read" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Monitor Baca Qur'an</a>
+            <a href="/observasi_murid" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Observasi Murid</a>
+          </div>
+        </div>
+        `;
+      }
+      // Role: semua (admin, guru, murid)
+      html += `
+        <a href="/surahIndex" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Qur'an
+        </a>
+        <a href="/dzikir" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Harian
+        </a>
+        <a href="/dzikir_pagi_sore" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Pagi Sore
+        </a>
+        <a href="/doa" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Doa-doa
+        </a>
+        <a href="/quiz" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
+        </a>
+      `;
+
+      menu.innerHTML = html;
+
+      // Aktifkan lucide icon
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
+    }
+
+    renderMenu();
   </script>
 </aside>
