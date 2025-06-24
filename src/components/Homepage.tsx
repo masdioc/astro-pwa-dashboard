@@ -7,6 +7,7 @@ import {
   Sun,
   Moon,
   HandHeart,
+  Youtube,
   //   HandsPraying,
 } from "lucide-react";
 import {
@@ -54,8 +55,8 @@ const menus = [
     link: "/doa",
   },
   {
-    title: "Youtube",
-    icon: <HandHeart className="w-8 h-8 text-pink-600" />,
+    title: "Metode Jariyah",
+    icon: <Youtube className="w-8 h-8 text-pink-600" />,
     link: "/nonton_tv",
   },
 ];
