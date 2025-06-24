@@ -53,6 +53,11 @@ const menus = [
     icon: <HandHeart className="w-8 h-8 text-pink-600" />,
     link: "/doa",
   },
+  {
+    title: "Youtube",
+    icon: <HandHeart className="w-8 h-8 text-pink-600" />,
+    link: "/nonton_tv",
+  },
 ];
 
 const HomepageMenu: React.FC = () => {
