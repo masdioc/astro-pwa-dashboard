@@ -11,63 +11,112 @@ interface itemData {
   teori: "Ya" | "Tidak" | "";
 }
 
-export default function ObservasiMurid() {
+export default function LastReadMonitor() {
   const [data, setData] = useState<itemData[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // Fetch data observasi
-  const fetchData = async () => {
-    const userStr = localStorage.getItem("user");
-    if (!userStr) return;
-    const user = JSON.parse(userStr);
-    if (!user?.id) return;
-
-    try {
-      const res = await fetch(`${API_URL}/api/get-observasi`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user.id }),
-      });
-      const json = await res.json();
-
-      const normalized = (json.data || []).map((item: any) => ({
-        ...item,
-        praktek: item.status_praktek ?? "",
-        teori: item.status_teori ?? "",
-      }));
-
-      setData(normalized);
-    } catch (err) {
-      console.error("Gagal fetch:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const updateStatus = async (
+  const updateStatusPraktek = async (
     user_id: number,
     observasi_id: number,
-    type: "status_praktek" | "status_teori",
-    value: "Ya" | "Tidak" | ""
+    praktek: "Ya" | "Tidak" | ""
   ) => {
     try {
       await fetch(`${API_URL}/api/update-observasi`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id, observasi_id, [type]: value }),
+        body: JSON.stringify({
+          user_id,
+          observasi_id,
+          status_praktek: praktek,
+        }),
       });
+      // console.log(user_id, observasi_id, praktek);
+      setData((prev) =>
+        prev.map((item) =>
+          item.user_id === user_id && item.observasi_id === observasi_id
+            ? { ...item, status_praktek: praktek === "" ? null : praktek }
+            : item
+        )
+      );
 
-      toast.success(`✅ Status ${type} berhasil disimpan`);
-      await fetchData(); // << refetch semua data dari server
+      toast.success("✅ Status praktek berhasil disimpan");
     } catch (err) {
-      console.error(`Gagal update ${type}:`, err);
-      toast.error(`❌ Gagal update status ${type}`);
+      console.error("Gagal update praktek:", err);
+      toast.error("❌ Gagal update status praktek");
     }
   };
+
+  const updateStatusTeori = async (
+    user_id: number,
+    observasi_id: number,
+    teori: "Ya" | "Tidak" | ""
+  ) => {
+    try {
+      await fetch(`${API_URL}/api/update-observasi`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id,
+          observasi_id,
+          status_teori: teori,
+        }),
+      });
+
+      setData((prev) =>
+        prev.map((item) =>
+          item.user_id === user_id && item.observasi_id === observasi_id
+            ? { ...item, status_teori: teori === "" ? null : teori }
+            : item
+        )
+      );
+
+      toast.success("✅ Status teori berhasil disimpan");
+    } catch (err) {
+      console.error("Gagal update teori:", err);
+      toast.error("❌ Gagal update status teori");
+    }
+  };
+
+  useEffect(() => {
+    const userStr = localStorage.getItem("user");
+    let userId = null;
+
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        userId = user.id;
+      } catch (err) {
+        console.error("Gagal parsing user:", err);
+        return;
+      }
+    }
+
+    if (!userId) {
+      console.error("User ID tidak ditemukan");
+      return;
+    }
+
+    fetch(`${API_URL}/api/get-observasi`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId }),
+    })
+      .then((res) => res.json())
+      .then((json) => setData(json.data || []))
+      .catch((err) => console.error("Gagal fetch:", err));
+  }, []);
+
+  const filtered = data.filter((item) =>
+    item.observasi.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const paginated = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   const createObservasi = async () => {
     const userStr = localStorage.getItem("user");
@@ -89,22 +138,20 @@ export default function ObservasiMurid() {
       if (!res.ok) throw new Error("Gagal request");
 
       toast.success("✅ Observasi baru berhasil dibuat");
-      await fetchData();
+
+      const res2 = await fetch(`${API_URL}/api/get-observasi`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId }),
+      });
+
+      const json2 = await res2.json();
+      setData(json2.data || []);
     } catch (err) {
       console.error("Gagal membuat observasi:", err);
       toast.error("❌ Gagal membuat observasi");
     }
   };
-
-  const filtered = data.filter((item) =>
-    item.observasi.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
-  const paginated = filtered.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -163,10 +210,9 @@ export default function ObservasiMurid() {
                   <select
                     value={item.praktek || ""}
                     onChange={(e) =>
-                      updateStatus(
+                      updateStatusPraktek(
                         item.user_id,
                         item.observasi_id,
-                        "status_praktek",
                         e.target.value as any
                       )
                     }
@@ -181,10 +227,9 @@ export default function ObservasiMurid() {
                   <select
                     value={item.teori || ""}
                     onChange={(e) =>
-                      updateStatus(
+                      updateStatusTeori(
                         item.user_id,
                         item.observasi_id,
-                        "status_teori",
                         e.target.value as any
                       )
                     }
@@ -222,10 +267,9 @@ export default function ObservasiMurid() {
               <select
                 value={item.praktek || ""}
                 onChange={(e) =>
-                  updateStatus(
+                  updateStatusPraktek(
                     item.user_id,
                     item.observasi_id,
-                    "status_praktek",
                     e.target.value as any
                   )
                 }
@@ -243,10 +287,9 @@ export default function ObservasiMurid() {
               <select
                 value={item.teori || ""}
                 onChange={(e) =>
-                  updateStatus(
+                  updateStatusTeori(
                     item.user_id,
                     item.observasi_id,
-                    "status_teori",
                     e.target.value as any
                   )
                 }
