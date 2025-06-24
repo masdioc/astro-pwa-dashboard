@@ -154,7 +154,7 @@ export default function LastReadMonitor() {
   };
 
   return (
-    <div className="p-4 max-w-5xl mx-auto">
+    <div className="p-1 max-w-5xl mx-auto">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
         <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
           📋 Observasi Murid
