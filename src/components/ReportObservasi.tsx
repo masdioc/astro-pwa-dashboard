@@ -6,8 +6,8 @@ import "html2pdf.js/dist/html2pdf.bundle";
 interface ObservasiItem {
   observasi_id: number;
   observasi: string;
-  praktek: "Ya" | "Tidak";
-  teori: "Ya" | "Tidak";
+  status_praktek: "Ya" | "Tidak";
+  status_teori: "Ya" | "Tidak";
 }
 
 export default function ReportObservasi() {
@@ -91,8 +91,8 @@ export default function ReportObservasi() {
             <tr>
               <th className="border p-2">#</th>
               <th className="border p-2 text-left">Observasi</th>
-              <th className="border p-2 text-center">Praktek</th>
-              <th className="border p-2 text-center">Teori</th>
+              <th className="border p-2 text-center">status_praktek</th>
+              <th className="border p-2 text-center">status_teori</th>
             </tr>
           </thead>
           <tbody>
@@ -105,17 +105,21 @@ export default function ReportObservasi() {
                 <td className="border p-2">{item.observasi}</td>
                 <td
                   className={`border p-2 text-center ${
-                    item.praktek === "Ya" ? "text-green-600" : "text-red-600"
+                    item.status_praktek === "Ya"
+                      ? "text-green-600"
+                      : "text-red-600"
                   }`}
                 >
-                  {item.praktek}
+                  {item.status_praktek}
                 </td>
                 <td
                   className={`border p-2 text-center ${
-                    item.teori === "Ya" ? "text-green-600" : "text-red-600"
+                    item.status_teori === "Ya"
+                      ? "text-green-600"
+                      : "text-red-600"
                   }`}
                 >
-                  {item.teori}
+                  {item.status_teori}
                 </td>
               </tr>
             ))}
