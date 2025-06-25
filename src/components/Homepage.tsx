@@ -73,19 +73,25 @@ const HomepageMenu: React.FC = () => {
       {/* <h1 className="text-3xl font-bold text-center text-gray-800 mb-10">
         🕌 Menu Utama
       </h1> */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
-        {menus.map((menu, index) => (
-          <a
-            href={menu.link}
-            key={index}
-            className="bg-white shadow-lg hover:shadow-xl transition duration-300 rounded-xl p-5 flex flex-col items-center text-center border border-gray-200"
-          >
-            <div className="mb-4">{menu.icon}</div>
-            <span className="text-lg font-medium text-gray-700">
-              {menu.title}
-            </span>
-          </a>
-        ))}
+      <div className="max-w-5xl mx-auto py-8 px-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
+          {menus.map((menu, index) => (
+            <a
+              href={menu.link}
+              key={index}
+              className="bg-white shadow-md hover:shadow-lg transition duration-300 rounded-lg p-3 flex flex-col items-center text-center border border-gray-200"
+            >
+              <div className="mb-2">
+                {React.cloneElement(menu.icon, {
+                  className: menu.icon.props.className + " w-6 h-6",
+                })}
+              </div>
+              <span className="text-sm font-medium text-gray-700 leading-tight">
+                {menu.title}
+              </span>
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );

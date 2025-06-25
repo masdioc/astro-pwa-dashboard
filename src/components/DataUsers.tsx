@@ -6,6 +6,7 @@ interface User {
   // lastName: string;
   email: string;
   level: string;
+  guru: string;
 }
 
 export default function UserDataPage() {
@@ -55,7 +56,7 @@ export default function UserDataPage() {
   return (
     <>
       <div className="w-screen h-screen overflow-x-auto flex flex-col p-4 max-w-screen-xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-bold mb-4">Data Pengguna</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-4">Data Santri</h1>
 
         {/* Filter dan Tombol */}
         <div className="mb-4 flex flex-col md:flex-row gap-2 md:gap-4 items-start md:items-center">
@@ -127,9 +128,8 @@ export default function UserDataPage() {
                     <th className="border px-4 py-2 text-left">ID</th>
                     <th className="border px-4 py-2 text-left">Nama</th>
                     <th className="border px-4 py-2 text-left">Email</th>
-                    <th className="border px-4 py-2 text-left">
-                      Level Pendidikan
-                    </th>
+                    <th className="border px-4 py-2 text-left">Pendidikan</th>
+                    <th className="border px-4 py-2 text-left">Guru</th>
                     <th className="border px-4 py-2 text-left">Aksi</th>
                   </tr>
                 </thead>
@@ -140,6 +140,7 @@ export default function UserDataPage() {
                       <td className="px-4 py-2 border-b">{user.name}</td>
                       <td className="px-4 py-2 border-b">{user.email}</td>
                       <td className="px-4 py-2 border-b">{user.level}</td>
+                      <td className="px-4 py-2 border-b">{user.guru}</td>
                       <td className="px-4 py-2 border-b">
                         <button
                           onClick={() => setDetailUser(user)}
@@ -171,7 +172,10 @@ export default function UserDataPage() {
                     <strong>Email:</strong> {user.email}
                   </div>
                   <div className="text-sm text-gray-600">
-                    <strong>Level Pendidikan:</strong> {user.level}
+                    <strong> Pendidikan:</strong> {user.level}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    <strong> Guru:</strong> {user.guru}
                   </div>
                   <div className="mt-3">
                     <button
@@ -234,7 +238,10 @@ export default function UserDataPage() {
                       <strong>Email:</strong> {detailUser.email}
                     </p>
                     <p>
-                      <strong>Level User:</strong> {detailUser.level}
+                      <strong>Pendidikan:</strong> {detailUser.level}
+                    </p>
+                    <p>
+                      <strong>Guru:</strong> {detailUser.level}
                     </p>
                   </div>
                   <div className="mt-4 text-right">
