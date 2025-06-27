@@ -1,0 +1,221 @@
+---
+import Sidebar from "../../components/Layout/Sidebar.astro";
+import ToastProvider from "../../components/Etc/ToasterProvider";
+import { Contact, Home, MailsIcon, MonitorCheck } from "lucide-react";
+const { title } = Astro.props;
+---
+
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <link rel="manifest" href="/manifest.webmanifest" />
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans min-h-screen flex flex-col"
+  >
+    <ToastProvider client:only="react" />
+
+    <script is:inline>
+      if (typeof window !== "undefined") {
+        const user = localStorage.getItem("user");
+        if (!user) window.location.href = "/home";
+      }
+    </script>
+
+    <div class="flex flex-1">
+      <Sidebar />
+      <div
+        id="main-content"
+        class="ml-0 flex-1 flex flex-col min-h-screen transition-all duration-300"
+      >
+        <!-- Header -->
+        <header
+          class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white dark:from-gray-800 dark:to-gray-900 shadow p-4 flex justify-between items-center sticky top-0 z-10"
+        >
+          <div class="flex items-center gap-3">
+            <button
+              onclick="toggleSidebar()"
+              class="p-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded ring-1 ring-white/30"
+            >
+              <i data-lucide="menu" class="w-5 h-5 text-white"></i>
+            </button>
+            <h1 class="text-lg font-semibold text-white">{title}</h1>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              onclick="toggleDarkMode()"
+              class="p-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded ring-1 ring-white/30"
+              title="Dark Mode"
+            >
+              <i data-lucide="moon" class="w-5 h-5 text-white"></i>
+            </button>
+            <div class="relative">
+              <button
+                onclick="toggleUserDropdown()"
+                class="flex items-center gap-2 px-3 py-2 bg-white/20 hover:bg-white/30 dark:bg-white/10 dark:hover:bg-white/20 transition rounded text-sm text-white ring-1 ring-white/30"
+              >
+                <i data-lucide="user" class="w-4 h-4"></i>
+                <span id="userNameDisplay" class="truncate max-w-[100px]"
+                ></span>
+                <i data-lucide="chevron-down" class="w-4 h-4"></i>
+              </button>
+              <div
+                id="userDropdown"
+                class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded shadow-lg hidden z-50"
+              >
+                <ul class="text-sm text-gray-700 dark:text-gray-100">
+                  <li>
+                    <a
+                      href="/profile"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >Profil</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="/pengaturan"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >Pengaturan</a
+                    >
+                  </li>
+                  <li>
+                    <hr class="my-1 border-gray-300 dark:border-gray-600" />
+                  </li>
+                  <li>
+                    <a
+                      href="/"
+                      onclick="logoutUser()"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
+                      >Keluar</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Konten -->
+        <main class="p-6 flex-1">
+          <slot />
+        </main>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer
+      class="bg-white dark:bg-gray-800 text-center text-sm text-gray-600 dark:text-gray-300 border-t border-gray-200 dark:border-gray-600 py-3"
+    >
+      &copy; {new Date().getFullYear()} Belajar Asik
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-white shadow-md block sm:hidden"
+    >
+      <nav
+        class="fixed bottom-0 w-full backdrop-blur-md bg-white/80 dark:bg-gray-800/80 border-t border-gray-300 dark:border-gray-700 shadow-md"
+      >
+        <div class="flex justify-around py-2">
+          <a
+            href="/home"
+            class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+          >
+            <Home size={24} />
+            <span class="text-xs mt-1">Home</span>
+          </a>
+          <a
+            href="#"
+            onclick="event.preventDefault(); alert('Fitur sedang dikembangkan')"
+            class="flex flex-col items-center text-gray-400 cursor-not-allowed"
+          >
+            <i data-lucide="monitor-check" class="w-5 h-5"></i>
+            <span class="text-xs mt-1">Materi Belajar</span>
+          </a>
+
+          <a
+            href="#"
+            onclick="event.preventDefault(); alert('Fitur sedang dikembangkan')"
+            class="flex flex-col items-center text-gray-400 cursor-not-allowed"
+          >
+            <i data-lucide="monitor-check" class="w-5 h-5"></i>
+            <span class="text-xs mt-1">Aktivitas</span>
+          </a>
+
+          <a
+            href="/profile"
+            class="flex flex-col items-center text-blue-600 hover:text-indigo-700 transition"
+          >
+            <Contact size={24} />
+            <span class="text-xs mt-1">Profile</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+      window.addEventListener("DOMContentLoaded", () => {
+        lucide?.createIcons();
+
+        if (localStorage.theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+
+        const userData = localStorage.getItem("user");
+        if (userData) {
+          try {
+            const user = JSON.parse(userData);
+            const nameEl = document.getElementById("userNameDisplay");
+            if (nameEl) nameEl.textContent = user.name || "User";
+          } catch (err) {
+            console.error("Gagal parsing user:", err);
+          }
+        }
+      });
+
+      function logoutUser() {
+        localStorage.clear();
+        localStorage.setItem("isLoggedIn", "false");
+      }
+
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        const main = document.getElementById("main-content");
+        const isHidden = sidebar?.classList.contains("-translate-x-full");
+        sidebar?.classList.toggle("-translate-x-full");
+        sidebar?.classList.toggle("translate-x-0");
+        if (window.innerWidth >= 768 && sidebar && main) {
+          main.classList.toggle("ml-60", isHidden);
+          main.classList.toggle("ml-0", !isHidden);
+        }
+      }
+
+      function toggleUserDropdown() {
+        const dropdown = document.getElementById("userDropdown");
+        dropdown?.classList.toggle("hidden");
+      }
+
+      function toggleDarkMode() {
+        const html = document.documentElement;
+        if (html.classList.contains("dark")) {
+          html.classList.remove("dark");
+          localStorage.theme = "light";
+        } else {
+          html.classList.add("dark");
+          localStorage.theme = "dark";
+        }
+      }
+
+      Object.assign(window, {
+        toggleSidebar,
+        toggleUserDropdown,
+        toggleDarkMode,
+        logoutUser,
+      });
+    </script>
+  </body>
+</html>

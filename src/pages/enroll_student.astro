@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../pages/layout/layout.astro";
+import { BrowserRouter } from "react-router-dom";
+import EnrollStudWarp from "../components/Enrollment/EnrollSudWrapper"; // atau '../course' sesuai struktur kamu
+---
+
+<BaseLayout title="Daftar Santri">
+  <EnrollStudWarp client:only="react" />
+</BaseLayout>

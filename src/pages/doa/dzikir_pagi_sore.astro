@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../../pages/layout/layout.astro";
+import DzikirPage from "../../components/Doa/DzikirPagiSore";
+import dzikirData from "../../data/dzikir_pagi_sore.json";
+---
+
+<BaseLayout title="Dzikir Pagi Sore">
+  <DzikirPage dzikirData={dzikirData} client:load />
+</BaseLayout>

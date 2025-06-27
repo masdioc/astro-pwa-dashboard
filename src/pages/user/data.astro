@@ -1,0 +1,9 @@
+---
+// import BaseLayout from "../components/Layout";
+import BaseLayout from "../../pages/layout/layout.astro";
+import DataUsers from "../../components/User/DataUsers";
+---
+
+<BaseLayout title="Data Santri">
+  <DataUsers client:load />
+</BaseLayout>

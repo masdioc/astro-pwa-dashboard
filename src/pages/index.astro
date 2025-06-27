@@ -1,7 +1,7 @@
 ---
 // src/pages/login.astro
 // import React, { useEffect } from "react";
-import LoginPage from "../components/Login";
+import LoginPage from "../components/User/Login";
 // import { API_URL } from "astro:env/server";
 // const API_URL = import.meta.env.VITE_API_BASE_URL;
 // console.log(API_URL);
@@ -11,6 +11,13 @@ import LoginPage from "../components/Login";
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+    <script>
+      // Ganti 'user' sesuai key yang kamu pakai di localStorage
+      const user = localStorage.getItem("token");
+      if (user) {
+        window.location.href = "/home";
+      }
+    </script>
   </head>
   <body>
     <LoginPage client:load />

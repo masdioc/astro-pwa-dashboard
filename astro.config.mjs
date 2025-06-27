@@ -4,6 +4,25 @@ import pwa from "@vite-pwa/astro";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
+  vite: {
+    server: {
+      fs: {
+        strict: false,
+      },
+      historyApiFallback: true, // ⬅️ Tambahkan ini
+    },
+  },
+  // vite: {
+  //   server: {
+  //     host: true,
+  //     hmr: {
+  //       protocol: "ws",
+  //       host: "localhost",
+  //       port: 4321,
+  //     },
+  //     historyApiFallback: true,
+  //   },
+  // },
   env: {
     schema: {
       BASE_URL: envField.string({

@@ -71,6 +71,7 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
       const item = localStorage.getItem("user");
       if (!item) return;
       const user = JSON.parse(item);
+      // console.log(user);
 
       fetch(`${API_URL}/api/last-read?user_id=${user.id}&_=${Date.now()}`)
         .then((res) => res.json())

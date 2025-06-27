@@ -1,9 +1,0 @@
----
-import BaseLayout from "../pages/layout.astro";
-import DzikirList from "../dzikir/DzikirList";
-import dzikirData from "../data/dzikir.json";
----
-
-<BaseLayout title="Dzikir Harian">
-  <DzikirList dzikirData={dzikirData} client:load />
-</BaseLayout>
