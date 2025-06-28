@@ -6,3 +6,15 @@
 body {
   @apply font-sans;
 }
+@font-face {
+  font-family: 'Indonesia';
+  src: url('/fonts/LPMQ.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Arab';
+  src: url('/fonts/LPMQ.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

@@ -259,7 +259,10 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
                 className="font-serif inline-flex items-center gap-2 justify-end flex-wrap text-right"
                 style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
               >
-                <span className="leading-snug">{a.arabic}</span>
+                {/* <p className="text-right text-2xl leading-snug">{a.arabic}</p> */}
+                <p className="text-right text-2xl font-indonesia leading-snug">
+                  {a.arabic}
+                </p>
                 <button
                   onClick={() => simpanTerakhirDibaca(i + 1)}
                   title="Tandai terakhir dibaca"

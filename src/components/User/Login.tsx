@@ -107,7 +107,7 @@ export default function LoginPage() {
             Belum punya akun?
           </span>
           <a
-            href="/register"
+            href="/u/register"
             className="ml-2 text-sm text-blue-600 dark:text-blue-400 hover:underline"
           >
             Daftar di sini

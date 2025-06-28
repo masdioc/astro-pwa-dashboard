@@ -103,9 +103,15 @@ const allMenus: MenuItem[] = [
     roles: ["santri"],
   },
   {
-    title: "Progres Pembelajaran",
+    title: "Observasi",
     icon: <ChartBar className="w-8 h-8 text-pink-600" />,
     link: "/observasi_report",
+    roles: ["santri"],
+  },
+  {
+    title: "Progres Pembelajaran",
+    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
+    link: "/couse_chart",
     roles: ["santri"],
   },
 ];
