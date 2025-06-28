@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../pages/layout/layout.astro";
+import ModulesPage from "../components/Course/CourseModuleMaterialDashboard"; // atau '../course' sesuai struktur kamu
+---
+
+<BaseLayout title="List Modules">
+  <!-- <ModuleList client:load /> -->
+  <ModulesPage client:load />
+</BaseLayout>

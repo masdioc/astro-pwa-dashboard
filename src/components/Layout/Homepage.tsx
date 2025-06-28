@@ -89,16 +89,23 @@ const allMenus: MenuItem[] = [
     link: "/observasi_murid",
     roles: ["guru"],
   },
-  {
-    title: "Progres Pembelajaran",
-    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/observasi_report",
-    roles: ["santri"],
-  },
+
   {
     title: "Enroll",
     icon: <FileInput className="w-8 h-8 text-pink-600" />,
     link: "/course_register",
+    roles: ["santri"],
+  },
+  {
+    title: "Modul Pembelajaran",
+    icon: <BookOpen className="w-8 h-8 text-pink-600" />,
+    link: "/modules_list",
+    roles: ["santri"],
+  },
+  {
+    title: "Progres Pembelajaran",
+    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
+    link: "/observasi_report",
     roles: ["santri"],
   },
 ];

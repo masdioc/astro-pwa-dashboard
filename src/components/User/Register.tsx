@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { API_URL } from "astro:env/client";
+import WilayahSelector from "../../components/Etc/WilayahSelector";
+
 type RegisterData = {
   username: string;
   password: string;
@@ -7,6 +9,10 @@ type RegisterData = {
   level: string;
   email: string;
   role: string;
+  province_id: string;
+  regence_id: string;
+  district_id: string;
+  village_id: string;
 };
 
 export default function RegisterPage() {
@@ -14,9 +20,13 @@ export default function RegisterPage() {
     username: "",
     password: "",
     name: "",
-    level: "user",
+    level: "TK",
     email: "",
-    role: "",
+    role: "santri",
+    province_id: "",
+    regence_id: "",
+    district_id: "",
+    village_id: "",
   });
 
   const [message, setMessage] = useState("");
@@ -34,28 +44,32 @@ export default function RegisterPage() {
     setMessage("");
 
     try {
-      const res = await fetch(API_URL + "/api/register", {
+      const res = await fetch(`${API_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
+      console.log("Data dikirim ke backend:", formData);
       if (res.ok) {
         setMessage("✅ Registrasi berhasil!");
         setFormData({
           username: "",
           password: "",
           name: "",
-          level: "user",
+          level: "TK",
           email: "",
-          role: "",
+          role: "santri",
+          province_id: "",
+          regence_id: "",
+          district_id: "",
+          village_id: "",
         });
-        window.location.href = "/home";
+        // window.location.href = "/home";
       } else {
         const error = await res.json();
         setMessage(`❌ Gagal: ${error.message || "Registrasi gagal."}`);
       }
-    } catch (err) {
+    } catch {
       setMessage("❌ Tidak bisa terhubung ke server.");
     } finally {
       setLoading(false);
@@ -76,110 +90,90 @@ export default function RegisterPage() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            required
+            placeholder="Username"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            placeholder="Password"
+            className="w-full p-2 border rounded"
+          />
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder="Nama Lengkap"
+            className="w-full p-2 border rounded"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
+          {/* WilayahSelector */}
+          <WilayahSelector
+            onChange={(wilayah) =>
+              setFormData((prev) => ({
+                ...prev,
+                ...wilayah,
+              }))
+            }
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Nama Lengkap
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
+          <select
+            name="level"
+            value={formData.level}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value="TK">TK</option>
+            <option value="SD">SD</option>
+            <option value="SMP">SMP</option>
+            <option value="SMA">SMA</option>
+          </select>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Level
-            </label>
-            <select
-              name="level"
-              value={formData.level}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            >
-              <option value="TK">TK</option>
-              <option value="SD">SD</option>
-              <option value="SMP">SMP</option>
-              <option value="SMA">SMA</option>
-            </select>
-          </div>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            placeholder="Email"
+            className="w-full p-2 border rounded"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Anda Calon
-            </label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-            >
-              <option value="santri">Santri</option>
-              <option value="guru">Guru</option>
-            </select>
-          </div>
+          <select
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value="santri">Santri</option>
+            <option value="guru">Guru</option>
+          </select>
+
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded text-white transition ${
+            className={`w-full py-2 rounded text-white ${
               loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
             }`}
           >
             {loading ? "Mendaftarkan..." : "Daftar"}
           </button>
         </form>
-        <div className="text-center mt-4">
-          <span className="text-sm text-gray-600 dark:text-gray-300">
-            Kembali
-          </span>
-          <a
-            href="/"
-            className="ml-2 text-sm text-blue-600 hover:underline dark:text-blue-400"
-          >
+
+        <div className="text-center mt-4 text-sm">
+          Sudah punya akun?{" "}
+          <a href="/" className="text-blue-600 hover:underline">
             Login
           </a>
         </div>

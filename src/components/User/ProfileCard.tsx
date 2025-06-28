@@ -18,7 +18,25 @@ export default function ProfileCard() {
   // Upload handler
   const handleUpload = async () => {
     const file = fileInputRef.current?.files?.[0];
-    if (!file || !file.type.startsWith("image/")) return;
+
+    if (!file) return;
+
+    // Validasi tipe file
+    if (!file.type.startsWith("image/")) {
+      alert("File harus berupa gambar");
+      return;
+    }
+
+    // Validasi ukuran file (max 2MB)
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      alert("Ukuran file maksimal 2MB");
+      return;
+    }
+
+    // ✅ Langsung tampilkan preview lokal
+    const localPreview = URL.createObjectURL(file);
+    setPhotoUrl(localPreview);
 
     const formData = new FormData();
     formData.append("photo", file);
@@ -35,18 +53,15 @@ export default function ProfileCard() {
       const result = await res.json();
 
       if (result.photo) {
+        // Pakai URL dari server (jika berbeda dari preview)
         setPhotoUrl(result.photo);
-
         const updatedUser = { ...user, photo: result.photo };
         localStorage.setItem("user", JSON.stringify(updatedUser));
         setUser(updatedUser);
       }
     } catch (err) {
-      if (err instanceof Error) {
-        alert("Upload gagal: " + err.message);
-      } else {
-        alert("Upload gagal");
-      }
+      alert("Upload gagal, silakan coba lagi");
+      console.error(err);
     }
   };
 
