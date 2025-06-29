@@ -44,7 +44,16 @@ export default function GrafikBelajarBar() {
     );
 
   const chartData = {
-    labels: dataLog.map((log) => log.tanggal),
+    labels: dataLog.map((log) => {
+      const date = new Date(log.tanggal);
+      const day = String(date.getDate()).padStart(2, "0");
+      const month = date
+        .toLocaleString("id-ID", {
+          month: "short",
+        })
+        .replace(".", "");
+      return `${day}-${month}`;
+    }),
     datasets: [
       {
         label: "Durasi Belajar (menit)",
@@ -76,7 +85,7 @@ export default function GrafikBelajarBar() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow p-6 mt-6">
+    <div className="bg-white rounded-xl shadow p-4 mt-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">
         📊 Grafik Durasi Belajar
       </h2>

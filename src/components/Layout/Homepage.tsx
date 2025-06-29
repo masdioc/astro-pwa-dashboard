@@ -111,8 +111,14 @@ const allMenus: MenuItem[] = [
   {
     title: "Progres Pembelajaran",
     icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/couse_chart",
+    link: "/course/course_chart",
     roles: ["santri"],
+  },
+  {
+    title: "Progres Pembelajaran Santri",
+    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
+    link: "/course/course_monitor_siswa",
+    roles: ["guru"],
   },
 ];
 

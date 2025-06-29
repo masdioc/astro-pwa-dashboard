@@ -166,7 +166,7 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
         ) : (
           <div />
         )}
-        <a href="/surahIndex" className="block text-center hover:underline">
+        <a href="/etc/surahIndex" className="block text-center hover:underline">
           📖 Daftar Surah
         </a>
         {nomorInt < 114 ? (
@@ -259,10 +259,12 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
                 className="font-serif inline-flex items-center gap-2 justify-end flex-wrap text-right"
                 style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
               >
-                {/* <p className="text-right text-2xl leading-snug">{a.arabic}</p> */}
-                <p className="text-right text-2xl font-indonesia leading-snug">
+                <span className="text-right text-4xl leading-snug">
                   {a.arabic}
-                </p>
+                </span>
+                {/* <p className="text-right text-2xl font-indonesia leading-snug">
+                  {a.arabic}
+                </p> */}
                 <button
                   onClick={() => simpanTerakhirDibaca(i + 1)}
                   title="Tandai terakhir dibaca"
