@@ -9,7 +9,10 @@ export default function EnrollStudWrapper() {
       <Routes>
         <Route path="/" element={<EnrolledStudentList />} />
         <Route path="/enroll_student" element={<EnrolledStudentList />} />
-        <Route path="/observasi_murid/:userId" element={<ObservasiMur />} />
+        <Route
+          path="/observasi/observasi_murid/:userId"
+          element={<ObservasiMur />}
+        />
       </Routes>
     </BrowserRouter>
   );

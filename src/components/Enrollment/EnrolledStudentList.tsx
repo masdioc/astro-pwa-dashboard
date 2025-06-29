@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_URL, BASE_URL } from "astro:env/client";
+import { API_URL } from "astro:env/client";
 import { useNavigate } from "react-router-dom";
 import { timeAgo } from "../../helpers/timeAgo";
 
@@ -81,7 +81,7 @@ const EnrolledStudentList: React.FC = () => {
                       <td className="p-3 border-b text-center">
                         <button
                           onClick={() =>
-                            navigate(`/observasi_murid/${student.id}`)
+                            navigate(`/observasi/observasi_murid/${student.id}`)
                           }
                           className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded"
                         >

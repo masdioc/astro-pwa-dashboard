@@ -86,7 +86,7 @@ const allMenus: MenuItem[] = [
   {
     title: "Observasi Santri",
     icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/observasi_murid",
+    link: "/observasi/observasi_murid",
     roles: ["guru"],
   },
 
