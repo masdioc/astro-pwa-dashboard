@@ -23,7 +23,7 @@ export default function UserDataPage() {
   const [detailUser, setDetailUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetch(API_URL + "/api/users/role/santri")
+    fetch(API_URL + "/api/users/role/guru")
       .then((res) => res.json())
       .then((data) => {
         console.log("Data loaded:", data);
@@ -60,7 +60,7 @@ export default function UserDataPage() {
   return (
     <>
       <div className="w-screen h-screen overflow-x-auto flex flex-col p-4 max-w-screen-xl mx-auto">
-        <h1 className="text-2xl md:text-3xl font-bold mb-4">Data Santri</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-4">Data Guru</h1>
 
         {/* Filter dan Tombol */}
         <div className="mb-4 flex flex-col md:flex-row gap-2 md:gap-4 items-start md:items-center">

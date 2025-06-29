@@ -71,6 +71,24 @@ const allMenus: MenuItem[] = [
   //   roles: ["santri", "guru", "admin"],
   // },
   {
+    title: "Data Guru",
+    icon: <Users className="w-8 h-8 text-pink-600" />,
+    link: "/u/data_guru",
+    roles: ["admin"],
+  },
+  {
+    title: "Data Siswa",
+    icon: <Users className="w-8 h-8 text-pink-600" />,
+    link: "/u/data_siswa",
+    roles: ["admin"],
+  },
+  {
+    title: "Modul Pembelajaran",
+    icon: <School className="w-8 h-8 text-pink-600" />,
+    link: "/modules",
+    roles: ["guru", "admin"],
+  },
+  {
     title: "Kelas",
     icon: <School className="w-8 h-8 text-pink-600" />,
     link: "/course",
