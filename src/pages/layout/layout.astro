@@ -2,14 +2,22 @@
 import Sidebar from "../../components/Layout/Sidebar.astro";
 import ToastProvider from "../../components/Etc/ToasterProvider";
 import { Contact, Home, MailsIcon, MonitorCheck } from "lucide-react";
+import "../../styles/global.css";
+
 const { title } = Astro.props;
 ---
 
 <html lang="id">
   <head>
     <meta charset="UTF-8" />
+
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link
+      href="https://fonts.googleapis.com/css2?family=Amiri&display=swap"
+      rel="stylesheet"
+    /> -->
+
     <script src="https://unpkg.com/lucide@latest" defer></script>
     <link rel="manifest" href="/manifest.webmanifest" />
   </head>

@@ -1,7 +1,8 @@
 // tailwind.config.js
 module.exports = {
   darkMode: "class",
-  content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
+  // content: ["./src/**/*.{astro,html,js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx,astro}"],
   theme: {
     extend: {
       animation: {
@@ -13,9 +14,15 @@ module.exports = {
           "100%": { opacity: 1, transform: "scale(1)" },
         },
       },
+
+      // fontFamily: {
+      //   arabic: ['"Traditional Arabic"', "Amiri", "serif"],
+      // },
+      // fontFamily: {
+      //   arabic: ["LPMQ", "serif"],
+      // },
       fontFamily: {
-        // arab: ["Indoensia", "serif"],
-        indonesia: ["Indonesia", "serif"],
+        arabic: ["arabic", "serif"],
       },
     },
   },

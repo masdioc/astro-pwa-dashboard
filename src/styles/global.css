@@ -2,19 +2,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap'); */
 
 body {
   @apply font-sans;
-}
-@font-face {
-  font-family: 'Indonesia';
-  src: url('/fonts/LPMQ.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Arab';
-  src: url('/fonts/LPMQ.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+} 
+ @font-face {
+  font-family: "arabic";
+  src: url("/fonts/LPMQ.ttf") format("truetype");
+  /* src: url("https://fonts.gstatic.com/s/amiri/v27/J7aRnpd8CGxBHpUgtLMA7w.woff2")format('woff2'); */
+  font-display: swap;
+      font-weight:normal;
+    font-style:normal; 
 }
