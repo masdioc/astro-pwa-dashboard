@@ -1,2 +1,5 @@
 emilys
 emilyspass
+
+
+ALTER USER 'apiuser'@'%' IDENTIFIED WITH mysql_native_password BY 'password2025';

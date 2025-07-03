@@ -127,13 +127,13 @@ const allMenus: MenuItem[] = [
     roles: ["santri"],
   },
   {
-    title: "Progres Pembelajaran",
+    title: "Statistik Pembelajaran",
     icon: <ChartBar className="w-8 h-8 text-pink-600" />,
     link: "/course/course_chart",
     roles: ["santri"],
   },
   {
-    title: "Progres Pembelajaran Santri",
+    title: "Monitor Pembelajaran Santri",
     icon: <ChartBar className="w-8 h-8 text-pink-600" />,
     link: "/course/course_monitor_siswa",
     roles: ["guru"],

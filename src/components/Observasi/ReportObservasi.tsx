@@ -91,8 +91,8 @@ export default function ReportObservasi() {
             <tr>
               <th className="border p-2">#</th>
               <th className="border p-2 text-left">Observasi</th>
-              <th className="border p-2 text-center">status_praktek</th>
-              <th className="border p-2 text-center">status_teori</th>
+              <th className="border p-2 text-center">Praktek</th>
+              <th className="border p-2 text-center">Teori</th>
             </tr>
           </thead>
           <tbody>

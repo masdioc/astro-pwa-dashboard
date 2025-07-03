@@ -21,9 +21,8 @@ export default function CourseEnrollment() {
     if (!data) return;
     const user = JSON.parse(data);
     setUserId(user.id);
-    // console.log(user.id);
   }, []);
-  // Fetch courses ketika userId sudah tersedia
+
   useEffect(() => {
     if (userId) {
       fetchCourses(userId);
@@ -67,51 +66,99 @@ export default function CourseEnrollment() {
 
   if (!userId) {
     return (
-      <p className="text-center text-red-500">Silakan login terlebih dahulu.</p>
+      <p className="text-center text-red-500 mt-6">
+        Silakan login terlebih dahulu.
+      </p>
     );
   }
+
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Daftar Course</h2>
-      <div className="bg-white rounded-xl shadow p-4">
-        {loading ? (
-          <p>Memuat data...</p>
-        ) : (
-          <table className="w-full table-auto border border-gray-300">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="border px-4 py-2 text-left">Judul</th>
-                <th className="border px-4 py-2 text-left">Deskripsi</th>
-                <th className="border px-4 py-2 text-left">Guru</th>
-                <th className="border px-4 py-2 text-center">Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {courses.map((course) => (
-                <tr key={course.id} className="hover:bg-gray-50">
-                  <td className="border px-4 py-2">{course.title}</td>
-                  <td className="border px-4 py-2">{course.description}</td>
-                  <td className="border px-4 py-2">{course.teacher_name}</td>
-                  <td className="border px-4 py-2 text-center">
-                    {course.enrolled ? (
-                      <span className="text-green-600 font-semibold">
-                        Sudah Terdaftar
-                      </span>
-                    ) : (
-                      <button
-                        onClick={() => handleEnroll(course.id)}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded"
-                      >
-                        Daftar
-                      </button>
-                    )}
-                  </td>
+    <div className="max-w-full mx-auto px-2 sm:max-w-3xl py-4">
+      <h2 className="text-lg sm:text-2xl font-bold mb-4 text-center sm:text-left">
+        Daftar Course
+      </h2>
+
+      {loading ? (
+        <p className="text-center text-gray-500">Memuat data...</p>
+      ) : courses.length === 0 ? (
+        <p className="text-center text-gray-500">Tidak ada course tersedia.</p>
+      ) : (
+        <>
+          {/* 👇 Table untuk layar besar */}
+          <div className="hidden sm:block bg-white rounded-xl shadow p-4 overflow-x-auto">
+            <table className="min-w-full table-auto border border-gray-300">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="border px-4 py-2 text-left">Judul</th>
+                  <th className="border px-4 py-2 text-left">Deskripsi</th>
+                  <th className="border px-4 py-2 text-left">Guru</th>
+                  <th className="border px-4 py-2 text-center">Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+              </thead>
+              <tbody>
+                {courses.map((course) => (
+                  <tr
+                    key={course.id}
+                    className="hover:bg-gray-50 transition-colors"
+                  >
+                    <td className="border px-4 py-2">{course.title}</td>
+                    <td className="border px-4 py-2">{course.description}</td>
+                    <td className="border px-4 py-2">{course.teacher_name}</td>
+                    <td className="border px-4 py-2 text-center">
+                      {course.enrolled ? (
+                        <span className="text-green-600 font-semibold">
+                          Sudah Terdaftar
+                        </span>
+                      ) : (
+                        <button
+                          onClick={() => handleEnroll(course.id)}
+                          onKeyDown={(e) =>
+                            e.key === "Enter" && handleEnroll(course.id)
+                          }
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1 rounded text-sm"
+                        >
+                          Daftar
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 👇 Card view untuk mobile */}
+          <div className="sm:hidden space-y-4">
+            <p className="text-sm text-gray-500">
+              Swipe ke bawah untuk melihat daftar...
+            </p>
+            {courses.map((course) => (
+              <div
+                key={course.id}
+                className="bg-white rounded-xl shadow p-4 space-y-2"
+              >
+                <h3 className="font-bold text-base">{course.title}</h3>
+                <p className="text-sm text-gray-700">{course.description}</p>
+                <p className="text-sm text-gray-500">
+                  Guru: {course.teacher_name}
+                </p>
+                {course.enrolled ? (
+                  <p className="text-green-600 font-semibold text-sm">
+                    Sudah Terdaftar
+                  </p>
+                ) : (
+                  <button
+                    onClick={() => handleEnroll(course.id)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                  >
+                    Daftar
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }
