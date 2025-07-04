@@ -26,9 +26,16 @@ const DoaList: React.FC<{ doaData: DoaItem[] }> = ({ doaData }) => {
               {item.judul}
             </h2>
 
-            <p className="text-3xl text-right font-serif text-gray-900 leading-snug mb-4 pr-4">
+            {/* <p className="text-3xl text-right font-serif text-gray-900 leading-snug mb-4 pr-4">
               {item.arab}
-            </p>
+            </p> */}
+
+            <div
+              className="rtl font-arabic text-right"
+              style={{ fontSize: `36px`, lineHeight: "1.6" }}
+            >
+              {item.arab}
+            </div>
 
             <p className="text-lg italic text-gray-700 mb-2">
               <strong>Latin:</strong> {item.latin}
@@ -42,12 +49,12 @@ const DoaList: React.FC<{ doaData: DoaItem[] }> = ({ doaData }) => {
               <strong>Keterangan:</strong> {item.keterangan}
             </p>
 
-            {item.audio && (
+            {/* {item.audio && (
               <audio controls className="mt-3">
                 <source src={item.audio} type="audio/mpeg" />
                 Browser tidak mendukung pemutar audio.
               </audio>
-            )}
+            )} */}
           </div>
         ))}
       </div>

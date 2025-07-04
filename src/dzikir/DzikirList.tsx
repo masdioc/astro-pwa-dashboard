@@ -24,9 +24,15 @@ const DzikirList: React.FC<{ dzikirData: DzikirItem[] }> = ({ dzikirData }) => {
             <h2 className="text-2xl font-semibold text-blue-700 mb-3">
               {item.urutan}. {item.judul}
             </h2>
-            <p className="text-4xl text-right font-serif text-gray-900 leading-snug mb-4">
+            {/* <p className="text-4xl text-right font-serif text-gray-900 leading-snug mb-4">
               {item.arab}
-            </p>
+            </p> */}
+            <div
+              className="rtl font-arabic text-right"
+              style={{ fontSize: `36px`, lineHeight: "1.6" }}
+            >
+              {item.arab}
+            </div>
             <p className="text-lg text-gray-700 italic mb-2">
               <strong>Latin:</strong> {item.latin}
             </p>

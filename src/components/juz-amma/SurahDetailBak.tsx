@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BASE_URL } from "astro:env/client";
 import { API_URL } from "astro:env/client";
 import toast from "react-hot-toast";
-import "../../styles/global.css";
 
 type Ayat = {
   arabic: string;
@@ -16,83 +15,16 @@ interface Props {
 }
 
 const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
-  const [ayat, setAyat] = useState<Ayat[]>([]);
-  const [showTranslation, setShowTranslation] = useState(true);
-  const [fontSize, setFontSize] = useState(35);
-  const [keterangan, setKeterangan] = useState<string>("");
-  const [suratAudioUrl, setSuratAudioUrl] = useState("");
-  const [showInfo, setShowInfo] = useState(false);
-
-  const nomorInt = parseInt(nomor);
-
-  const toArabicNumber = (num: number): string =>
-    num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]);
-
-  console.log("Font LPMQ tersedia?", document.fonts.check("16px LPMQ"));
-
-  useEffect(() => {
-    fetch(`/data/surah/surah${nomor}.json`)
-      .then((res) => res.json())
-      .then((data) => {
-        setAyat(data.ayat || []);
-      });
-
-    const formatted = String(nomor).padStart(3, "0");
-    const mp3 = `${BASE_URL}/data/audio/${formatted}.mp3`;
-    setSuratAudioUrl(mp3);
-  }, [nomor]);
-
-  useEffect(() => {
-    if (!ayat.length) return;
-
-    const local = localStorage.getItem("lastRead");
-    let done = false;
-
-    if (local) {
-      try {
-        const data = JSON.parse(local);
-        if (data.surah === nomor && data.ayat) {
-          const el = document.getElementById(`ayat-${data.ayat}`);
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-            el.classList.add("ring-2", "ring-blue-400", "rounded-lg");
-            setTimeout(
-              () => el.classList.remove("ring-2", "ring-blue-400"),
-              3000
-            );
-            done = true;
-          }
-        }
-      } catch (e) {
-        console.warn("Gagal baca localStorage:", e);
-      }
-    }
-
-    if (!done) {
-      const item = localStorage.getItem("user");
-      if (!item) return;
-      const user = JSON.parse(item);
-
-      fetch(`${API_URL}/api/last-read?user_id=${user.id}&_=${Date.now()}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.surah_nomor === nomor && data.ayat_nomor) {
-            const el = document.getElementById(`ayat-${data.ayat_nomor}`);
-            if (el) {
-              el.scrollIntoView({ behavior: "smooth", block: "start" });
-              el.classList.add("animate-pulse");
-              setTimeout(() => el.classList.remove("animate-pulse"), 8000);
-            }
-          }
-        });
-    }
-  }, [ayat, nomor]);
-
   const simpanTerakhirDibaca = async (ayatKe: number) => {
     const item = localStorage.getItem("user");
-    if (!item) return;
+    if (!item) {
+      console.warn("❌ Tidak ada data user di localStorage");
+      return;
+    }
 
     const user = JSON.parse(item);
+    console.log("✅ Simpan terakhir dibaca:", { user, ayatKe });
+
     localStorage.setItem(
       "lastRead",
       JSON.stringify({
@@ -102,10 +34,8 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
         timestamp: Date.now(),
       })
     );
-    toast.success(`📌 Ayat ${ayatKe} disimpan sebagai terakhir dibaca`);
-
     try {
-      await fetch(`${API_URL}/api/last-read`, {
+      const res = await fetch(`${API_URL}/api/last-read`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -115,33 +45,135 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
           ayat_nomor: ayatKe,
         }),
       });
+      console.log("📤 Terkirim ke server:", res.status);
     } catch (err) {
-      console.error("Gagal simpan ke server:", err);
+      console.error("❌ Gagal simpan ke server:", err);
+    }
+  };
+  const [ayat, setAyat] = useState<Ayat[]>([]);
+  const [showTranslation, setShowTranslation] = useState(true);
+  const [showLatin, setShowLatin] = useState(false);
+  const [fontSize, setFontSize] = useState(35);
+  const [keterangan, setKeterangan] = useState<string>("");
+  const [audioPerAyat, setAudioPerAyat] = useState<Record<number, string>>({});
+  const [playingAyat, setPlayingAyat] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const nomorInt = parseInt(nomor);
+
+  const toArabicNumber = (num: number): string =>
+    num.toString().replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[parseInt(d)]);
+
+  useEffect(() => {
+    fetch(`/data/surah/surah${nomor}.json`)
+      .then((res) => res.json())
+      .then((data) => {
+        setAyat(data.ayat || []);
+
+        const local = localStorage.getItem("lastRead");
+        let done = false;
+
+        if (local) {
+          try {
+            const data = JSON.parse(local);
+            console.log("📌 Last read from localStorage:", data);
+            if (data.surah === nomor && data.ayat) {
+              const el = document.getElementById(`ayat-${data.ayat}`);
+              console.log("🎯 Elemen ditemukan?", !!el);
+              if (el) {
+                setTimeout(() => {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                  el.classList.add("ring-2", "ring-blue-400", "rounded-lg");
+                  setTimeout(
+                    () => el.classList.remove("ring-2", "ring-blue-400"),
+                    3000
+                  );
+                }, 100);
+                done = true;
+              }
+            }
+          } catch (e) {
+            console.warn("❌ Gagal baca localStorage lastRead:", e);
+          }
+        }
+
+        if (!done) {
+          const item = localStorage.getItem("user");
+          if (!item) return;
+          const user = JSON.parse(item);
+          fetch(`${API_URL}/api/last-read?user_id=${user.id}&_=${Date.now()}`)
+            .then((res) => res.json())
+            .then((data) => {
+              if (data && data.surah_nomor === nomor && data.ayat_nomor) {
+                console.log("🌐 Last read from server:", data);
+                const el = document.getElementById(`ayat-${data.ayat_nomor}`);
+                console.log("🎯 Elemen ditemukan?", !!el);
+                if (el) {
+                  setTimeout(() => {
+                    el.scrollIntoView({ behavior: "smooth", block: "start" });
+                    el.classList.add("animate-pulse");
+                    setTimeout(
+                      () => el.classList.remove("animate-pulse"),
+                      8000
+                    );
+                  }, 100);
+                }
+              }
+            });
+        }
+      });
+
+    fetch("/data/durasi-ayat1.json")
+      .then((res) => res.json())
+      .then((data) => {
+        const filtered = data.filter(
+          (d: any) => d.no_surah === parseInt(nomor)
+        );
+        const mapping: Record<number, string> = {};
+        filtered.forEach((d: any) => {
+          mapping[d.no_ayah] = d.url_audio;
+        });
+        if (nomorInt !== 9) {
+          mapping[0] = "/data/audio/bismillah.mp3";
+        }
+        setAudioPerAyat(mapping);
+      });
+  }, [nomor]);
+
+  useEffect(() => {
+    if (playingAyat !== null) {
+      const element = document.getElementById(`ayat-${playingAyat}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    }
+  }, [playingAyat]);
+
+  const playNextAyat = (current: number) => {
+    const next = current + 1;
+    if (!audioPerAyat[next]) {
+      setPlayingAyat(null);
+      return;
+    }
+    setPlayingAyat(next);
+    if (audioRef.current) {
+      audioRef.current.src = audioPerAyat[next];
+      audioRef.current.play();
     }
   };
 
-  const addToHafalan = async () => {
-    const item = localStorage.getItem("user");
-    if (!item) return toast.error("⚠️ Data user tidak ditemukan");
-
-    const user = JSON.parse(item);
-
-    try {
-      const res = await fetch(`${API_URL}/api/hafalan`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          user_id: user.id,
-          surah_nomor: nomor,
-          surah_nama: nama,
-        }),
-      });
-
-      if (res.ok)
-        toast.success("🧠 Surah ditambahkan ke hafalan! 💪 Semangat!");
-      else toast.error("❌ Gagal menyimpan.");
-    } catch (error) {
-      toast.error("❌ Terjadi kesalahan.");
+  const togglePlayAyat = (ayatKe: number) => {
+    if (playingAyat === ayatKe) {
+      audioRef.current?.pause();
+      setPlayingAyat(null);
+    } else {
+      if (!audioPerAyat[ayatKe]) return toast.error("Audio tidak ditemukan");
+      setPlayingAyat(ayatKe);
+      if (audioRef.current) {
+        audioRef.current.src = audioPerAyat[ayatKe];
+        audioRef.current.play();
+      }
+      simpanTerakhirDibaca(ayatKe);
     }
   };
 
@@ -149,64 +181,35 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
     <div className="p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-white rounded-lg border border-gray-200 dark:border-gray-700">
       <h2 className="text-2xl font-bold text-center mb-2">{nama}</h2>
 
-      <div className="flex justify-between items-center text-sm mb-4 text-blue-600 dark:text-blue-400">
-        {nomorInt > 1 ? (
-          <a href={`/surah/${nomorInt - 1}`} className="hover:underline">
-            ← Sebelumnya
-          </a>
-        ) : (
-          <div />
-        )}
-        <a href="/etc/surahIndex" className="block text-center hover:underline">
-          📖 Daftar Surah
-        </a>
-        {nomorInt < 114 ? (
-          <a href={`/surah/${nomorInt + 1}`} className="hover:underline">
-            Selanjutnya →
-          </a>
-        ) : (
-          <div />
-        )}
-      </div>
+      <audio
+        ref={audioRef}
+        onEnded={() => playingAyat !== null && playNextAyat(playingAyat)}
+        hidden
+      />
 
-      <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={() => setShowInfo(true)}
-          className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+      {nomorInt !== 9 && (
+        <div
+          id="ayat-0"
+          className={`text-center my-6 rtl font-arabic leading-loose transition-all ${
+            playingAyat === 0
+              ? "ring-2 ring-yellow-400 dark:ring-yellow-500 rounded-lg"
+              : ""
+          }`}
+          style={{ fontSize: `${fontSize}px` }}
         >
-          ℹ️ Keterangan
-        </button>
-        <button
-          onClick={addToHafalan}
-          className="text-sm px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700 transition"
-        >
-          + Hafalan
-        </button>
-      </div>
-
-      {showInfo && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 z-50 flex items-center justify-center">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full relative">
-            <button
-              onClick={() => setShowInfo(false)}
-              className="absolute top-2 right-3 text-gray-600 dark:text-gray-300 hover:text-red-500"
+          بِسْمِ اللَّهِ الرَّحْمَـٰنِ الرَّحِيمِ
+          <div className="flex justify-center mt-2">
+            <span
+              onClick={() => togglePlayAyat(0)}
+              className={`cursor-pointer text-xl ${
+                playingAyat === 0 ? "text-red-600" : "text-green-600"
+              }`}
+              title={playingAyat === 0 ? "Hentikan" : "Putar Bismillah"}
             >
-              ✖
-            </button>
-            <h3 className="text-xl font-bold mb-2">Tentang Surat {nama}</h3>
-            <p
-              className="text-sm text-gray-700 dark:text-gray-200 whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: keterangan }}
-            />
+              {playingAyat === 0 ? "⏸️" : "▶️"}
+            </span>
           </div>
         </div>
-      )}
-
-      {suratAudioUrl && (
-        <audio controls className="w-full mb-4">
-          <source src={suratAudioUrl} type="audio/mpeg" />
-          Browser tidak mendukung audio.
-        </audio>
       )}
 
       <div className="flex flex-wrap justify-between items-center gap-4 mb-4">
@@ -216,6 +219,14 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
         >
           {showTranslation ? "Sembunyikan Terjemahan" : "Tampilkan Terjemahan"}
         </button>
+
+        <button
+          onClick={() => setShowLatin((prev) => !prev)}
+          className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          {showLatin ? "Sembunyikan Latin" : "Tampilkan Latin"}
+        </button>
+
         <div className="flex items-center gap-2">
           <button
             onClick={() => setFontSize((size) => Math.max(20, size - 2))}
@@ -238,32 +249,72 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
             <div
               key={i}
               id={`ayat-${i + 1}`}
-              className="relative text-right border-b border-gray-200 dark:border-gray-700 pb-5 pt-6"
+              className={`relative text-right border-b border-gray-200 dark:border-gray-700 pb-5 pt-6 transition-all ${
+                playingAyat === i + 1
+                  ? "ring-2 ring-yellow-400 dark:ring-yellow-500 rounded-lg"
+                  : ""
+              }`}
             >
               <div
-                className="inline-flex items-center gap-2 justify-end flex-wrap text-right"
+                className="rtl font-arabic my-4 text-right"
                 style={{ fontSize: `${fontSize}px`, lineHeight: "1.6" }}
               >
-                {/* <span className="text-right text-4xl leading-snug  Indonesia">
-                  {a.arabic}
-                </span> */}
-                <div className="text-[40px] leading-loose rtl font-Amiri my-4">
-                  {a.arabic}
-                </div>
-
-                <button
-                  onClick={() => simpanTerakhirDibaca(i + 1)}
-                  title="Tandai terakhir dibaca"
-                  className="absolute top-0 right-0 w-12 h-12 text-2xl font-bold rounded-full border border-gray-400 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                {a.arabic}{" "}
+                <span
+                  className="font-bold text-blue-600 dark:text-blue-400"
+                  style={{ fontSize: `${fontSize}px` }}
                 >
                   {toArabicNumber(i + 1)}
+                </span>
+              </div>
+              <div className="flex gap-2 justify-end mb-2">
+                <span
+                  onClick={() => togglePlayAyat(i + 1)}
+                  className={`cursor-pointer text-xl ${
+                    playingAyat === i + 1 ? "text-red-600" : "text-green-600"
+                  }`}
+                  title={
+                    playingAyat === i + 1 ? "Hentikan" : `Putar ayat ${i + 1}`
+                  }
+                >
+                  {playingAyat === i + 1 ? "⏸️" : "▶️"}
+                </span>
+                <button
+                  onClick={() => {
+                    const user = localStorage.getItem("user");
+                    if (!user) return;
+                    localStorage.setItem(
+                      "lastRead",
+                      JSON.stringify({
+                        surah: nomor,
+                        nama,
+                        ayat: i + 1,
+                        timestamp: Date.now(),
+                      })
+                    );
+                    toast.success(
+                      `📌 Ayat ${i + 1} disimpan sebagai terakhir dibaca`
+                    );
+                  }}
+                  title="Tandai terakhir dibaca"
+                  className="w-10 h-10 text-lg font-bold rounded-full border border-gray-400 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+                >
+                  🔖
                 </button>
               </div>
-              <div className="text-base text-gray-700 dark:text-gray-300 italic mr-10">
-                {a.latin}
-              </div>
+              {showLatin && (
+                <div
+                  className="italic mr-10 text-gray-700 dark:text-gray-300"
+                  style={{ fontSize: `${fontSize - 10}px` }}
+                >
+                  {a.latin}
+                </div>
+              )}
               {showTranslation && (
-                <div className="text-sm text-gray-800 dark:text-gray-200 text-left mt-1">
+                <div
+                  className="text-left mt-1 text-gray-800 dark:text-gray-200"
+                  style={{ fontSize: `${fontSize - 14}px` }}
+                >
                   {a.translation}
                 </div>
               )}
@@ -273,29 +324,6 @@ const SurahDetail: React.FC<Props> = ({ nomor, nama }) => {
           <div className="text-center text-gray-500 dark:text-gray-400 mt-10">
             Tidak ada ayat untuk surat ini.
           </div>
-        )}
-      </div>
-
-      <div className="flex justify-between text-sm mt-10 pt-4 border-t border-gray-200 dark:border-gray-700">
-        {nomorInt > 1 ? (
-          <a
-            href={`/surah/${nomorInt - 1}`}
-            className="text-blue-600 hover:underline"
-          >
-            ← Sebelumnya
-          </a>
-        ) : (
-          <div />
-        )}
-        {nomorInt < 114 ? (
-          <a
-            href={`/surah/${nomorInt + 1}`}
-            className="text-blue-600 hover:underline ml-auto"
-          >
-            Selanjutnya →
-          </a>
-        ) : (
-          <div />
         )}
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function SurahList({ surahList }: { surahList: any[] }) {
             </div>
 
             <div className="mt-3 flex items-center justify-between">
-   {/* <button
+              {/* <button
  onClick={() => handlePlay(`data/audio/${formatted}.mp3`, index)}
   
   className="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 text-white rounded"
@@ -66,12 +66,23 @@ export default function SurahList({ surahList }: { surahList: any[] }) {
   ▶️ Putar
 </button> */}
 
-
-              <a
+              {/* <a
                 href={`/surah/${surah.nomor}`}
                 className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Buka Surat →
+              </a> */}
+              {/* <a
+                href={`/surah_baca/${surah.nomor}`}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Buka Surat & Dengar →
+              </a> */}
+              <a
+                href={`/surah_baca/${surah.nomor}`}
+                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              >
+                Buka Surat & Dengar →
               </a>
             </div>
           </div>

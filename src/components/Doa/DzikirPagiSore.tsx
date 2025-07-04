@@ -33,9 +33,15 @@ const DzikirPagiSoreList: React.FC<{ dzikirData: DzikirItem[] }> = ({
               </span>
             </div>
 
-            <p className="text-2xl sm:text-3xl text-right font-serif text-gray-900 leading-snug mb-4 overflow-x-auto">
+            {/* <p className="text-2xl  font-arabic  sm:text-3xl text-right font-serif text-gray-900 leading-snug mb-4 overflow-x-auto">
               {item.arab}
-            </p>
+            </p> */}
+            <div
+              className="rtl font-arabic text-right"
+              style={{ fontSize: `36px`, lineHeight: "1.6" }}
+            >
+              {item.arab}
+            </div>
 
             <p className="text-base sm:text-lg italic text-gray-700 mb-2">
               <strong>Latin:</strong> {item.latin}

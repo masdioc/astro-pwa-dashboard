@@ -1,0 +1,14 @@
+---
+import SurahList from "../../components/juz-amma/SurahList";
+import listSurah from "../../data/list_surah.json";
+import LastReadButton from "../../components/LastRead/LastReading";
+import BaseLayout from "../../pages/layout/layout.astro";
+import PlayAudio from "../../components/Etc/PlayAudio";
+// import audioFiles from "../data/list_surah_audio_juza30.json";
+---
+
+<BaseLayout title="Al Qur'an">
+  <LastReadButton client:only="react" />
+
+  <SurahList client:only="react" surahList={listSurah} />
+</BaseLayout>
