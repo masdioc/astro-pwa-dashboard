@@ -14,15 +14,11 @@ export async function getStaticPaths() {
 ---
 
 <BaseLayout title={`Surat ${surat?.nama || "Tidak Ditemukan"}`}>
-  <main class="max-w-3xl mx-auto">
-    {
-      surat ? (
-        <SurahDetail client:only="react" nomor={nomor} nama={surat.nama} />
-      ) : (
-        <div class="text-center text-gray-600 mt-10">
-          Surat tidak ditemukan.
-        </div>
-      )
-    }
-  </main>
+  {
+    surat ? (
+      <SurahDetail client:only="react" nomor={nomor} nama={surat.nama} />
+    ) : (
+      <div class="text-center text-gray-600 mt-10">Surat tidak ditemukan.</div>
+    )
+  }
 </BaseLayout>

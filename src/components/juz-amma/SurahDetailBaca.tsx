@@ -17,7 +17,7 @@ type Mode = "scroll" | "audio" | "both";
 
 const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
   const [ayat, setAyat] = useState<Ayat[]>([]);
-  const [showTranslation, setShowTranslation] = useState(true);
+  const [showTranslation, setShowTranslation] = useState(false);
   const [showLatin, setShowLatin] = useState(false);
   const [fontSize, setFontSize] = useState(35);
   const [playingAyat, setPlayingAyat] = useState<number | null>(null);
@@ -258,10 +258,6 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
             {showLatin ? "Hide Latin" : "Tampilkan Latin"}
           </button>
         </div>
-      </div>
-
-      <div className="p-4 pt-24 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-[90%] mx-auto">
-        <h2 className="text-2xl font-bold text-center mb-4">{nama}</h2>
         {autoScrollActive && (
           <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 mb-4">
             <div
@@ -270,6 +266,10 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
             ></div>
           </div>
         )}
+      </div>
+
+      <div className="p-4 pt-10 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-[90%] mx-auto">
+        <h2 className="text-2xl font-bold text-center mb-4">{nama}</h2>
 
         <audio ref={audioRef} hidden />
 
