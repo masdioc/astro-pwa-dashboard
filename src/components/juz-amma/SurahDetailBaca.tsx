@@ -70,11 +70,13 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
       .then((data) => {
         const ayatData = data.ayat || [];
         if (nomorInt !== 9) {
+          // if (nomorInt !== 1) {
           ayatData.unshift({
             arabic: "بِسْمِ اللهِ الرَّحْمَـنِ الرَّحِيمِ",
             latin: "Bismillāhir-raḥmānir-raḥīm",
             translation: "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang",
           });
+          // }
         }
         setAyat(ayatData);
       });
@@ -268,12 +270,12 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
         )}
       </div>
 
-      <div className="p-4 pt-10 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-[90%] mx-auto">
+      <div className=" pt-10 bg-white dark:bg-gray-900 text-gray-900 dark:text-white w-full mx-auto">
         <h2 className="text-2xl font-bold text-center mb-4">{nama}</h2>
 
         <audio ref={audioRef} hidden />
 
-        <div className="space-y-3">
+        <div className="space-y-2 pr-3">
           {ayat.map((a, i) => (
             <div
               key={i}
