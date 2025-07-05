@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { BASE_URL } from "astro:env/client";
+import { BookOpen, Headphones } from "lucide-react"; // optional icon lib
 
 export default function SurahList({ surahList }: { surahList: any[] }) {
   const [query, setQuery] = useState("");
@@ -12,13 +13,11 @@ export default function SurahList({ surahList }: { surahList: any[] }) {
   });
 
   const handlePlay = (nomor: number, index: number) => {
-    // pause semua dulu
     Object.values(audioRefs.current).forEach((audio) => {
       audio.pause();
       audio.currentTime = 0;
     });
 
-    // set src dan play
     const formatted = String(nomor).padStart(3, "0");
     const url = `${BASE_URL}data/audio/${formatted}.mp3`;
     const audio = new Audio(url);
@@ -31,60 +30,44 @@ export default function SurahList({ surahList }: { surahList: any[] }) {
     <>
       <input
         type="text"
-        placeholder="Cari surah..."
-        className="w-full mb-4 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+        placeholder="🔍 Cari surah..."
+        className="w-full mb-6 px-5 py-3 text-lg border rounded-2xl shadow-md focus:outline-none focus:ring focus:border-blue-400 dark:bg-gray-900 dark:border-gray-700 dark:text-white"
         onChange={(e) => setQuery(e.target.value)}
         value={query}
       />
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-5 sm:grid-cols-2">
         {filtered.map((surah, index) => (
           <div
             key={surah.nomor}
-            className="block px-4 py-3 rounded-xl bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors shadow-sm"
+            onClick={() =>
+              (window.location.href = `/surah_baca/${surah.nomor}`)
+            }
+            className="cursor-pointer px-6 py-5 rounded-2xl bg-white dark:bg-gray-800 hover:bg-blue-50 dark:hover:bg-gray-700 transition-all shadow-lg border border-gray-200 dark:border-gray-700 group"
           >
-            <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-medium text-gray-900 dark:text-white">
-                  {surah.nomor}. {surah.nama}
-                </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
-                  {surah.arti} • {surah.type} • {surah.ayat} ayat
-                </p>
+            <div className="flex justify-between items-center mb-3">
+              <div className="flex items-center gap-3">
+                <div className="text-lg font-bold w-10 h-10 flex items-center justify-center rounded-full bg-blue-100 text-blue-700 dark:bg-gray-700 dark:text-blue-300">
+                  {surah.nomor}
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white group-hover:underline">
+                    {surah.nama}
+                  </h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {surah.arti} • {surah.type} • {surah.ayat} ayat
+                  </p>
+                </div>
               </div>
-              <span className="text-2xl font-arabic text-right text-gray-800 dark:text-white">
+              <div className="text-3xl font-arabic text-gray-800 dark:text-white">
                 {surah.asma}
-              </span>
+              </div>
             </div>
 
-            <div className="mt-3 flex items-center justify-between">
-              {/* <button
- onClick={() => handlePlay(`data/audio/${formatted}.mp3`, index)}
-  
-  className="px-3 py-1 text-sm bg-green-600 hover:bg-green-700 text-white rounded"
->
-  ▶️ Putar
-</button> */}
-
-              {/* <a
-                href={`/surah/${surah.nomor}`}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Buka Surat →
-              </a> */}
-              {/* <a
-                href={`/surah_baca/${surah.nomor}`}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Buka Surat & Dengar →
-              </a> */}
-              <a
-                href={`/surah_baca/${surah.nomor}`}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Buka Surat & Dengar →
-              </a>
-            </div>
+            {/* <div className="flex items-center gap-3 text-sm text-blue-600 dark:text-blue-400 mt-2">
+              <BookOpen className="w-4 h-4" />
+              <span>Baca & Dengar Surat</span>
+            </div> */}
           </div>
         ))}
       </div>

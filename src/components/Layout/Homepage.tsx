@@ -107,36 +107,36 @@ const allMenus: MenuItem[] = [
     link: "/observasi/observasi_murid",
     roles: ["guru"],
   },
-
+  //Santri
   {
-    title: "Enroll",
-    icon: <FileInput className="w-8 h-8 text-pink-600" />,
-    link: "/course_register",
+    title: "Qur'an",
+    icon: <BookOpen className="w-8 h-8 text-green-600" />,
+    link: "/etc/surahIndex",
     roles: ["santri"],
   },
   {
-    title: "Modul Pembelajaran",
-    icon: <BookOpen className="w-8 h-8 text-pink-600" />,
-    link: "/modules_list",
+    title: "juz-Amma",
+    icon: <BookOpen className="w-8 h-8 text-green-600" />,
+    link: "/etc/surahIndexJuzAmma",
     roles: ["santri"],
   },
   {
-    title: "Observasi",
-    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/observasi_report",
+    title: "Dzikir",
+    icon: <BookOpen className="w-8 h-8 text-blue-600" />,
+    link: "/doa/dzikir",
     roles: ["santri"],
   },
   {
-    title: "Statistik Pembelajaran",
-    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/course/course_chart",
+    title: "Dzikir Pagi & Sore",
+    icon: <BookOpen className="w-8 h-8 text-blue-600" />,
+    link: "/doa/dzikir_pagi_sor",
     roles: ["santri"],
   },
   {
-    title: "Monitor Pembelajaran Santri",
-    icon: <ChartBar className="w-8 h-8 text-pink-600" />,
-    link: "/course/course_monitor_siswa",
-    roles: ["guru"],
+    title: "Doa",
+    icon: <BookOpen className="w-8 h-8 text-yellow-600" />,
+    link: "/doa/doa",
+    roles: ["santri"],
   },
 ];
 

@@ -64,31 +64,51 @@
             <i data-lucide="chevron-down" class="w-4 h-4 ml-auto"></i>
           </button>
           <div id="dataDropdown" class="ml-6 mt-1 hidden flex-col space-y-1">
-            <a href="/data" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Data Santri</a>
-            <a href="/monitor_last_read" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Monitor Baca Qur'an</a>
-            <a href="/observasi/observasi_murid" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Observasi Murid</a>
+            <a href="/u/data_guru" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Data Guru</a>
+            <a href="/u/data_siswa" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Data Siswa</a>
+            <a href="/modules" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Modul Pembelajaran</a>
+            <a href="/course" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Kelas</a>
+            <a href="/enroll_student" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Observasi Murid</a>
+            <a href="/observasi/observasi_murid" class="block px-2 py-1 rounded hover:bg-blue-700 dark:hover:bg-gray-700 text-sm">Observasi Murid</a>     
           </div>
         </div>
         `;
       }
       // Role: semua (admin, guru, murid)
       html += `
-        <a href="/etc/surahIndex" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
-          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Qur'an
+        <a href="/course_register" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i>Enroll
         </a>
-        <a href="/doa/dzikir" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
-          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Harian
+        <a href="modules_list" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i>Modul Pembelajaran
         </a>
-        <a href="/doa/dzikir_pagi_sore" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
-          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Pagi Sore
+        <a href="/observasi_report" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="book" class="w-4 h-4 mr-2"></i>Observasi
         </a>
-        <a href="/doa/doa" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
-          <i data-lucide="book" class="w-4 h-4 mr-2"></i> Doa-doa
+        <a href="/course/course_chart" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="chart-bar" class="w-4 h-4 mr-2"></i>Statistik Pembelajaran
         </a>
-        <a href="/quiz/quiz" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
-          <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
+        <a href="/course/course_monitor_siswa" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+          <i data-lucide="chart-bar" class="w-4 h-4 mr-2"></i> Monitor Pembelajaran Santri
         </a>
       `;
+      // html += `
+      //   <a href="/etc/surahIndex" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+      //     <i data-lucide="book" class="w-4 h-4 mr-2"></i> Qur'an
+      //   </a>
+      //   <a href="/doa/dzikir" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+      //     <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Harian
+      //   </a>
+      //   <a href="/doa/dzikir_pagi_sore" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+      //     <i data-lucide="book" class="w-4 h-4 mr-2"></i> Dzikir Pagi Sore
+      //   </a>
+      //   <a href="/doa/doa" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+      //     <i data-lucide="book" class="w-4 h-4 mr-2"></i> Doa-doa
+      //   </a>
+      //   <a href="/quiz/quiz" class="hover:bg-blue-700 dark:hover:bg-gray-700 transition-colors px-2 py-1 rounded flex items-center">
+      //     <i data-lucide="test-tube-diagonal" class="w-4 h-4 mr-2"></i> Quiz
+      //   </a>
+      // `;
 
       menu.innerHTML = html;
 
