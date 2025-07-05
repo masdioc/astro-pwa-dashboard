@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { API_URL } from "astro:env/client";
 import toast from "react-hot-toast";
+import { BASE_URL } from "astro:env/client";
 
 type Ayat = {
   arabic: string;
@@ -87,16 +88,17 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
         const filtered = data.filter((d: any) => d.no_surah === nomorInt);
         const durasi: Record<number, number> = {};
         const audio: Record<number, string> = {};
-        filtered.forEach((d: any) => {
+        const url_mp3 = filtered.forEach((d: any) => {
+          const url_audio_mp3 = `${BASE_URL}/data/audio/mp3/compress/${d.url_audio}`;
           durasi[d.no_ayah] = d.durasi_ms;
-          audio[d.no_ayah] = d.url_audio;
+          audio[d.no_ayah] = url_audio_mp3;
         });
         if (nomorInt !== 9) {
           durasi[0] = 6113;
           const bismillahAudio = data.find(
             (d: any) => d.no_surah === 1 && d.no_ayah === 1
-          )?.url_audio;
-          audio[0] = bismillahAudio || "/data/audio/bismillah.mp3";
+          )?.url_audio_mp3;
+          audio[0] = bismillahAudio || "/data/audio/mp3/001001.mp3";
         }
         setDurasiMap(durasi);
         setAudioUrlMap(audio);
