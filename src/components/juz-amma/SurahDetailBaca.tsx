@@ -98,7 +98,7 @@ const SurahDetailBaca: React.FC<Props> = ({ nomor, nama }) => {
           const bismillahAudio = data.find(
             (d: any) => d.no_surah === 1 && d.no_ayah === 1
           )?.url_audio_mp3;
-          audio[0] = bismillahAudio || "/data/audio/mp3/001001.mp3";
+          audio[0] = bismillahAudio || "/data/audio/mp3/compress/001001.mp3";
         }
         setDurasiMap(durasi);
         setAudioUrlMap(audio);
